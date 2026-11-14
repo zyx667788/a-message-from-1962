@@ -42,9 +42,7 @@ html {
   font-size: 15px;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
-}
-
-html {
+  scroll-behavior: smooth;
   width: 100%;
   max-width: 100%;
   overflow-x: clip;
@@ -137,7 +135,7 @@ body {
   right: 0;
   z-index: 5;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   gap: 12px;
   padding: 14px 24px;
@@ -145,14 +143,7 @@ body {
 }
 
 .intro-tag {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  color: var(--espresso-umber);
-  background: var(--paper-inset);
-  border: 2px solid var(--espresso-umber);
-  padding: 4px 10px;
+  display: none;
 }
 
 .intro-top-actions {
@@ -269,25 +260,33 @@ body {
 .pixel-window-body {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  padding: 16px 20px 18px;
-  gap: 10px;
+  align-items: center;
+  text-align: center;
+  padding: 18px 22px 20px;
+  gap: 12px;
 }
 
 .intro-icon-badge {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 18px;
+  align-self: center;
+  width: 100%;
+  max-width: 268px;
+  padding: 12px 16px;
+  margin: 2px auto 4px;
   border: 2px solid var(--espresso-umber);
   background: var(--paper-inset);
   box-shadow: var(--pixel-shadow-sm);
 }
 
-.intro-pixel-svg {
-  width: 112px;
-  height: 70px;
+.intro-hero-canvas {
+  width: 224px;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 224 / 136;
   display: block;
+  image-rendering: pixelated;
 }
 
 .intro-exhibit-badge {
@@ -1169,7 +1168,7 @@ body {
   overflow: hidden;
   display: flex;
   align-items: center;
-  touch-action: none;
+  touch-action: pan-y;
   user-select: none;
 }
 
@@ -2033,12 +2032,13 @@ body {
   }
 
   .intro-icon-badge {
-    padding: 8px 14px;
+    max-width: 236px;
+    padding: 10px 12px;
   }
 
-  .intro-pixel-svg {
-    width: 88px;
-    height: 55px;
+  .intro-hero-canvas {
+    width: 204px;
+    height: auto;
   }
 
   .pixel-greeting {
@@ -2081,9 +2081,12 @@ body {
     padding: 14px 12px calc(44px + env(safe-area-inset-bottom));
   }
 
-  .screen-banner,
-  .loop-waiting-banner {
+  .screen-banner {
     margin-bottom: 14px;
+  }
+
+  .loop-waiting-banner {
+    margin-bottom: 10px;
   }
 
   .screen-banner-body {
@@ -2171,24 +2174,24 @@ body {
 
   /* Screen 2: Mobile Receiver Console */
   .loop-waiting-body {
-    padding: 12px;
-    gap: 12px;
+    padding: 10px 12px;
+    gap: 8px;
   }
 
   .waiting-counter-card {
     min-width: 0;
     width: 100%;
-    padding: 10px 12px;
+    padding: 8px 12px;
   }
 
   .waiting-cycles-number {
-    font-size: 32px;
+    font-size: 26px;
   }
 
   .console-top {
-    gap: 10px;
-    margin-bottom: 12px;
-    padding-bottom: 10px;
+    gap: 8px;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
   }
 
   .plate-title {
@@ -2258,12 +2261,13 @@ body {
   }
 
   .teleprinter-frame {
-    padding: 12px;
+    margin-top: 12px;
+    padding: 10px 12px;
   }
 
   .letter-sheet {
-    min-height: 145px;
-    padding: 10px 0 6px;
+    min-height: 72px;
+    padding: 8px 0 6px;
   }
 
   .decoded-text {

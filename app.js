@@ -740,6 +740,8 @@
       this.overlay = document.getElementById("intro-overlay");
       this.canvas = document.getElementById("intro-canvas");
       this.ctx = this.canvas ? this.canvas.getContext("2d") : null;
+      this.heroCanvas = document.getElementById("intro-hero-canvas");
+      this.heroCtx = this.heroCanvas ? this.heroCanvas.getContext("2d") : null;
       this.stageEl = document.getElementById("intro-stage");
       this.dialogEl = document.getElementById("pixel-dialog");
       this.stampsEl = document.getElementById("intro-stamps");
@@ -759,6 +761,7 @@
 
       this.bindEvents();
       this.resizeCanvas();
+      this.renderHeroIcon(performance.now());
       this.startLoop();
     }
 
@@ -794,12 +797,155 @@
     }
 
     startLoop() {
-      const tick = () => {
+      const tick = (now) => {
         if (!this.isActive) return;
+        this.renderHeroIcon(now);
         this.renderCanvas();
         this.rafId = requestAnimationFrame(tick);
       };
       this.rafId = requestAnimationFrame(tick);
+    }
+
+    renderHeroIcon(nowMs) {
+      if (!this.heroCtx || !this.heroCanvas) return;
+      const ctx = this.heroCtx;
+      const S = 2; // 112x68 crisp integer pixel grid -> 224x136
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const t = prefersReduced ? 0.6 : nowMs / 1000;
+
+      ctx.imageSmoothingEnabled = false;
+      const px = (x, y, w, h, color) => {
+        ctx.fillStyle = color;
+        ctx.fillRect(x * S, y * S, w * S, h * S);
+      };
+
+      // Vintage oil-paper backdrop with subtle corner brackets
+      px(0, 0, 112, 68, "#D9C4B1");
+      px(2, 2, 108, 64, "#ECE6D8");
+      for (let gx = 8; gx < 108; gx += 10) {
+        for (let gy = 8; gy < 62; gy += 10) {
+          px(gx, gy, 1, 1, "#C9B99F");
+        }
+      }
+      // Corner pixel ticks
+      px(4, 4, 4, 1, "#A39670");
+      px(4, 4, 1, 4, "#A39670");
+      px(104, 4, 4, 1, "#A39670");
+      px(107, 4, 1, 4, "#A39670");
+      px(4, 63, 4, 1, "#A39670");
+      px(4, 60, 1, 4, "#A39670");
+      px(104, 63, 4, 1, "#A39670");
+      px(107, 60, 1, 4, "#A39670");
+
+      // Ground shadow under Sirius console
+      px(8, 59, 44, 3, "#C6B196");
+
+      // Left / Center: 1962 Ferranti Sirius Pixel Cabinet + CRT Desk
+      px(10, 11, 40, 39, "#372713"); // Outer cabinet frame
+      px(12, 13, 36, 35, "#4D4828"); // Olive chassis body
+      px(12, 13, 36, 2, "#A39670");  // Brushed brass top rim
+
+      // Decimal Register Lamps (0-9 style indicators along upper bezel)
+      px(14, 16, 32, 6, "#23180B");
+      const activeLed = Math.floor(t * 4.5) % 8;
+      for (let i = 0; i < 8; i += 1) {
+        const lx = 15 + i * 4;
+        const isLit = i === activeLed || i === (activeLed + 5) % 8;
+        px(lx, 18, 2, 2, isLit ? "#7D2027" : "#A39670");
+      }
+
+      // CRT Phosphor Display Window inside console
+      px(14, 24, 32, 15, "#372713");
+      px(15, 25, 30, 13, "#23180B");
+      // Animated acoustic-loop waveform bars inside CRT
+      for (let wx = 0; wx < 13; wx += 1) {
+        const wave = Math.sin(t * 5.2 + wx * 0.65);
+        const barH = Math.max(1, Math.round(3 + wave * 2.5));
+        const col = (wx + Math.floor(t * 6)) % 5 === 0 ? "#7D2027" : "#ECE6D8";
+        px(17 + wx * 2, 32 - Math.floor(barH / 2), 1, barH, col);
+      }
+      // Subtle animated CRT scanline
+      const scanY = 25 + (Math.floor(t * 10) % 13);
+      px(15, scanY, 30, 1, "rgba(163, 150, 112, 0.25)");
+
+      // Lower slanted teleprinter / keycap deck
+      px(14, 41, 32, 5, "#A39670");
+      px(15, 42, 4, 2, "#372713");
+      px(21, 42, 4, 2, "#372713");
+      px(27, 42, 4, 2, "#372713");
+      px(33, 42, 11, 2, "#7D2027");
+
+      // Desk slab + cabinet legs
+      px(7, 50, 46, 4, "#372713");
+      px(8, 51, 44, 1, "#A39670");
+      px(11, 54, 4, 6, "#372713");
+      px(45, 54, 4, 6, "#372713");
+
+      // Streaming 5-Track Oiled Paper Tape Ribbon -> Right Envelope
+      const tapeScroll = Math.floor(t * 14);
+      px(49, 27, 36, 13, "#372713");
+      px(49, 28, 35, 11, "#D9C4B1");
+      px(49, 29, 35, 9, "#ECE6D8");
+
+      // Scrolling punched holes on paper tape (modulo 4px repeat)
+      const pattern = [0b10101, 0b01011, 0b11010, 0b00101, 0b10110, 0b01100, 0b11101];
+      for (let i = 0; i < 9; i += 1) {
+        const hx = 50 + ((i * 4 - (tapeScroll % 4) + 4) % 34);
+        if (hx > 81) continue;
+        const pIdx = (i + Math.floor(tapeScroll / 4)) % pattern.length;
+        const bits = pattern[pIdx];
+        // Center sprocket hole
+        px(hx, 33, 1, 1, "#7D2027");
+        if (bits & 1) px(hx, 30, 1, 1, "#372713");
+        if (bits & 2) px(hx, 31, 1, 1, "#372713");
+        if (bits & 4) px(hx, 35, 1, 1, "#372713");
+        if (bits & 8) px(hx, 37, 1, 1, "#372713");
+      }
+
+      // Crimson Optical Read Head bracket over tape
+      px(55, 25, 6, 17, "#7D2027");
+      px(56, 26, 4, 15, "#372713");
+      px(57, 27, 2, 1, "#FAF6EE");
+      // Pulsing sensor LEDs inside reader
+      const pulseOn = Math.sin(t * 9) > 0;
+      px(57, 30, 2, 1, pulseOn ? "#FAF6EE" : "#7D2027");
+      px(57, 33, 2, 1, "#7D2027");
+      px(57, 36, 2, 1, pulseOn ? "#7D2027" : "#A39670");
+
+      // Right: Bobbing 1962 Wax-Sealed Airmail Envelope
+      const bob = Math.round(Math.sin(t * 3.2) * 2);
+      const envX = 76;
+      const envY = 20 + bob;
+      px(envX + 1, 56, 26, 2, "#C6B196"); // Soft floating ground shadow
+
+      // Envelope card
+      px(envX, envY, 28, 20, "#372713");
+      px(envX + 1, envY + 1, 26, 18, "#FAF6EE");
+      // Envelope diagonal pixel fold lines
+      for (let k = 0; k < 10; k += 1) {
+        px(envX + 2 + k, envY + 2 + Math.floor(k * 0.7), 2, 1, "#A39670");
+        px(envX + 24 - k, envY + 2 + Math.floor(k * 0.7), 2, 1, "#A39670");
+      }
+      // Corner airmail stripes
+      px(envX + 21, envY + 3, 4, 2, "#7D2027");
+      px(envX + 21, envY + 6, 4, 1, "#4D4828");
+
+      // Crimson Wax Seal on envelope center
+      px(envX + 11, envY + 9, 6, 6, "#372713");
+      px(envX + 12, envY + 10, 4, 4, "#7D2027");
+      px(envX + 13, envY + 11, 1, 1, "#FAF6EE");
+
+      // Twinkling pixel sparkles around icon showcase
+      const sparkPhase = Math.floor(t * 4) % 3;
+      const drawSpark = (sx, sy, active) => {
+        const col = active ? "#7D2027" : "#A39670";
+        px(sx, sy - 1, 1, 3, col);
+        px(sx - 1, sy, 3, 1, col);
+        if (active) px(sx, sy, 1, 1, "#FAF6EE");
+      };
+      drawSpark(67, 13, sparkPhase === 0);
+      drawSpark(98, 12 + Math.round(bob * 0.5), sparkPhase === 1);
+      drawSpark(72, 49, sparkPhase === 2);
     }
 
     buildPixelComputerParticles() {
@@ -1185,6 +1331,8 @@
       this.isHolding = false;
       this.isDragging = false;
       this.dragStartX = 0;
+      this.dragStartY = 0;
+      this.dragDirectionLocked = null;
       this.dragStartProgress = 0;
       this.lastRevealedCount = 0;
       this.loopAngle = 0;
@@ -1277,8 +1425,10 @@
         if (e.button !== 0 && e.pointerType === "mouse") return;
         this.isDragging = true;
         this.dragStartX = e.clientX;
+        this.dragStartY = e.clientY;
+        this.dragDirectionLocked = e.pointerType === "touch" ? null : "x";
         this.dragStartProgress = state.tapeProgress;
-        if (this.viewport.setPointerCapture) {
+        if (e.pointerType !== "touch" && this.viewport.setPointerCapture) {
           try {
             this.viewport.setPointerCapture(e.pointerId);
           } catch (_err) {}
@@ -1287,6 +1437,20 @@
 
       const onPointerMove = (e) => {
         if (!this.isDragging) return;
+        if (e.pointerType === "touch" && !this.dragDirectionLocked) {
+          const dx = e.clientX - this.dragStartX;
+          const dy = e.clientY - this.dragStartY;
+          if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 6) {
+            this.dragDirectionLocked = "y";
+            this.isDragging = false;
+            return;
+          }
+          if (Math.abs(dx) > 6) {
+            this.dragDirectionLocked = "x";
+          } else {
+            return;
+          }
+        }
         const deltaX = this.dragStartX - e.clientX; // Pulling left increases progress
         const effectiveSpan =
           e.pointerType === "touch"
@@ -1298,6 +1462,7 @@
 
       const onPointerUp = () => {
         this.isDragging = false;
+        this.dragDirectionLocked = null;
       };
 
       this.viewport.addEventListener("pointerdown", onPointerDown);
@@ -1426,8 +1591,22 @@
         lamp.classList.toggle("is-lit", idx === activeDigit);
       });
 
-      // Show Stage 4 prompt once read to >= 98%
+      // Show Stage 4 prompt once read to >= 98% with gentle fade-in
+      const wasHidden = this.completeCard.hidden;
       this.completeCard.hidden = clamped < 0.98;
+      if (
+        wasHidden &&
+        !this.completeCard.hidden &&
+        window.gsap &&
+        !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ) {
+        window.gsap.killTweensOf(this.completeCard);
+        window.gsap.fromTo(
+          this.completeCard,
+          { autoAlpha: 0, y: 14 },
+          { autoAlpha: 1, y: 0, duration: 0.45, ease: "power2.out", clearProps: "opacity,visibility,transform" }
+        );
+      }
 
       this.updateProcessIndicators();
     }
@@ -2325,7 +2504,140 @@
       siriusMachine.rebuildTape();
     }
 
+    const STAGE_REVEAL_SELECTORS = {
+      compose: ".screen-banner, .input-panel, .letter-panel",
+      receive: ".screen-banner, .loop-waiting-banner, .reader-housing, .teleprinter-frame, .loop-card, .receive-bottom-nav",
+      history: ".screen-banner, .museum-photo-frame, .history-cards"
+    };
+
+    let revealObserver = null;
+
+    function clearRevealState(container) {
+      if (!container) return;
+      container.querySelectorAll("[data-scroll-pending]").forEach((el) => {
+        delete el.dataset.scrollPending;
+        if (window.gsap) {
+          window.gsap.killTweensOf(el);
+          window.gsap.set(el, { clearProps: "opacity,visibility,transform" });
+        }
+      });
+    }
+
+    function revealPendingElement(el) {
+      if (!el || el.dataset.scrollPending !== "1") return;
+      delete el.dataset.scrollPending;
+      if (revealObserver) revealObserver.unobserve(el);
+      if (window.gsap && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        window.gsap.killTweensOf(el);
+        window.gsap.fromTo(
+          el,
+          { autoAlpha: 0, y: 18 },
+          { autoAlpha: 1, y: 0, duration: 0.48, ease: "power2.out", clearProps: "opacity,visibility,transform" }
+        );
+      }
+    }
+
+    function checkVisiblePendingReveals() {
+      const vh = window.innerHeight || document.documentElement.clientHeight || 800;
+      document.querySelectorAll('[data-scroll-pending="1"]').forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.height > 0 && rect.top <= vh + 24) {
+          revealPendingElement(el);
+        }
+      });
+    }
+
+    function setupScrollReveal() {
+      if ("IntersectionObserver" in window && !revealObserver) {
+        revealObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                revealPendingElement(entry.target);
+              }
+            });
+          },
+          { threshold: 0.04, rootMargin: "0px 0px 28px 0px" }
+        );
+        window.addEventListener("scroll", checkVisiblePendingReveals, { passive: true });
+      }
+    }
+
+    function animateStageEntrance(targetStage) {
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      Object.values(stageSections).forEach((sec) => clearRevealState(sec));
+
+      const activeSec = stageSections[targetStage];
+      if (!activeSec || !window.gsap || prefersReduced) return;
+
+      const selector = STAGE_REVEAL_SELECTORS[targetStage];
+      if (!selector) return;
+
+      const cards = Array.from(activeSec.querySelectorAll(selector));
+      const vh = window.innerHeight || document.documentElement.clientHeight || 800;
+      const aboveFold = [];
+      const belowFold = [];
+
+      cards.forEach((card) => {
+        window.gsap.killTweensOf(card);
+        window.gsap.set(card, { clearProps: "opacity,visibility,transform" });
+        const rect = card.getBoundingClientRect();
+        if (rect.top < vh * 0.94) {
+          aboveFold.push(card);
+        } else {
+          belowFold.push(card);
+        }
+      });
+
+      if (aboveFold.length) {
+        window.gsap.fromTo(
+          aboveFold,
+          { autoAlpha: 0, y: 16 },
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.48,
+            stagger: 0.08,
+            ease: "power2.out",
+            clearProps: "opacity,visibility,transform"
+          }
+        );
+      }
+
+      if (belowFold.length && revealObserver) {
+        belowFold.forEach((card) => {
+          card.dataset.scrollPending = "1";
+          window.gsap.set(card, { autoAlpha: 0, y: 18 });
+          revealObserver.observe(card);
+        });
+      }
+    }
+
+    function animateLetterPaperRefresh() {
+      if (!window.gsap || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      const targets = document.querySelectorAll("#stage-compose .letter-paper, #stage-compose .live-punch-strip");
+      if (!targets.length) return;
+      window.gsap.killTweensOf(targets);
+      window.gsap.fromTo(
+        targets,
+        { autoAlpha: 0.25, y: 6 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.38,
+          stagger: 0.04,
+          ease: "power2.out",
+          clearProps: "opacity,visibility,transform"
+        }
+      );
+    }
+
+    setupScrollReveal();
+
     function switchStage(targetStage, shouldScroll = true) {
+      if (revealObserver) {
+        revealObserver.disconnect();
+      }
       state.stage = targetStage;
       Object.entries(stageSections).forEach(([key, section]) => {
         const isTarget = key === targetStage;
@@ -2340,13 +2652,11 @@
       }
 
       const activeSec = stageSections[targetStage];
-      if (window.gsap && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        window.gsap.fromTo(
-          activeSec,
-          { autoAlpha: 0, y: 12 },
-          { autoAlpha: 1, y: 0, duration: 0.35, ease: "power2.out", clearProps: "transform" }
-        );
+      if (window.gsap && activeSec) {
+        window.gsap.killTweensOf(activeSec);
+        window.gsap.set(activeSec, { clearProps: "opacity,visibility,transform" });
       }
+      animateStageEntrance(targetStage);
 
       if (shouldScroll) {
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -2358,6 +2668,8 @@
       mainContent.focus();
       if (loadedFromUrl || state.hasSharedArrival) {
         switchStage("receive", true);
+      } else {
+        animateStageEntrance(state.stage || "compose");
       }
     });
 
@@ -2454,6 +2766,7 @@
         senderInput.value = sample.from;
         rawMessageInput.value = sample.text;
         handleComposeInput();
+        animateLetterPaperRefresh();
       });
     });
 
@@ -2485,6 +2798,7 @@
       editedBadge.hidden = true;
       rewrittenLetterInput.value = getActiveLetterText();
       renderLivePunchPreview();
+      animateLetterPaperRefresh();
       if (state.isConfirmed) {
         shareUrlInput.value = encodeSharePayload();
       }
@@ -2500,6 +2814,15 @@
       shareUrlInput.value = encodeSharePayload();
       copyFeedback.textContent = "";
       siriusMachine.rebuildTape();
+      if (window.gsap && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        window.gsap.killTweensOf(dispatchPanel);
+        window.gsap.fromTo(
+          dispatchPanel,
+          { autoAlpha: 0, y: 12 },
+          { autoAlpha: 1, y: 0, duration: 0.42, ease: "power2.out", clearProps: "opacity,visibility,transform" }
+        );
+      }
+      dispatchPanel.scrollIntoView({ behavior: "smooth", block: "nearest" });
     });
 
     goReceiveBtn.addEventListener("click", () => switchStage("receive"));
