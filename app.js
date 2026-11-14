@@ -2508,234 +2508,140 @@
       window.gsap.registerPlugin(window.ScrollTrigger);
     }
 
-    const STAGE_REVEAL_SELECTORS = {
+    // Non-nested block selectors per stage so scrolling triggers each card cleanly
+    const STAGE_TRIGGER_SELECTORS = {
       compose: ".screen-banner, .input-panel, .letter-panel",
-      receive: ".screen-banner, .loop-waiting-banner, .reader-housing, .teleprinter-frame, .loop-card, .receive-bottom-nav",
-      history: ".screen-banner, .museum-photo-frame, .history-cards, .museum-visit-banner"
+      receive: ".screen-banner, #loop-waiting-banner, .console-top, .reader-housing, .teleprinter-frame, .loop-card, .receive-bottom-nav",
+      history: ".screen-banner, .museum-photo-frame, .history-card, .museum-visit-banner"
     };
 
-    let revealObserver = null;
-    let parallaxTweens = [];
+    let stageTriggers = [];
+    let bottomRevealHandler = null;
 
-    function clearParallax() {
-      parallaxTweens.forEach((tween) => {
-        if (tween.scrollTrigger) tween.scrollTrigger.kill();
-        tween.kill();
+    function clearScrollEffects() {
+      stageTriggers.forEach((st) => {
+        if (!st) return;
+        if (st.scrollTrigger) st.scrollTrigger.kill();
+        if (typeof st.kill === "function") st.kill();
       });
-      parallaxTweens = [];
+      stageTriggers = [];
+      if (bottomRevealHandler) {
+        window.removeEventListener("scroll", bottomRevealHandler);
+        bottomRevealHandler = null;
+      }
       if (window.gsap) {
-        const targets = document.querySelectorAll(
-          ".parallax-layer-slow, .parallax-layer-mid, #scroll-progress-bar, .screen-banner-copy, .input-panel, .letter-panel, .waiting-counter-card, .loop-waiting-copy, .teleprinter-frame, .loop-column, #loop-canvas, #museum-active-photo, .history-card, .museum-visit-banner"
+        const allNodes = document.querySelectorAll(
+          ".parallax-layer-slow, .parallax-layer-mid, #scroll-progress-bar, .stage-section .screen-banner, .input-panel, .letter-panel, #loop-waiting-banner, .console-top, .reader-housing, .teleprinter-frame, .loop-card, .receive-bottom-nav, .museum-photo-frame, .history-card, .museum-visit-banner, .site-footer"
         );
-        window.gsap.set(targets, { clearProps: "transform" });
-      }
-    }
-
-    function setupParallaxScroll(targetStage) {
-      clearParallax();
-      if (
-        !window.gsap ||
-        !window.ScrollTrigger ||
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches
-      ) {
-        return;
-      }
-
-      const activeSec = stageSections[targetStage];
-      if (!activeSec || activeSec.hidden) return;
-
-      const addParallax = (el, fromVars, toVars, triggerCfg) => {
-        const target = typeof el === "string" ? activeSec.querySelector(el) : el;
-        const triggerEl =
-          typeof triggerCfg.trigger === "string"
-            ? activeSec.querySelector(triggerCfg.trigger) || document.querySelector(triggerCfg.trigger)
-            : triggerCfg.trigger;
-        if (!target || !triggerEl) return;
-        const tween = window.gsap.fromTo(target, fromVars, {
-          ...toVars,
-          ease: "none",
-          scrollTrigger: {
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 0.55,
-            invalidateOnRefresh: true,
-            ...triggerCfg,
-            trigger: triggerEl
-          }
-        });
-        parallaxTweens.push(tween);
-      };
-
-      const isDesktop = window.innerWidth >= 961;
-
-      // Global scroll-linked progress bar & multi-depth archival backdrop parallax
-      addParallax(
-        document.getElementById("scroll-progress-bar"),
-        { scaleX: 0 },
-        { scaleX: 1 },
-        { trigger: document.body, start: "top top", end: "bottom bottom", scrub: true }
-      );
-      addParallax(
-        document.querySelector(".parallax-layer-slow"),
-        { y: 0 },
-        { y: -110 },
-        { trigger: document.body, start: "top top", end: "bottom bottom", scrub: 0.4 }
-      );
-      addParallax(
-        document.querySelector(".parallax-layer-mid"),
-        { y: 0 },
-        { y: -210 },
-        { trigger: document.body, start: "top top", end: "bottom bottom", scrub: 0.4 }
-      );
-
-      // Internal banner depth (starts aligned at top and lags downward smoothly as user scrolls)
-      addParallax(
-        ".screen-banner-copy",
-        { y: 0 },
-        { y: 18 },
-        { trigger: ".screen-banner", start: "top 80px", end: "bottom top", scrub: 0.5 }
-      );
-
-      if (targetStage === "compose") {
-        if (isDesktop) {
-          addParallax(".input-panel", { y: 6 }, { y: -10 }, { trigger: ".compose-grid", scrub: 0.5 });
-          addParallax(".letter-panel", { y: 26 }, { y: -26 }, { trigger: ".compose-grid", scrub: 0.65 });
-        } else {
-          addParallax(".input-panel", { y: 8 }, { y: -8 }, { trigger: ".input-panel", scrub: 0.5 });
-          addParallax(".letter-panel", { y: 12 }, { y: -12 }, { trigger: ".letter-panel", scrub: 0.6 });
-        }
-        addParallax(".live-punch-strip", { y: 6 }, { y: -8 }, { trigger: ".letter-panel", scrub: 0.45 });
-      } else if (targetStage === "receive") {
-        addParallax(".waiting-counter-card", { y: -8 }, { y: 12 }, { trigger: "#loop-waiting-banner", scrub: 0.5 });
-        addParallax(".loop-waiting-copy", { y: 10 }, { y: -12 }, { trigger: "#loop-waiting-banner", scrub: 0.6 });
-        if (isDesktop) {
-          addParallax(".teleprinter-frame", { y: 14 }, { y: -16 }, { trigger: ".console-workspace", scrub: 0.55 });
-          addParallax(".loop-column", { y: 30 }, { y: -26 }, { trigger: ".console-workspace", scrub: 0.65 });
-        } else {
-          addParallax(".teleprinter-frame", { y: 10 }, { y: -10 }, { trigger: ".teleprinter-frame", scrub: 0.55 });
-          addParallax(".loop-column", { y: 12 }, { y: -12 }, { trigger: ".loop-column", scrub: 0.6 });
-        }
-        addParallax("#loop-canvas", { y: -12 }, { y: 12 }, { trigger: ".loop-visual-box", scrub: 0.45 });
-      } else if (targetStage === "history") {
-        addParallax(
-          "#museum-active-photo",
-          { scale: 1.09, yPercent: -6 },
-          { scale: 1.09, yPercent: 6 },
-          { trigger: ".photo-plate-wrap", scrub: 0.45 }
-        );
-        const cards = Array.from(activeSec.querySelectorAll(".history-card"));
-        cards.forEach((card, idx) => {
-          const offset = isDesktop ? 22 + idx * 8 : 10 + idx * 3;
-          addParallax(card, { y: offset }, { y: -offset }, { trigger: card, scrub: 0.6 });
-        });
-        addParallax(".museum-visit-banner", { y: 16 }, { y: -14 }, { trigger: ".museum-visit-banner", scrub: 0.55 });
-      }
-
-      requestAnimationFrame(() => {
-        if (window.ScrollTrigger) window.ScrollTrigger.refresh();
-      });
-    }
-
-    function clearRevealState(container) {
-      if (!container) return;
-      container.querySelectorAll("[data-scroll-pending]").forEach((el) => {
-        delete el.dataset.scrollPending;
-        if (window.gsap) {
-          window.gsap.killTweensOf(el, "opacity,visibility");
-          window.gsap.set(el, { clearProps: "opacity,visibility" });
-        }
-      });
-    }
-
-    function revealPendingElement(el) {
-      if (!el || el.dataset.scrollPending !== "1") return;
-      delete el.dataset.scrollPending;
-      if (revealObserver) revealObserver.unobserve(el);
-      if (window.gsap && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        window.gsap.killTweensOf(el, "opacity,visibility");
-        window.gsap.fromTo(
-          el,
-          { autoAlpha: 0 },
-          { autoAlpha: 1, duration: 0.48, ease: "power2.out", clearProps: "opacity,visibility" }
-        );
-      }
-    }
-
-    function checkVisiblePendingReveals() {
-      const vh = window.innerHeight || document.documentElement.clientHeight || 800;
-      document.querySelectorAll('[data-scroll-pending="1"]').forEach((el) => {
-        const rect = el.getBoundingClientRect();
-        if (rect.height > 0 && rect.top <= vh + 24) {
-          revealPendingElement(el);
-        }
-      });
-    }
-
-    function setupScrollReveal() {
-      if ("IntersectionObserver" in window && !revealObserver) {
-        revealObserver = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                revealPendingElement(entry.target);
-              }
-            });
-          },
-          { threshold: 0.04, rootMargin: "0px 0px 28px 0px" }
-        );
-        window.addEventListener("scroll", checkVisiblePendingReveals, { passive: true });
+        window.gsap.killTweensOf(allNodes);
+        window.gsap.set(allNodes, { clearProps: "opacity,visibility,transform" });
       }
     }
 
     function animateStageEntrance(targetStage) {
+      clearScrollEffects();
       const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      Object.values(stageSections).forEach((sec) => clearRevealState(sec));
-
       const activeSec = stageSections[targetStage];
       if (!activeSec || !window.gsap || prefersReduced) return;
 
-      const selector = STAGE_REVEAL_SELECTORS[targetStage];
+      const selector = STAGE_TRIGGER_SELECTORS[targetStage];
       if (!selector) return;
 
-      const cards = Array.from(activeSec.querySelectorAll(selector));
-      const vh = window.innerHeight || document.documentElement.clientHeight || 800;
-      const aboveFold = [];
-      const belowFold = [];
+      const targets = Array.from(activeSec.querySelectorAll(selector));
+      const footerEl = document.querySelector(".site-footer");
+      if (footerEl) targets.push(footerEl);
 
-      cards.forEach((card) => {
-        window.gsap.killTweensOf(card, "opacity,visibility");
-        window.gsap.set(card, { clearProps: "opacity,visibility" });
-        const rect = card.getBoundingClientRect();
-        if (rect.top < vh * 0.94) {
-          aboveFold.push(card);
-        } else {
-          belowFold.push(card);
-        }
-      });
+      // Header scroll progress bar & subtle backdrop depth
+      if (window.ScrollTrigger) {
+        const addGlobalScrub = (el, fromVars, toVars, scrubVal) => {
+          if (!el) return;
+          const tween = window.gsap.fromTo(el, fromVars, {
+            ...toVars,
+            ease: "none",
+            scrollTrigger: {
+              trigger: document.body,
+              start: "top top",
+              end: "bottom bottom",
+              scrub: scrubVal,
+              invalidateOnRefresh: true
+            }
+          });
+          stageTriggers.push(tween);
+        };
 
-      if (aboveFold.length) {
-        window.gsap.fromTo(
-          aboveFold,
-          { autoAlpha: 0 },
-          {
+        addGlobalScrub(document.getElementById("scroll-progress-bar"), { scaleX: 0 }, { scaleX: 1 }, true);
+        addGlobalScrub(document.querySelector(".parallax-layer-slow"), { y: 0 }, { y: -90 }, 0.45);
+        addGlobalScrub(document.querySelector(".parallax-layer-mid"), { y: 0 }, { y: -160 }, 0.45);
+
+        // Prepare every target offstage before ScrollTrigger.batch evaluates viewport
+        window.gsap.set(targets, {
+          autoAlpha: 0,
+          y: 38,
+          scale: 0.96,
+          transformOrigin: "center top"
+        });
+
+        const revealBatch = (batch) => {
+          if (!batch || !batch.length) return;
+          window.gsap.to(batch, {
             autoAlpha: 1,
-            duration: 0.48,
-            stagger: 0.08,
-            ease: "power2.out",
-            clearProps: "opacity,visibility"
+            y: 0,
+            scale: 1,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: "power3.out",
+            overwrite: true
+          });
+        };
+
+        const batchTriggers = window.ScrollTrigger.batch(targets, {
+          interval: 0.08,
+          batchMax: 4,
+          start: "top 90%",
+          onEnter: (batch) => revealBatch(batch),
+          onLeaveBack: (batch) => {
+            window.gsap.to(batch, {
+              autoAlpha: 0,
+              y: 38,
+              scale: 0.96,
+              duration: 0.28,
+              ease: "power2.in",
+              overwrite: true
+            });
           }
+        });
+        stageTriggers.push(...batchTriggers);
+
+        // Safety fallback so bottom-most card/footer never stays hidden at max scroll
+        bottomRevealHandler = () => {
+          const scrollBottom = window.scrollY + window.innerHeight;
+          const docHeight = document.documentElement.scrollHeight;
+          const vh = window.innerHeight;
+          const pendingAtBottom = targets.filter((el) => {
+            if (Number(getComputedStyle(el).opacity) > 0.05) return false;
+            const rect = el.getBoundingClientRect();
+            return rect.top < vh * 0.92 || scrollBottom >= docHeight - 20;
+          });
+          if (pendingAtBottom.length) {
+            revealBatch(pendingAtBottom);
+          }
+        };
+        window.addEventListener("scroll", bottomRevealHandler, { passive: true });
+
+        requestAnimationFrame(() => {
+          if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+          // Reveal initial above-the-fold cards cleanly even if already within start threshold
+          const vh = window.innerHeight || document.documentElement.clientHeight || 800;
+          const initialVisible = targets.filter((el) => el.getBoundingClientRect().top < vh * 0.9);
+          if (initialVisible.length) revealBatch(initialVisible);
+        });
+      } else {
+        window.gsap.fromTo(
+          targets,
+          { autoAlpha: 0, y: 24 },
+          { autoAlpha: 1, y: 0, duration: 0.55, stagger: 0.08, ease: "power3.out", clearProps: "opacity,visibility,transform" }
         );
       }
-
-      if (belowFold.length && revealObserver) {
-        belowFold.forEach((card) => {
-          card.dataset.scrollPending = "1";
-          window.gsap.set(card, { autoAlpha: 0 });
-          revealObserver.observe(card);
-        });
-      }
-
-      setupParallaxScroll(targetStage);
     }
 
     function animateLetterPaperRefresh() {
@@ -2757,12 +2663,8 @@
       );
     }
 
-    setupScrollReveal();
-
     function switchStage(targetStage, shouldScroll = true) {
-      if (revealObserver) {
-        revealObserver.disconnect();
-      }
+      clearScrollEffects();
       state.stage = targetStage;
       Object.entries(stageSections).forEach(([key, section]) => {
         const isTarget = key === targetStage;
@@ -2776,16 +2678,16 @@
         renderMuseumGallery(state.activePhotoIdx, state.activeHotspotIdx);
       }
 
+      if (shouldScroll) {
+        window.scrollTo({ top: 0, behavior: "auto" });
+      }
+
       const activeSec = stageSections[targetStage];
       if (window.gsap && activeSec) {
         window.gsap.killTweensOf(activeSec);
         window.gsap.set(activeSec, { clearProps: "opacity,visibility,transform" });
       }
       animateStageEntrance(targetStage);
-
-      if (shouldScroll) {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
     }
 
     // Intro Controller
