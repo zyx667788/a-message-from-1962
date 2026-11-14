@@ -1,0 +1,7 @@
+*.png
+*.mp4
+.git
+.gitignore
+netlify.toml
+wrangler.jsonc
+.wrangler
