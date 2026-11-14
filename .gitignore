@@ -1,0 +1,5 @@
+# Ignore local reference screenshots and videos
+*.png
+*.mp4
+.DS_Store
+Thumbs.db
