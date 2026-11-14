@@ -313,7 +313,7 @@
     isActivelyPulling: false,
     isLoopPaused: false,
     simulatedCycles: 0,
-    soundEnabled: false,
+    soundEnabled: true,
     hasSharedArrival: false
   };
 
@@ -1627,7 +1627,14 @@
       });
     });
 
-    // Sound Toggle (WCAG 1.4.2 opt-in)
+    // Sound Toggle (default ON; unlock AudioContext on first gesture)
+    const unlockAudioOnFirstGesture = () => {
+      if (state.soundEnabled) soundEngine.ensureContext();
+      window.removeEventListener("pointerdown", unlockAudioOnFirstGesture);
+    };
+    window.addEventListener("pointerdown", unlockAudioOnFirstGesture, { passive: true });
+    soundToggleBtn.classList.toggle("is-on", state.soundEnabled);
+
     soundToggleBtn.addEventListener("click", () => {
       state.soundEnabled = !state.soundEnabled;
       soundToggleBtn.classList.toggle("is-on", state.soundEnabled);
