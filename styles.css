@@ -414,9 +414,50 @@ body {
    ========================================================================== */
 
 .app-shell {
+  position: relative;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+.parallax-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.parallax-layer-slow,
+.parallax-layer-mid {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -140px;
+  bottom: -240px;
+  will-change: transform;
+}
+
+.parallax-layer-slow {
+  opacity: 0.45;
+  background-image:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0 28px,
+      rgba(163, 150, 112, 0.24) 28px 30px
+    ),
+    radial-gradient(circle at 22px 15px, rgba(55, 39, 19, 0.16) 2.2px, transparent 2.4px),
+    radial-gradient(circle at calc(100% - 22px) 15px, rgba(55, 39, 19, 0.16) 2.2px, transparent 2.4px);
+  background-size: 100% 30px, 100% 30px, 100% 30px;
+}
+
+.parallax-layer-mid {
+  opacity: 0.55;
+  background-image:
+    radial-gradient(rgba(125, 32, 39, 0.12) 1.6px, transparent 1.8px),
+    radial-gradient(rgba(77, 72, 40, 0.1) 1.4px, transparent 1.6px);
+  background-size: 46px 46px;
+  background-position: 0 0, 23px 23px;
 }
 
 .site-header {
@@ -425,6 +466,19 @@ body {
   z-index: 40;
   background: var(--paper-bg);
   border-bottom: 2px solid var(--espresso-umber);
+}
+
+.scroll-progress-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 3px;
+  background: var(--lacquer-crimson);
+  transform-origin: left center;
+  transform: scaleX(0);
+  pointer-events: none;
+  will-change: transform;
 }
 
 .header-inner {
@@ -530,6 +584,8 @@ body {
    ========================================================================== */
 
 .main-content {
+  position: relative;
+  z-index: 2;
   flex: 1;
   max-width: var(--max-width);
   width: 100%;
@@ -553,6 +609,7 @@ body {
   align-items: flex-end;
   gap: 20px;
   flex-wrap: wrap;
+  overflow: hidden;
 }
 
 .screen-banner-copy {
@@ -976,6 +1033,7 @@ body {
   padding: 18px 20px;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
+  overflow: hidden;
   gap: 20px;
   align-items: center;
 }
@@ -1487,6 +1545,7 @@ body {
   padding: 6px;
   display: flex;
   justify-content: center;
+  overflow: hidden;
 }
 
 .loop-canvas {
@@ -1859,6 +1918,8 @@ body {
    ========================================================================== */
 
 .site-footer {
+  position: relative;
+  z-index: 2;
   border-top: 2px solid var(--espresso-umber);
   background: var(--paper-surface);
   padding: 14px 24px;

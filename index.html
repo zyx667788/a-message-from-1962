@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=VT323&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
   <script src="app.js" defer></script>
 </head>
 <body>
@@ -59,6 +60,11 @@
 
   <!-- Main Application Shell -->
   <div id="app-shell" class="app-shell">
+    <div class="parallax-backdrop" aria-hidden="true">
+      <div class="parallax-layer-slow"></div>
+      <div class="parallax-layer-mid"></div>
+    </div>
+
     <header id="site-header" class="site-header">
       <div class="header-inner">
         <div class="brand-lockup">
@@ -79,6 +85,7 @@
           </div>
         </div>
       </div>
+      <div id="scroll-progress-bar" class="scroll-progress-bar" aria-hidden="true"></div>
     </header>
 
     <main id="main-content" class="main-content" tabindex="-1">

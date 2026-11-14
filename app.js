@@ -1594,18 +1594,18 @@
       // Show Stage 4 prompt once read to >= 98% with gentle fade-in
       const wasHidden = this.completeCard.hidden;
       this.completeCard.hidden = clamped < 0.98;
-      if (
-        wasHidden &&
-        !this.completeCard.hidden &&
-        window.gsap &&
-        !window.matchMedia("(prefers-reduced-motion: reduce)").matches
-      ) {
-        window.gsap.killTweensOf(this.completeCard);
-        window.gsap.fromTo(
-          this.completeCard,
-          { autoAlpha: 0, y: 14 },
-          { autoAlpha: 1, y: 0, duration: 0.45, ease: "power2.out", clearProps: "opacity,visibility,transform" }
-        );
+      if (wasHidden && !this.completeCard.hidden) {
+        if (window.gsap && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          window.gsap.killTweensOf(this.completeCard);
+          window.gsap.fromTo(
+            this.completeCard,
+            { autoAlpha: 0, y: 14 },
+            { autoAlpha: 1, y: 0, duration: 0.45, ease: "power2.out", clearProps: "opacity,visibility,transform" }
+          );
+        }
+        if (window.ScrollTrigger) {
+          requestAnimationFrame(() => window.ScrollTrigger.refresh());
+        }
       }
 
       this.updateProcessIndicators();
@@ -2504,21 +2504,145 @@
       siriusMachine.rebuildTape();
     }
 
+    if (window.gsap && window.ScrollTrigger) {
+      window.gsap.registerPlugin(window.ScrollTrigger);
+    }
+
     const STAGE_REVEAL_SELECTORS = {
       compose: ".screen-banner, .input-panel, .letter-panel",
       receive: ".screen-banner, .loop-waiting-banner, .reader-housing, .teleprinter-frame, .loop-card, .receive-bottom-nav",
-      history: ".screen-banner, .museum-photo-frame, .history-cards"
+      history: ".screen-banner, .museum-photo-frame, .history-cards, .museum-visit-banner"
     };
 
     let revealObserver = null;
+    let parallaxTweens = [];
+
+    function clearParallax() {
+      parallaxTweens.forEach((tween) => {
+        if (tween.scrollTrigger) tween.scrollTrigger.kill();
+        tween.kill();
+      });
+      parallaxTweens = [];
+      if (window.gsap) {
+        const targets = document.querySelectorAll(
+          ".parallax-layer-slow, .parallax-layer-mid, #scroll-progress-bar, .screen-banner-copy, .input-panel, .letter-panel, .waiting-counter-card, .loop-waiting-copy, .teleprinter-frame, .loop-column, #loop-canvas, #museum-active-photo, .history-card, .museum-visit-banner"
+        );
+        window.gsap.set(targets, { clearProps: "transform" });
+      }
+    }
+
+    function setupParallaxScroll(targetStage) {
+      clearParallax();
+      if (
+        !window.gsap ||
+        !window.ScrollTrigger ||
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ) {
+        return;
+      }
+
+      const activeSec = stageSections[targetStage];
+      if (!activeSec || activeSec.hidden) return;
+
+      const addParallax = (el, fromVars, toVars, triggerCfg) => {
+        const target = typeof el === "string" ? activeSec.querySelector(el) : el;
+        const triggerEl =
+          typeof triggerCfg.trigger === "string"
+            ? activeSec.querySelector(triggerCfg.trigger) || document.querySelector(triggerCfg.trigger)
+            : triggerCfg.trigger;
+        if (!target || !triggerEl) return;
+        const tween = window.gsap.fromTo(target, fromVars, {
+          ...toVars,
+          ease: "none",
+          scrollTrigger: {
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 0.55,
+            invalidateOnRefresh: true,
+            ...triggerCfg,
+            trigger: triggerEl
+          }
+        });
+        parallaxTweens.push(tween);
+      };
+
+      const isDesktop = window.innerWidth >= 961;
+
+      // Global scroll-linked progress bar & multi-depth archival backdrop parallax
+      addParallax(
+        document.getElementById("scroll-progress-bar"),
+        { scaleX: 0 },
+        { scaleX: 1 },
+        { trigger: document.body, start: "top top", end: "bottom bottom", scrub: true }
+      );
+      addParallax(
+        document.querySelector(".parallax-layer-slow"),
+        { y: 0 },
+        { y: -110 },
+        { trigger: document.body, start: "top top", end: "bottom bottom", scrub: 0.4 }
+      );
+      addParallax(
+        document.querySelector(".parallax-layer-mid"),
+        { y: 0 },
+        { y: -210 },
+        { trigger: document.body, start: "top top", end: "bottom bottom", scrub: 0.4 }
+      );
+
+      // Internal banner depth (starts aligned at top and lags downward smoothly as user scrolls)
+      addParallax(
+        ".screen-banner-copy",
+        { y: 0 },
+        { y: 18 },
+        { trigger: ".screen-banner", start: "top 80px", end: "bottom top", scrub: 0.5 }
+      );
+
+      if (targetStage === "compose") {
+        if (isDesktop) {
+          addParallax(".input-panel", { y: 6 }, { y: -10 }, { trigger: ".compose-grid", scrub: 0.5 });
+          addParallax(".letter-panel", { y: 26 }, { y: -26 }, { trigger: ".compose-grid", scrub: 0.65 });
+        } else {
+          addParallax(".input-panel", { y: 8 }, { y: -8 }, { trigger: ".input-panel", scrub: 0.5 });
+          addParallax(".letter-panel", { y: 12 }, { y: -12 }, { trigger: ".letter-panel", scrub: 0.6 });
+        }
+        addParallax(".live-punch-strip", { y: 6 }, { y: -8 }, { trigger: ".letter-panel", scrub: 0.45 });
+      } else if (targetStage === "receive") {
+        addParallax(".waiting-counter-card", { y: -8 }, { y: 12 }, { trigger: "#loop-waiting-banner", scrub: 0.5 });
+        addParallax(".loop-waiting-copy", { y: 10 }, { y: -12 }, { trigger: "#loop-waiting-banner", scrub: 0.6 });
+        if (isDesktop) {
+          addParallax(".teleprinter-frame", { y: 14 }, { y: -16 }, { trigger: ".console-workspace", scrub: 0.55 });
+          addParallax(".loop-column", { y: 30 }, { y: -26 }, { trigger: ".console-workspace", scrub: 0.65 });
+        } else {
+          addParallax(".teleprinter-frame", { y: 10 }, { y: -10 }, { trigger: ".teleprinter-frame", scrub: 0.55 });
+          addParallax(".loop-column", { y: 12 }, { y: -12 }, { trigger: ".loop-column", scrub: 0.6 });
+        }
+        addParallax("#loop-canvas", { y: -12 }, { y: 12 }, { trigger: ".loop-visual-box", scrub: 0.45 });
+      } else if (targetStage === "history") {
+        addParallax(
+          "#museum-active-photo",
+          { scale: 1.09, yPercent: -6 },
+          { scale: 1.09, yPercent: 6 },
+          { trigger: ".photo-plate-wrap", scrub: 0.45 }
+        );
+        const cards = Array.from(activeSec.querySelectorAll(".history-card"));
+        cards.forEach((card, idx) => {
+          const offset = isDesktop ? 22 + idx * 8 : 10 + idx * 3;
+          addParallax(card, { y: offset }, { y: -offset }, { trigger: card, scrub: 0.6 });
+        });
+        addParallax(".museum-visit-banner", { y: 16 }, { y: -14 }, { trigger: ".museum-visit-banner", scrub: 0.55 });
+      }
+
+      requestAnimationFrame(() => {
+        if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+      });
+    }
 
     function clearRevealState(container) {
       if (!container) return;
       container.querySelectorAll("[data-scroll-pending]").forEach((el) => {
         delete el.dataset.scrollPending;
         if (window.gsap) {
-          window.gsap.killTweensOf(el);
-          window.gsap.set(el, { clearProps: "opacity,visibility,transform" });
+          window.gsap.killTweensOf(el, "opacity,visibility");
+          window.gsap.set(el, { clearProps: "opacity,visibility" });
         }
       });
     }
@@ -2528,11 +2652,11 @@
       delete el.dataset.scrollPending;
       if (revealObserver) revealObserver.unobserve(el);
       if (window.gsap && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        window.gsap.killTweensOf(el);
+        window.gsap.killTweensOf(el, "opacity,visibility");
         window.gsap.fromTo(
           el,
-          { autoAlpha: 0, y: 18 },
-          { autoAlpha: 1, y: 0, duration: 0.48, ease: "power2.out", clearProps: "opacity,visibility,transform" }
+          { autoAlpha: 0 },
+          { autoAlpha: 1, duration: 0.48, ease: "power2.out", clearProps: "opacity,visibility" }
         );
       }
     }
@@ -2579,8 +2703,8 @@
       const belowFold = [];
 
       cards.forEach((card) => {
-        window.gsap.killTweensOf(card);
-        window.gsap.set(card, { clearProps: "opacity,visibility,transform" });
+        window.gsap.killTweensOf(card, "opacity,visibility");
+        window.gsap.set(card, { clearProps: "opacity,visibility" });
         const rect = card.getBoundingClientRect();
         if (rect.top < vh * 0.94) {
           aboveFold.push(card);
@@ -2592,14 +2716,13 @@
       if (aboveFold.length) {
         window.gsap.fromTo(
           aboveFold,
-          { autoAlpha: 0, y: 16 },
+          { autoAlpha: 0 },
           {
             autoAlpha: 1,
-            y: 0,
             duration: 0.48,
             stagger: 0.08,
             ease: "power2.out",
-            clearProps: "opacity,visibility,transform"
+            clearProps: "opacity,visibility"
           }
         );
       }
@@ -2607,10 +2730,12 @@
       if (belowFold.length && revealObserver) {
         belowFold.forEach((card) => {
           card.dataset.scrollPending = "1";
-          window.gsap.set(card, { autoAlpha: 0, y: 18 });
+          window.gsap.set(card, { autoAlpha: 0 });
           revealObserver.observe(card);
         });
       }
+
+      setupParallaxScroll(targetStage);
     }
 
     function animateLetterPaperRefresh() {
@@ -2823,6 +2948,9 @@
         );
       }
       dispatchPanel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      if (window.ScrollTrigger) {
+        requestAnimationFrame(() => window.ScrollTrigger.refresh());
+      }
     });
 
     goReceiveBtn.addEventListener("click", () => switchStage("receive"));
@@ -2904,6 +3032,9 @@
       toggleOriginalBtn.textContent = nextHidden
         ? I18N[state.lang].peekOriginal
         : I18N[state.lang].hideOriginal;
+      if (window.ScrollTrigger) {
+        requestAnimationFrame(() => window.ScrollTrigger.refresh());
+      }
     });
 
     goHistoryBtn.addEventListener("click", () => switchStage("history"));
