@@ -1288,7 +1288,11 @@
       const onPointerMove = (e) => {
         if (!this.isDragging) return;
         const deltaX = this.dragStartX - e.clientX; // Pulling left increases progress
-        const nextProgress = Math.max(0, Math.min(1, this.dragStartProgress + deltaX / this.maxPullPx));
+        const effectiveSpan =
+          e.pointerType === "touch"
+            ? Math.max(220, (this.viewport ? this.viewport.clientWidth : 320) * 1.15)
+            : Math.min(this.maxPullPx, 780);
+        const nextProgress = Math.max(0, Math.min(1, this.dragStartProgress + deltaX / effectiveSpan));
         this.applyProgress(nextProgress, true);
       };
 
