@@ -1304,9 +1304,12 @@
       this.decodedEl = document.getElementById("decoded-letter-text");
       this.cursorEl = document.getElementById("decoded-cursor");
       this.emptyPromptEl = document.getElementById("tape-empty-prompt");
+      this.unitEl = document.querySelector(".reader-teleprinter-unit");
+      this.letterSheetEl = document.querySelector(".letter-sheet");
       this.sensorLeds = Array.from(document.querySelectorAll("#head-sensors .sensor-led"));
       this.lamps = Array.from(document.querySelectorAll("#decimal-lamps .lamp"));
       this.completeCard = document.getElementById("receive-complete-card");
+      this.footerHistoryBtn = document.getElementById("receive-footer-history-btn");
 
       // Delay-line loop monitor elements
       this.loopCanvas = document.getElementById("loop-canvas");
@@ -1354,6 +1357,15 @@
         duration: prefersReduced ? 0 : 0.08,
         ease: "power2.out"
       });
+    }
+
+    centerUnitInView() {
+      if (!this.unitEl) return;
+      const rect = this.unitEl.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight || 800;
+      if (rect.top < 78 || rect.bottom > vh - 12) {
+        this.unitEl.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
     }
 
     encodeTextToColumns(text) {
@@ -1447,6 +1459,7 @@
           }
           if (Math.abs(dx) > 6) {
             this.dragDirectionLocked = "x";
+            this.centerUnitInView();
           } else {
             return;
           }
@@ -1480,6 +1493,7 @@
       const startHold = () => {
         if (this.isHolding) return;
         this.isHolding = true;
+        this.centerUnitInView();
         const step = () => {
           if (!this.isHolding) return;
           if (state.tapeProgress >= 1) {
@@ -1564,6 +1578,9 @@
       this.emptyPromptEl.hidden = revealedCount > 0;
       this.cursorEl.classList.toggle("is-active", revealedCount > 0 && revealedCount < totalChars);
       this.cursorEl.style.display = revealedCount >= totalChars ? "none" : "inline-block";
+      if (this.letterSheetEl && isUserMotion && revealedCount > 0) {
+        this.letterSheetEl.scrollTop = this.letterSheetEl.scrollHeight;
+      }
 
       // Update labels
       const dict = I18N[state.lang];
@@ -1591,9 +1608,12 @@
         lamp.classList.toggle("is-lit", idx === activeDigit);
       });
 
-      // Show Stage 4 prompt once read to >= 98% with gentle fade-in
+      // Show Stage 4 prompt once read to >= 98% and hide duplicate footer museum CTA
       const wasHidden = this.completeCard.hidden;
       this.completeCard.hidden = clamped < 0.98;
+      if (this.footerHistoryBtn) {
+        this.footerHistoryBtn.hidden = !this.completeCard.hidden;
+      }
       if (wasHidden && !this.completeCard.hidden) {
         if (window.gsap && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
           window.gsap.killTweensOf(this.completeCard);
@@ -2511,7 +2531,7 @@
     // Non-nested block selectors per stage so scrolling triggers each card cleanly
     const STAGE_TRIGGER_SELECTORS = {
       compose: ".screen-banner, .input-panel, .letter-panel",
-      receive: ".screen-banner, #loop-waiting-banner, .console-top, .reader-housing, .teleprinter-frame, .loop-card, .receive-bottom-nav",
+      receive: ".screen-banner, #loop-waiting-banner, .console-top, .reader-teleprinter-unit, .loop-card, .receive-bottom-nav",
       history: ".screen-banner, .museum-photo-frame, .history-card, .museum-visit-banner"
     };
 
@@ -2531,7 +2551,7 @@
       }
       if (window.gsap) {
         const allNodes = document.querySelectorAll(
-          ".parallax-layer-slow, .parallax-layer-mid, #scroll-progress-bar, .stage-section .screen-banner, .input-panel, .letter-panel, #loop-waiting-banner, .console-top, .reader-housing, .teleprinter-frame, .loop-card, .receive-bottom-nav, .museum-photo-frame, .history-card, .museum-visit-banner, .site-footer"
+          ".parallax-layer-slow, .parallax-layer-mid, #scroll-progress-bar, .stage-section .screen-banner, .input-panel, .letter-panel, #loop-waiting-banner, .console-top, .reader-teleprinter-unit, .loop-card, .receive-bottom-nav, .museum-photo-frame, .history-card, .museum-visit-banner, .site-footer"
         );
         window.gsap.killTweensOf(allNodes);
         window.gsap.set(allNodes, { clearProps: "opacity,visibility,transform" });

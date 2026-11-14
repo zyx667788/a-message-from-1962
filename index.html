@@ -291,69 +291,76 @@
             </div>
 
             <div class="console-workspace">
-              <!-- Left Column: Paper Tape Puller + Teleprinter Letter -->
+              <!-- Left Column: Unified Paper Tape Puller + Teleprinter Letter Window -->
               <div class="reader-column">
-                <div class="reader-housing">
-                  <div class="reader-meta-bar">
-                    <span data-i18n="tapeTrackLabel">五孔油浸纸带（5-TRACK TAPE）</span>
-                    <span id="tape-percent-label" class="tape-percent">0% 已读</span>
-                  </div>
+                <div class="reader-teleprinter-unit">
+                  <div class="reader-housing">
+                    <div class="reader-meta-bar">
+                      <span data-i18n="tapeTrackLabel">五孔油浸纸带（5-TRACK TAPE）</span>
+                      <span id="tape-percent-label" class="tape-percent">0% 已读</span>
+                    </div>
 
-                  <div id="tape-viewport" class="tape-viewport">
-                    <div class="optical-head" aria-hidden="true">
-                      <span class="head-tag">READ</span>
-                      <div id="head-sensors" class="head-sensors">
-                        <span class="sensor-led"></span>
-                        <span class="sensor-led"></span>
-                        <span class="sensor-led is-sprocket"></span>
-                        <span class="sensor-led"></span>
-                        <span class="sensor-led"></span>
-                        <span class="sensor-led"></span>
+                    <div id="tape-viewport" class="tape-viewport">
+                      <div class="optical-head" aria-hidden="true">
+                        <span class="head-tag">READ</span>
+                        <div id="head-sensors" class="head-sensors">
+                          <span class="sensor-led"></span>
+                          <span class="sensor-led"></span>
+                          <span class="sensor-led is-sprocket"></span>
+                          <span class="sensor-led"></span>
+                          <span class="sensor-led"></span>
+                          <span class="sensor-led"></span>
+                        </div>
+                      </div>
+
+                      <div id="tape-ribbon" class="tape-ribbon">
+                        <div id="tape-holes-canvas-wrap" class="tape-holes-wrap">
+                          <canvas id="tape-canvas" class="tape-canvas" height="84" aria-hidden="true"></canvas>
+                        </div>
+                        <button type="button" id="tape-pull-handle" class="tape-handle" aria-label="Drag left to pull paper tape">
+                          <span class="handle-grip" aria-hidden="true">⋮⋮</span>
+                          <span class="handle-text" data-i18n="pullHandle">向左拉出</span>
+                        </button>
                       </div>
                     </div>
+                  </div>
 
-                    <div id="tape-ribbon" class="tape-ribbon">
-                      <div id="tape-holes-canvas-wrap" class="tape-holes-wrap">
-                        <canvas id="tape-canvas" class="tape-canvas" height="84" aria-hidden="true"></canvas>
+                  <!-- Directly attached Teleprinter Letter Output beneath the tape -->
+                  <div class="teleprinter-frame">
+                    <div class="teleprinter-header">
+                      <span data-i18n="decodedLetterLabel">读出的书信内容</span>
+                      <span id="char-progress-label" class="char-progress">0 / 0 字</span>
+                    </div>
+                    <div class="letter-sheet" aria-live="off">
+                      <pre id="decoded-letter-text" class="decoded-text"></pre>
+                      <span id="decoded-cursor" class="decoded-cursor" aria-hidden="true">_</span>
+                      <p id="tape-empty-prompt" class="tape-empty-prompt" data-i18n="tapeEmptyPrompt">
+                        [ 试着拉动上方的打孔纸带，展开这封等待已久的来信…… ]
+                      </p>
+                    </div>
+                  </div>
+
+                  <!-- Integrated Control Deck at bottom so thumb/controls never split tape from text -->
+                  <div class="reader-controls-dock">
+                    <div class="tape-controls-row">
+                      <label for="tape-scrubber" class="sr-only" data-i18n="scrubberAria">纸带拉动读取进度</label>
+                      <input type="range" id="tape-scrubber" class="tape-scrubber" min="0" max="1000" value="0">
+                      <div class="tape-btn-group">
+                        <button type="button" id="hold-pull-btn" class="btn-secondary btn-sm" data-i18n="holdToPull">按住持续拉动</button>
+                        <button type="button" id="reset-tape-btn" class="btn-ghost btn-sm" data-i18n="resetTape">倒回纸带</button>
                       </div>
-                      <button type="button" id="tape-pull-handle" class="tape-handle" aria-label="Drag left to pull paper tape">
-                        <span class="handle-grip" aria-hidden="true">⋮⋮</span>
-                        <span class="handle-text" data-i18n="pullHandle">向左拉出</span>
-                      </button>
                     </div>
-                  </div>
-
-                  <div class="tape-controls-row">
-                    <label for="tape-scrubber" class="sr-only" data-i18n="scrubberAria">纸带拉动读取进度</label>
-                    <input type="range" id="tape-scrubber" class="tape-scrubber" min="0" max="1000" value="0">
-                    <div class="tape-btn-group">
-                      <button type="button" id="hold-pull-btn" class="btn-secondary btn-sm" data-i18n="holdToPull">按住持续拉动</button>
-                      <button type="button" id="reset-tape-btn" class="btn-ghost btn-sm" data-i18n="resetTape">倒回纸带</button>
+                    <div class="reader-dock-footer">
+                      <p class="drag-hint" data-i18n="dragHint">
+                        向左拖拽纸带拉手（或按住「按住持续拉动」按钮），纸带走过读头时，信的内容会逐字浮现。
+                      </p>
+                      <div class="letter-compare-toggle">
+                        <button type="button" id="toggle-original-in-receive" class="link-btn" data-i18n="peekOriginal">
+                          对照寄信人的现代原文
+                        </button>
+                        <p id="receive-original-box" class="receive-original-box" hidden></p>
+                      </div>
                     </div>
-                  </div>
-                  <p class="drag-hint" data-i18n="dragHint">
-                    向左拖拽纸带拉手（或按住「按住持续拉动」按钮），纸带走过读头时，信的内容会逐字浮现。
-                  </p>
-                </div>
-
-                <!-- Teleprinter Letter Output -->
-                <div class="teleprinter-frame">
-                  <div class="teleprinter-header">
-                    <span data-i18n="decodedLetterLabel">读出的书信内容</span>
-                    <span id="char-progress-label" class="char-progress">0 / 0 字</span>
-                  </div>
-                  <div class="letter-sheet" aria-live="off">
-                    <pre id="decoded-letter-text" class="decoded-text"></pre>
-                    <span id="decoded-cursor" class="decoded-cursor" aria-hidden="true">_</span>
-                    <p id="tape-empty-prompt" class="tape-empty-prompt" data-i18n="tapeEmptyPrompt">
-                      [ 试着拉动上方的打孔纸带，展开这封等待已久的来信…… ]
-                    </p>
-                  </div>
-                  <div class="letter-compare-toggle">
-                    <button type="button" id="toggle-original-in-receive" class="link-btn" data-i18n="peekOriginal">
-                      对照寄信人的现代原文
-                    </button>
-                    <p id="receive-original-box" class="receive-original-box" hidden></p>
                   </div>
                 </div>
               </div>

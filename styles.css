@@ -68,7 +68,10 @@ body {
 .pixel-box,
 .console-body,
 .reader-column,
+.reader-teleprinter-unit,
 .reader-housing,
+.teleprinter-frame,
+.reader-controls-dock,
 .loop-column,
 .history-layout,
 .museum-photo-frame,
@@ -1195,10 +1198,17 @@ body {
   align-items: start;
 }
 
-.reader-housing {
+.reader-teleprinter-unit {
   background: var(--paper-elevated);
   border: 2px solid var(--espresso-umber);
-  padding: 14px;
+  box-shadow: var(--pixel-shadow-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+.reader-housing {
+  background: var(--paper-elevated);
+  padding: 14px 16px 12px;
 }
 
 .reader-meta-bar {
@@ -1337,8 +1347,13 @@ body {
   letter-spacing: 2px;
 }
 
+.reader-controls-dock {
+  background: var(--paper-surface);
+  border-top: 2px dashed var(--brass-ochre);
+  padding: 10px 16px 12px;
+}
+
 .tape-controls-row {
-  margin-top: 12px;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -1357,20 +1372,28 @@ body {
   gap: 8px;
 }
 
+.reader-dock-footer {
+  margin-top: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px 14px;
+  flex-wrap: wrap;
+}
+
 .drag-hint {
-  margin: 10px 0 0;
+  margin: 0;
   font-family: var(--font-mono);
-  font-size: 12.5px;
+  font-size: 12px;
   color: var(--olive-bronze);
 }
 
-/* Teleprinter Letter Output */
+/* Teleprinter Letter Output — directly coupled beneath the Paper Tape */
 
 .teleprinter-frame {
-  margin-top: 16px;
   background: var(--paper-elevated);
-  border: 2px solid var(--espresso-umber);
-  padding: 16px 18px;
+  border-top: 2px dashed var(--brass-ochre);
+  padding: 12px 16px 12px;
 }
 
 .teleprinter-header {
@@ -1380,13 +1403,16 @@ body {
   font-family: var(--font-mono);
   font-size: 11px;
   color: var(--olive-bronze);
-  padding-bottom: 10px;
-  border-bottom: 1px dashed var(--brass-ochre);
+  padding-bottom: 8px;
+  border-bottom: 1px dashed rgba(163, 150, 112, 0.55);
 }
 
 .letter-sheet {
-  min-height: 205px;
-  padding: 14px 0 10px;
+  min-height: 155px;
+  max-height: 240px;
+  overflow-y: auto;
+  padding: 10px 4px 6px 0;
+  overscroll-behavior: contain;
 }
 
 .decoded-text {
@@ -1428,8 +1454,7 @@ body {
 }
 
 .letter-compare-toggle {
-  padding-top: 10px;
-  border-top: 1px dashed var(--brass-ochre);
+  margin-left: auto;
 }
 
 .receive-original-box {
@@ -2233,36 +2258,40 @@ body {
     font-size: 13px;
   }
 
-  /* Screen 2: Mobile Receiver Console */
+  /* Screen 2: Mobile Receiver Console — unified Tape + Letter in single centered viewport */
   .loop-waiting-body {
-    padding: 10px 12px;
-    gap: 8px;
+    padding: 8px 10px;
+    gap: 6px;
   }
 
   .waiting-counter-card {
     min-width: 0;
     width: 100%;
-    padding: 8px 12px;
+    padding: 6px 10px;
   }
 
   .waiting-cycles-number {
-    font-size: 26px;
+    font-size: 22px;
   }
 
   .console-top {
-    gap: 8px;
-    margin-bottom: 10px;
-    padding-bottom: 8px;
+    gap: 6px;
+    margin-bottom: 8px;
+    padding-bottom: 6px;
   }
 
   .plate-title {
-    font-size: 20px;
+    font-size: 18px;
+  }
+
+  .plate-model {
+    display: none;
   }
 
   .decimal-strip {
     width: 100%;
     gap: 6px;
-    padding: 6px 8px;
+    padding: 5px 8px;
   }
 
   .lamp-row {
@@ -2274,21 +2303,22 @@ body {
 
   .lamp {
     width: auto;
-    height: 22px;
+    height: 20px;
     font-size: 10px;
   }
 
   .reader-housing {
-    padding: 10px;
+    padding: 8px 10px 8px;
   }
 
   .reader-meta-bar {
     font-size: 10px;
     gap: 6px;
+    margin-bottom: 6px;
   }
 
   .tape-viewport {
-    height: 104px;
+    height: 88px;
   }
 
   .tape-handle {
@@ -2297,14 +2327,39 @@ body {
     font-size: 10px;
   }
 
+  .teleprinter-frame {
+    margin-top: 0;
+    padding: 8px 10px;
+  }
+
+  .teleprinter-header {
+    padding-bottom: 5px;
+    font-size: 10px;
+  }
+
+  .letter-sheet {
+    min-height: 98px;
+    max-height: 175px;
+    padding: 6px 2px 4px 0;
+  }
+
+  .decoded-text {
+    font-size: 14px;
+    line-height: 1.58;
+  }
+
+  .reader-controls-dock {
+    padding: 8px 10px 10px;
+  }
+
   .tape-controls-row {
-    gap: 8px;
+    gap: 6px;
   }
 
   .tape-scrubber {
     flex: 1 1 100%;
     min-width: 0;
-    min-height: 28px;
+    min-height: 24px;
   }
 
   .tape-btn-group {
@@ -2317,23 +2372,23 @@ body {
   .tape-btn-group button,
   .ping-loop-btn {
     width: 100%;
-    min-height: 40px;
+    min-height: 38px;
     justify-content: center;
   }
 
-  .teleprinter-frame {
-    margin-top: 12px;
-    padding: 10px 12px;
+  .reader-dock-footer {
+    margin-top: 6px;
+    gap: 4px;
   }
 
-  .letter-sheet {
-    min-height: 72px;
-    padding: 8px 0 6px;
+  .drag-hint {
+    font-size: 11px;
+    line-height: 1.4;
   }
 
-  .decoded-text {
-    font-size: 14.5px;
-    line-height: 1.65;
+  .letter-compare-toggle {
+    margin-left: 0;
+    width: 100%;
   }
 
   .receive-bottom-nav,
