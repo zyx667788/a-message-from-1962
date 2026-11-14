@@ -125,7 +125,7 @@
       factDemoVal: "1962 Ferranti Sirius Console & 5-Track Tape",
       openVisitModal: "Full Museum & Visitor Guide",
       writeAnother: "Write Another 1962 Letter",
-      footerNote: "Building B, Foyer, Level 2, Caulfield East VIC 3145 · Vintage Oil Palette",
+      footerNote: "Building B, Foyer, Level 2, Caulfield East VIC 3145, Australia",
       dialogTitle: "Monash Museum of Computing History",
       dialogLead:
         "Situated right inside Caulfield Campus Building B Level 2 foyer, displaying Monash’s 1962 Ferranti Sirius and early calculators.",
@@ -266,7 +266,7 @@
       factDemoVal: "1962 Ferranti Sirius 全套操作台与纸带",
       openVisitModal: "查看完整地址与交通指南",
       writeAnother: "再写一封 1962 年的信",
-      footerNote: "Building B, Foyer, Level 2, Caulfield East VIC 3145 · 复古油画配色",
+      footerNote: "Building B, Foyer, Level 2, Caulfield East VIC 3145, Australia",
       dialogTitle: "莫纳什计算历史博物馆 · 参观指南",
       dialogLead:
         "展厅设在 Caulfield 校区 Building B 二楼开放大厅，免费向学生与公众开放。",
