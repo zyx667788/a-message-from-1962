@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "my-worker",
+  "name": "a-message-from-1962",
   "compatibility_date": "2026-11-13",
   "observability": {
     "enabled": true
