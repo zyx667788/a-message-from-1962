@@ -6,85 +6,69 @@
      ======================================================================== */
   const I18N = {
     en: {
-      introSkip: "Enter Directly",
-      introPhotoTag: "Real Exhibit · Building B, Level 2",
-      introExhibitBadge: "EXHIBIT: 1962 FERRANTI SIRIUS (MONASH’S FIRST COMPUTER)",
+      introSkip: "Skip",
+      introExhibitBadge: "EXHIBIT: 1962 FERRANTI SIRIUS · MONASH UNIVERSITY",
       introHeadline: "Send a 1962 Punched-Tape Letter Across Time",
       introDesc:
-        "Write a note to a friend. Inspired by the real 1962 Ferranti Sirius housed in Monash University’s Building B Level 2 foyer, your letter is punched onto 5-track paper tape and kept alive in a ceaseless acoustic delay loop until the reader pulls it free.",
-      introLocation: "Monash Museum of Computing History · Building B, Foyer, Level 2, Caulfield East VIC 3145",
+        "Write a short note to a friend. Inspired by Monash University’s 1962 Ferranti Sirius computer, your words become 5-track punched paper tape circulating nonstop until the reader pulls it free.",
+      introLocation: "Building B, Foyer, Level 2, Caulfield East VIC 3145, Australia",
       introStart: "Enter 1962 · Write a Letter",
-      brandSub: "Monash Museum · Building B, Level 2",
+      brandSub: "Ferranti Sirius · Building B Level 2",
       soundOff: "Sound: Off",
       soundOn: "Sound: On",
       replayIntro: "Replay Intro",
       composeBadge: "1962 CORRESPONDENCE DESK",
       composeHeading: "Write a note today, punch it onto 1962 paper tape",
       composeSubtitle:
-        "Choose a 1962 tone and archival postmark below—keeping your exact meaning without invented promises—while watching live 5-track paper tape punch in real time.",
+        "Write your note or pick a quick prompt—once punched, pull the paper tape yourself to read it, or share the link.",
       jumpToReceiver: "Go to Receiver →",
-      learnExhibit: "Learn More: 7 Museum Photos →",
-      livePunchLabel: "LIVE 5-TRACK PAPER TAPE PUNCH PREVIEW",
+      learnExhibit: "Real 1962 Exhibit →",
+      livePunchLabel: "LIVE 5-TRACK PAPER TAPE PUNCH",
       labelTo: "To",
       labelFrom: "From",
-      placeholderTo: "My Friend",
-      placeholderFrom: "Alex",
+      placeholderTo: "Clara",
+      placeholderFrom: "Sam",
       labelMessage: "Your note to a friend",
       placeholderMessage: "Write a short message you would send to a friend today...",
       samplesLabel: "Quick prompts:",
       sample1Label: "Friday café",
       sample2Label: "Late lab report",
       sample3Label: "Meet at Building B",
-      toneModeLabel: "1962 Tone",
-      toneGentle: "Gentle Letter",
-      toneLab: "Lab Cable",
-      tonePostcard: "Time Postcard",
-      stampLabel: "Archival Postmark",
-      originalEchoLabel: "Original Text Snapshot",
-      resetDraft: "Reset to auto-draft",
+      composePullHint:
+        "Tip: After encoding, click \"Go to Receiver\" to pull the 5-track paper tape out yourself—or share the link with a friend.",
+      resetDraft: "Reset draft",
       editedBadge: "Edited",
       labelRewritten: "1962 rewritten letter",
-      toneFootnote:
-        "Compare your modern note with the 1962 adaptation and edit any word freely before punching.",
-      confirmEncode: "Confirm & Encode to Punched Tape",
-      dispatchReady: "5-track punched tape encoded—circulating in acoustic memory and ready to share.",
-      openAsRecipient: "Go to Receiver (Pull Tape to Read) →",
-      copyShareLink: "Copy Shareable Recipient Link",
-      openIgCardBtn: "Save IG Story Letter Card",
-      learnMoreSirius: "Explore the 7 Real Museum Photos →",
+      confirmEncode: "Confirm & Punch onto 1962 Tape",
+      dispatchReady: "Encoded onto 5-track tape—now pull the tape free yourself or share the link.",
+      openAsRecipient: "Go to Receiver (Pull Tape Yourself) →",
+      copyShareLink: "Copy Recipient Link",
+      openIgCardBtn: "Save Story Card",
+      learnMoreSirius: "Explore the Real 1962 Sirius →",
       copiedOk: "Link copied to clipboard",
       copiedFallback: "Link ready—copy from field",
-      realExhibitTag: "ON DISPLAY IN CAULFIELD · BUILDING B LEVEL 2",
-      composeExhibitTitle: "The real computer behind this site sits inside Monash University’s Caulfield Campus",
-      composeExhibitDesc:
-        "Donated to Monash University in 1962, this Ferranti Sirius transistor computer used 5-track punched tape and nickel acoustic delay lines. Its original desk console, brown leather chair, and cabinets still stand in Building B, Foyer, Level 2.",
-      viewAllSevenPhotos: "Explore 7 Museum Photos & Hardware Pins →",
       receiveBadge: "1962 PAPER TAPE RECEIVER",
       receiveHeading: "Pull the tape to read the message",
-      apparatusDisclaimer:
-        "A contemporary interactive apparatus inspired by the 1962 Ferranti Sirius at Monash University — built to let you feel the contrast between reading tape and circulating memory.",
       backToWrite: "← Back to Write Desk",
       liveLoopTag: "● LOOPING ENDLESSLY",
-      waitingCountLabel: "CIRCULATED BEFORE YOU ARRIVED",
+      waitingCountLabel: "CIRCULATED WHILE WAITING",
       waitingUnit: "cycles",
-      waitingTimeLabel: "KEEPING MEMORY ALIVE",
-      waitingHeadline: "Before you pulled the tape, this letter had already raced tens of thousands of loops waiting for you",
+      waitingTimeLabel: "Elapsed in coil:",
+      waitingHeadline: "No static disk in 1962—this letter kept circling as sound until you opened it",
       waitingDesc:
-        "Today's messages rest quietly inside solid-state drives or cloud servers. In 1962, the Ferranti Sirius had no static disk: to keep this letter from vanishing, it had to travel nonstop as acoustic ripples through a nickel wire coil until you opened it.",
+        "To stay alive, every bit had to loop endlessly as acoustic pulses through a nickel wire coil.",
       consoleSub: "OPTICAL PAPER TAPE INPUT & ACOUSTIC DELAY LOOP",
       tapeTrackLabel: "5-TRACK OILED PAPER TAPE",
       pullHandle: "PULL",
       scrubberAria: "Paper tape reading progress",
       holdToPull: "Hold to Pull",
       resetTape: "Rewind",
-      dragHint:
-        "Drag the paper tape leftward out of the slot—or press and hold “Hold to Pull”—to feed characters into memory.",
+      dragHint: "Drag left or hold “Hold to Pull” to read each character from the tape.",
       decodedLetterLabel: "DECODED CORRESPONDENCE",
-      tapeEmptyPrompt:
-        "[ Pull the paper tape above to reveal the message waiting inside... ]",
-      peekOriginal: "Compare with sender's original note",
-      hideOriginal: "Hide sender's original note",
-      loopTitle: "How the machine keeps your letter alive",
+      tapeEmptyPrompt: "[ Pull the paper tape above to reveal the letter... ]",
+      peekOriginal: "Compare with original note",
+      hideOriginal: "Hide original note",
+      loopTitle: "How the machine remembers your letter",
       pauseLoop: "Pause",
       resumeLoop: "Resume",
       procReadingName: "1. Reading Tape",
@@ -97,20 +81,20 @@
       statusCirculating: "Circulating",
       statusLoopStopped: "Display Paused",
       pingLoopBtn: "Ping Delay Loop (+Acoustic Echo)",
-      pauseCalloutTitle: "Tape stopped — memory still circulating",
+      pauseCalloutTitle: "Tape stopped — memory still circling",
       pauseCalloutBody:
-        "You stopped pulling the paper tape, so reading has paused. Yet the information already read keeps circulating inside the machine to remain stored. Reading and storing are two separate processes.",
-      simCycleLabel: "Additional Loops Since Opening",
+        "Reading paused when you stopped pulling, but decoded bits stay alive inside the acoustic coil.",
+      simCycleLabel: "Loops Since Opening",
       simDisclaimer:
-        "Note: This counter illustrates continuous acoustic delay-line recirculation—it does not represent the exact kHz clock speed of the original Ferranti Sirius.",
+        "Illustrative delay-line loop counter (not exact original kHz clock speed).",
       completePrompt:
-        "Every character of the 1962 message has arrived. Now inspect all 7 real photographs of the Ferranti Sirius inside Monash University.",
-      meetRealSirius: "Explore the 7 Museum Photos & Hardware Pins →",
+        "Every character has arrived. Inspect the 7 real Monash Museum photos next.",
+      meetRealSirius: "Explore the 7 Museum Photos →",
       writeReplyLetter: "← Write a 1962 Letter",
       historyBadge: "MONASH MUSEUM OF COMPUTING HISTORY · 1962",
       historyHeading: "The Real Ferranti Sirius (Building B, Level 2)",
       historySubtitle:
-        "Walk inside Monash University Caulfield Campus: inspect 7 real collection photographs, click the hardware pins on the 1962 console, and trace how memory traveled as sound.",
+        "Inspect 7 real photos from Monash University Caulfield Campus and click numbered pins to explore hardware details.",
       backToReceive: "← Back to Tape Receiver",
       thumb0Label: "01 Sirius Console Desk",
       thumb1Label: "02 Console Closeup",
@@ -122,43 +106,42 @@
       uploadPhotoBtn: "Load Local Exhibition Photo",
       histCard1Title: "Monash University's First Computer (1962)",
       histCard1Body:
-        "Installed at Monash in 1962, the transistorized Ferranti Sirius replaced fragile vacuum tubes and plugged into ordinary campus mains electricity—becoming a generation of students' first direct encounter with digital computing.",
+        "Transistorized instead of vacuum-tube based, Sirius plugged into standard campus power at Monash in 1962.",
       histCard2Title: "Why 5-Track Punched Paper Tape?",
       histCard2Body:
-        "In 1962, you did not type directly into live screen editors. Programs and messages were punched as 5-hole patterns onto oiled paper strips via teleprinter, then read optically into the Sirius console.",
+        "Messages and code were punched offline as 5-hole strips on a teleprinter, then read optically into Sirius.",
       histCard3Title: "Saving Data as Traveling Echoes",
       histCard3Body:
-        "Instead of magnetic core memory, the Sirius sent acoustic torsion pulses endlessly around coiled nickel wires. Stop circulating, and every letter inside would vanish immediately.",
+        "Nickel magnetostrictive delay lines kept data circling endlessly as acoustic ripples—stop circulating, and memory vanishes.",
       visitKicker: "Monash Museum of Computing History · Caulfield Campus",
       visitHeadline: "Visit the surviving 1962 Ferranti Sirius in person",
       visitDesc:
-        "Located in Building B, Foyer, Level 2, Caulfield East VIC 3145, Australia—inspect the actual blue-grey console, transistor delay-line cabinets, and neighboring computing artifacts.",
+        "Building B, Foyer, Level 2, Caulfield East VIC 3145, Australia — open freely during campus hours.",
       factLocationLabel: "Address",
       factLocationVal: "Building B, Foyer, Level 2, Caulfield East VIC 3145",
       factHoursLabel: "Access",
-      factHoursVal: "Mon – Fri · Building B Campus Hours (Free)",
+      factHoursVal: "Mon – Fri · Campus Hours (Free)",
       factDemoLabel: "Core Exhibit",
-      factDemoVal: "1962 Ferranti Sirius Console & 5-Track Paper Tape",
+      factDemoVal: "1962 Ferranti Sirius Console & 5-Track Tape",
       openVisitModal: "Full Museum & Visitor Guide",
       writeAnother: "Write Another 1962 Letter",
       footerNote: "Building B, Foyer, Level 2, Caulfield East VIC 3145 · Vintage Oil Palette",
       dialogTitle: "Monash Museum of Computing History",
       dialogLead:
-        "Housed inside an open university foyer at Caulfield Campus, the museum preserves Monash University’s 1962 Ferranti Sirius alongside mechanical calculators and four decades of digital evolution.",
+        "Situated right inside Caulfield Campus Building B Level 2 foyer, displaying Monash’s 1962 Ferranti Sirius and early calculators.",
       dlgLocationDt: "Museum Address",
       dlgLocationDd: "Building B, Foyer, Level 2, Caulfield East VIC 3145, Australia",
       dlgExhibitDt: "Highlight Exhibit",
       dlgExhibitDd:
-        "1962 Ferranti Sirius L-shaped console desk, original leather chair, open nickel delay-line cabinet & 5-track paper tape reader",
+        "1962 Ferranti Sirius console desk, leather chair, nickel delay-line cabinet & 5-track paper tape",
       dlgAdmissionDt: "Admission & Hours",
-      dlgAdmissionDd:
-        "Free open access during Monash Caulfield Building B foyer hours; ideal for students, drop-in visitors, and exhibition classes",
+      dlgAdmissionDd: "Free open access during Monash Caulfield Building B foyer hours.",
       dlgTransitDt: "Getting There",
-      dlgTransitDd: "Directly beside Caulfield Railway Station (Frankston / Cranbourne / Pakenham lines), Building B Level 2 Foyer",
-      dialogDone: "Back to Online Exhibition",
+      dlgTransitDd: "Steps from Caulfield Railway Station, Building B Level 2 Foyer.",
+      dialogDone: "Back to Exhibition",
       igDialogTitle: "Your 1962 Slow-Mail Share Card",
       igDialogDesc:
-        "Save this 9:16 portrait card stamped with your 1962 postmark, punched-tape excerpt, and Monash Museum address—ready for Instagram Story, Moments, or Xiaohongshu.",
+        "Save this 9:16 portrait card featuring Monash Sirius hardware, punched tape, and museum address.",
       downloadIgCardBtn: "Download PNG Story Card",
       closeIgCardBtn: "Close",
       charsSuffix: "chars",
@@ -166,12 +149,11 @@
     },
     zh: {
       introSkip: "直接进入",
-      introPhotoTag: "馆藏实拍 · Building B 二楼大厅",
-      introExhibitBadge: "馆藏展品：1962 FERRANTI SIRIUS（Monash 第一台计算机）",
+      introExhibitBadge: "馆藏展品：1962 FERRANTI SIRIUS · 莫纳什大学",
       introHeadline: "寄出一封穿越 1962 年的打孔纸带信",
       introDesc:
-        "写一段话给朋友，由陈列在莫纳什大学 Caulfield 校区 Building B 二楼的 1962 年 Ferranti Sirius 晶体管计算机将其编码为五孔纸带，并在镍金属丝声波回路里日夜循环保存，等待收信人亲手拉出破译。",
-      introLocation: "Monash Museum of Computing History · Building B, Foyer, Level 2, Caulfield East VIC 3145",
+        "写一段话给朋友，由莫纳什大学 Building B 二楼馆藏 1962 年 Ferranti Sirius 计算机编为五孔纸带，在声波回路里日夜循环保存，等待拉出破译。",
+      introLocation: "Building B, Foyer, Level 2, Caulfield East VIC 3145, Australia",
       introStart: "进入 1962 年 · 开始写信",
       brandSub: "Monash 博物馆 · Building B Level 2",
       soundOff: "机械音：关",
@@ -180,68 +162,55 @@
       composeBadge: "1962 写信台 · 线上互动体验",
       composeHeading: "写下一句话，交由 1962 年的打孔纸带寄出",
       composeSubtitle:
-        "挑选 1962 书信口吻与档案邮戳印章，系统在严格保留你原意的前提下改写书信稿，并在下方实时打出五孔光电纸带；可生成收信链接或保存 9:16 分享卡片。",
+        "写下你的留言或点选快速灵感——编码后可以自己拉动纸带体验破译，也可以生成链接发给朋友。",
       jumpToReceiver: "前往收信机 →",
-      learnExhibit: "了解更多：7 张馆藏实拍 →",
-      livePunchLabel: "实时五孔纸带打孔预览",
+      learnExhibit: "7 张馆藏实拍 →",
+      livePunchLabel: "实时五孔纸带打孔",
       labelTo: "收信人",
       labelFrom: "署名",
-      placeholderTo: "挚友",
-      placeholderFrom: "小陈",
+      placeholderTo: "林同学",
+      placeholderFrom: "阿哲",
       labelMessage: "想对朋友说的话",
       placeholderMessage: "输入一段今天想发给朋友的话……",
-      samplesLabel: "示例灵感：",
+      samplesLabel: "Quick prompts：",
       sample1Label: "周五大课后",
       sample2Label: "赶实验报告",
       sample3Label: "约看 Building B 真机",
-      toneModeLabel: "1962 书信口吻",
-      toneGentle: "温柔书简",
-      toneLab: "实验室电报",
-      tonePostcard: "时空慢递卡",
-      stampLabel: "盖章邮戳",
-      originalEchoLabel: "原文对照",
+      composePullHint:
+        "提示：确认编码后，点「前往收信机」即可亲自向左拉动五孔纸带读信，也可复制链接发给朋友。",
       resetDraft: "恢复自动改写",
-      editedBadge: "已手动微调",
-      labelRewritten: "1962 年代感书信稿",
-      toneFootnote: "可自由切换书信口吻并直接修改上方任意一句，确认后再编码为打孔纸带。",
-      confirmEncode: "确认信件并编码为打孔纸带",
-      dispatchReady: "五单位打孔纸带已生成，正送入声波延迟线循环保存，可前往收信、复制链接或导出 IG 慢递卡片。",
-      openAsRecipient: "前往收信机（亲手拉出纸带读信）→",
+      editedBadge: "已微调",
+      labelRewritten: "1962 书信稿",
+      confirmEncode: "确认并编码为 1962 打孔纸带",
+      dispatchReady: "纸带已打孔送入声波循环——现在你可以亲自去拉动纸带，或分享链接。",
+      openAsRecipient: "前往收信机（自己拉纸带看）→",
       copyShareLink: "复制收信链接发给朋友",
-      openIgCardBtn: "生成 IG Story 分享图卡",
-      learnMoreSirius: "浏览 7 张莫纳什馆藏实拍档案 →",
+      openIgCardBtn: "生成 9:16 分享卡片",
+      learnMoreSirius: "参观 7 张莫纳什真机档案 →",
       copiedOk: "链接已复制到剪贴板",
       copiedFallback: "链接已生成，请手动复制",
-      realExhibitTag: "真实展品所在地 · CAULFIELD BUILDING B二楼",
-      composeExhibitTitle: "这台机器此刻就静静陈列在莫纳什大学 Caulfield 校区",
-      composeExhibitDesc:
-        "1962 年入驻莫纳什大学的 Ferranti Sirius 晶体管计算机，靠五孔纸带读入、靠镍丝声波回路留存记忆。它的原装操作桌、棕色皮椅与存储机柜，今天仍完整陈列在 Building B 二楼大堂。",
-      viewAllSevenPhotos: "查看 7 张馆藏实拍与机台细节标注 →",
-      receiveBadge: "纸带收信台 · 逐字破译",
-      receiveHeading: "拉动打孔纸带，让 1962 年的信慢慢显现",
-      apparatusDisclaimer:
-        "这是一台专为本次展览设计的当代互动装置，灵感源自莫纳什大学馆藏的 1962 年 Ferranti Sirius 晶体管计算机，帮助你感受“读取纸带”与“声波循环记忆”的不同。",
+      receiveBadge: "1962 纸带收信台",
+      receiveHeading: "拉动打孔纸带，让信慢慢显现",
       backToWrite: "← 返回写信台",
       liveLoopTag: "● 持续循环中",
-      waitingCountLabel: "等待收信期间已持续循环",
+      waitingCountLabel: "等待期间已循环",
       waitingUnit: "次",
-      waitingTimeLabel: "持续守候保存计时",
-      waitingHeadline: "在你还没点开这封信时，它已经在镍金属丝里不停奔跑了上万圈",
+      waitingTimeLabel: "在线圈中守候",
+      waitingHeadline: "1962 年没有静态硬盘——在你打开前，它靠金属丝声波回荡保持记忆",
       waitingDesc:
-        "今天的微信、邮件会安静地躺在硬盘或云服务器里等你查看；但 1962 年的 Ferranti Sirius 没有静态硬盘——为了不让这封信消失，机器只能把它化作一串机械声波脉冲，沿着镍丝线圈永不停止地循环回荡。只要循环不断，记忆就在。",
-      consoleSub: "五孔光电纸带读入器 · 声学延迟线循环示意",
+        "为防止信息消失，已打孔的内容必须化作声波脉冲在镍丝线圈里永不停止地循环。",
+      consoleSub: "五孔光电读带器 · 声学延迟线示意",
       tapeTrackLabel: "五孔油浸纸带（5-TRACK TAPE）",
       pullHandle: "向左拉出",
       scrubberAria: "纸带拉动读取进度",
       holdToPull: "按住持续拉动",
       resetTape: "倒回纸带",
-      dragHint:
-        "向左拖拽纸带拉手（或按住「按住持续拉动」按钮），纸带走过读头时，信的内容会逐字浮现。",
+      dragHint: "向左拖拽拉手（或按住「按住持续拉动」）逐字读出。",
       decodedLetterLabel: "读出的书信内容",
-      tapeEmptyPrompt: "[ 试着拉动上方的打孔纸带，展开这封等待已久的来信…… ]",
-      peekOriginal: "对照寄信人的现代原文",
-      hideOriginal: "收起现代原文",
-      loopTitle: "机器内部是如何“记住”这封信的",
+      tapeEmptyPrompt: "[ 拉动上方打孔纸带，展开这封来信…… ]",
+      peekOriginal: "对照现代原文",
+      hideOriginal: "收起原文",
+      loopTitle: "机器内部是如何记住这封信的",
       pauseLoop: "暂停示意",
       resumeLoop: "继续示意",
       procReadingName: "1. 读取纸带信息",
@@ -253,20 +222,20 @@
       statusLoopStandby: "待机循环保存中",
       statusCirculating: "持续循环中",
       statusLoopStopped: "示意已暂停",
-      pingLoopBtn: "拨动镍丝（听一声回响 / Ping Delay Loop）",
-      pauseCalloutTitle: "纸带停下了——内部循环仍在继续",
+      pingLoopBtn: "拨动镍丝（听回响 / Ping Loop）",
+      pauseCalloutTitle: "纸带停下——循环仍在继续",
       pauseCalloutBody:
-        "你停下了拉纸带的动作，「读取信息」随之暂停；但已经读入机器的信息仍在内部不断循环以保持记忆。「读取」和「保存」是两个不同的过程。",
+        "松手后读取暂停，但已读入的字符仍在金属丝线圈内持续循环保存。",
       simCycleLabel: "本次读取后循环圈数",
       simDisclaimer:
-        "说明：此处显示的循环次数仅用于帮助理解声波循环概念，并非 Ferranti Sirius 原机的真实运行速度或测量数据。",
-      completePrompt: "这封来自 1962 年的信已经读完。现在，点击查看莫纳什大学大楼里真实的 7 张博物馆照片吧。",
-      meetRealSirius: "前往第三屏：看 7 张莫纳什馆藏实拍 →",
-      writeReplyLetter: "← 我也写一封 1962 年的信",
+        "说明：仅作声波循环工作原理示意，非原机实际主频测量。",
+      completePrompt: "这封来自 1962 年的信已全部读出，接着看看莫纳什大学大楼里的真实展品吧。",
+      meetRealSirius: "查看 7 张莫纳什馆藏实拍 →",
+      writeReplyLetter: "← 我也写一封 1962 的信",
       historyBadge: "MONASH MUSEUM OF COMPUTING HISTORY · 1962",
-      historyHeading: "真实的 Ferranti Sirius 与莫纳什展厅（7 张实拍档案）",
+      historyHeading: "真实的 Ferranti Sirius（Building B 二楼）",
       historySubtitle:
-        "无需预约专门场馆，这台 1962 年的计算机就在墨尔本莫纳什大学 Caulfield 校区 Building B 二楼开放走廊里。点击照片上的圆点，拆解机台上的每个时代细节。",
+        "这台 1962 年的计算机正陈列在莫纳什大学 Caulfield 校区 Building B 二楼开放大堂，点击图片热点查看真机细节。",
       backToReceive: "← 返回纸带收信机",
       thumb0Label: "01 Sirius 操作台",
       thumb1Label: "02 控制台特写",
@@ -275,45 +244,45 @@
       thumb4Label: "05 数字演进展区",
       thumb5Label: "06 早期机械计算器",
       thumb6Label: "07 馆内参观实景",
-      uploadPhotoBtn: "上传本地展厅照片预览",
+      uploadPhotoBtn: "上传本地照片预览",
       histCard1Title: "不用空调机房的晶体管计算机",
       histCard1Body:
-        "Ferranti Sirius 于 1962 年落户莫纳什大学。它用晶体管取代了耗电发热的真空管，插上普通校园市电就能运转，让当年师生第一次把电脑搬进了日常工作间。",
+        "1962 年入驻莫纳什大学，用晶体管替代电子管，插上普通校园电源即可运行。",
       histCard2Title: "为什么要用五孔打孔纸带？",
       histCard2Body:
-        "在 1962 年，人们还不能直接在屏幕上实时编辑文字。消息与程序会先在电传打字机上打成五孔带孔纸带，再送入 Sirius 的光电读带机，由光线透过小孔逐列辨认字符。",
-      histCard3Title: "靠“声音回声”把信息留在机器里",
+        "信件与程序需先在电传打字机上离线打出五孔纸带，再送入光电读带机逐列识别。",
+      histCard3Title: "靠“声音回声”留下记忆",
       histCard3Body:
-        "Sirius 采用镍磁致伸缩声学延迟线作为内部记忆：把电信号变成细微的机械脉冲，在盘绕的镍丝线圈里一圈圈循环传播，只要循环不断，记忆就不会消失。",
+        "Sirius 依靠镍磁致伸缩声学延迟线循环保存数据：只要脉冲不断在金属丝中传播，信息就不会消失。",
       visitKicker: "Monash Museum of Computing History · Caulfield Campus",
-      visitHeadline: "欢迎来莫纳什大学 Caulfield 校区亲眼看看 Sirius 实物",
+      visitHeadline: "欢迎来 Caulfield 校区亲眼看看 Sirius 真机",
       visitDesc:
-        "位于 Building B, Foyer, Level 2, Caulfield East VIC 3145, Australia（澳大利亚墨尔本莫纳什大学考菲尔德校区 B 栋二楼大堂），对在校学生与访客常年免费开放。",
+        "地址：Building B, Foyer, Level 2, Caulfield East VIC 3145, Australia，教学楼开放时段免费参观。",
       factLocationLabel: "准确馆址",
       factLocationVal: "Building B, Foyer, Level 2, Caulfield East VIC 3145",
       factHoursLabel: "开放方式",
-      factHoursVal: "周一至周五教学楼开放时段 · 免费参观",
+      factHoursVal: "周一至周五教学楼时段 · 免费",
       factDemoLabel: "核心馆藏",
-      factDemoVal: "1962 Ferranti Sirius 全套操作台与五孔纸带机",
-      openVisitModal: "查看博物馆地址与参观交通指南",
+      factDemoVal: "1962 Ferranti Sirius 全套操作台与纸带",
+      openVisitModal: "查看完整地址与交通指南",
       writeAnother: "再写一封 1962 年的信",
-      footerNote: "Building B, Foyer, Level 2, Caulfield East VIC 3145 · 复古油画展陈配色",
+      footerNote: "Building B, Foyer, Level 2, Caulfield East VIC 3145 · 复古油画配色",
       dialogTitle: "莫纳什计算历史博物馆 · 参观指南",
       dialogLead:
-        "这座展厅并没有藏在高门槛展馆深处，而是直接设在莫纳什大学 Caulfield 校区教学楼大厅二层——下课路过就能与 1962 年的打孔纸带历史面对面。",
+        "展厅设在 Caulfield 校区 Building B 二楼开放大厅，免费向学生与公众开放。",
       dlgLocationDt: "博物馆精确地址",
       dlgLocationDd: "Building B, Foyer, Level 2, Caulfield East VIC 3145, Australia",
-      dlgExhibitDt: "核心馆藏实物",
-      dlgExhibitDd: "1962 年 Ferranti Sirius 蓝灰色 L 型控制台、原装棕色皮椅、镍声波延迟线晶体管机柜与早期机械计算器展柜",
-      dlgAdmissionDt: "门票与参观时段",
-      dlgAdmissionDd: "常年免费免预约开放（Building B 校园大堂开放时间即可自由驻足观看）",
-      dlgTransitDt: "交通路线指引",
-      dlgTransitDd: "墨尔本城铁 Caulfield Station 下车步行约 3 分钟即达 Monash Caulfield 校区 Building B，乘扶梯或楼梯至二楼（Level 2）大堂",
+      dlgExhibitDt: "核心馆藏",
+      dlgExhibitDd: "1962 Ferranti Sirius 操作台、原装皮椅、延迟线机柜与早期计算器",
+      dlgAdmissionDt: "参观方式",
+      dlgAdmissionDd: "免费免预约（Building B 开放时间均可自由参观）",
+      dlgTransitDt: "交通路线",
+      dlgTransitDd: "Caulfield Station 下车步行 3 分钟即达 Building B，上二楼大堂。",
       dialogDone: "返回线上展览",
-      igDialogTitle: "你的 1962 慢递信件分享图卡",
+      igDialogTitle: "你的 1962 慢递信件卡片",
       igDialogDesc:
-        "点击下方按钮保存这张 9:16 竖版纪念卡——带有你选择的档案邮戳、五孔纸带纹样与莫纳什博物馆地址，可直接分享到 Instagram Story、朋友圈或小红书。",
-      downloadIgCardBtn: "下载 PNG 纪念卡片",
+        "点击保存 9:16 纪念图卡，带有莫纳什馆藏图、五孔纸带纹样与博物馆地址。",
+      downloadIgCardBtn: "下载 PNG 卡片",
       closeIgCardBtn: "关闭",
       charsSuffix: "字",
       readSuffix: "已读"
@@ -360,15 +329,16 @@
   ];
 
   /* ========================================================================
-     2. Shared State (Preserved across EN <-> 中文 switches)
+     2. Shared State (English Default + Bilingual Sample Sync)
      ======================================================================== */
   const state = {
-    lang: "zh",
+    lang: "en",
     stage: "compose", // 'compose' | 'receive' | 'history'
-    sender: SAMPLES[0].zh.from,
-    recipient: SAMPLES[0].zh.to,
-    rawInput: SAMPLES[0].zh.text,
-    tone: "gentle", // 'gentle' | 'lab' | 'postcard'
+    sender: SAMPLES[0].en.from,
+    recipient: SAMPLES[0].en.to,
+    rawInput: SAMPLES[0].en.text,
+    activeSampleIdx: 0,
+    tone: "gentle",
     stamp: "MONASH SIRIUS · 1962",
     activePhotoIdx: 0,
     activeHotspotIdx: 0,
@@ -386,6 +356,41 @@
     soundEnabled: true,
     hasSharedArrival: false
   };
+
+  function syncKnownFieldsForLanguage(nextLang) {
+    let changed = false;
+    SAMPLES.forEach((pair) => {
+      if (state.recipient === pair.en.to || state.recipient === pair.zh.to) {
+        const mapped = pair[nextLang].to;
+        if (state.recipient !== mapped) {
+          state.recipient = mapped;
+          changed = true;
+        }
+      }
+      if (state.sender === pair.en.from || state.sender === pair.zh.from) {
+        const mapped = pair[nextLang].from;
+        if (state.sender !== mapped) {
+          state.sender = mapped;
+          changed = true;
+        }
+      }
+      if (state.rawInput === pair.en.text || state.rawInput === pair.zh.text) {
+        const mapped = pair[nextLang].text;
+        if (state.rawInput !== mapped) {
+          state.rawInput = mapped;
+          changed = true;
+        }
+      }
+    });
+    if (changed) {
+      if (!state.isCustomEditedEn) {
+        state.letterEn = buildLetter1962(state.rawInput, state.sender, state.recipient, "en", state.tone);
+      }
+      if (!state.isCustomEditedZh) {
+        state.letterZh = buildLetter1962(state.rawInput, state.sender, state.recipient, "zh", state.tone);
+      }
+    }
+  }
 
   /* ========================================================================
      3. 1962 Epistolary Rewrite Engine (Strict Fidelity, Zero Invented Facts)
@@ -2287,12 +2292,13 @@
       rawMessageInput.placeholder = dict.placeholderMessage;
       soundToggleLabel.textContent = state.soundEnabled ? dict.soundOn : dict.soundOff;
 
-      // Preserve user's entered & edited content across language switches!
+      // Preserve user's entered & edited content across language switches, while syncing known sample names/prompts!
+      syncKnownFieldsForLanguage(nextLang);
       recipientInput.value = state.recipient;
       senderInput.value = state.sender;
       rawMessageInput.value = state.rawInput;
       rawCharCount.textContent = String(state.rawInput.length);
-      originalPreview.textContent = state.rawInput || "—";
+      if (originalPreview) originalPreview.textContent = state.rawInput || "—";
 
       rewrittenLetterInput.value = getActiveLetterText();
       const isEdited = nextLang === "zh" ? state.isCustomEditedZh : state.isCustomEditedEn;
@@ -2382,7 +2388,7 @@
       state.sender = senderInput.value;
       state.rawInput = rawMessageInput.value;
       rawCharCount.textContent = String(state.rawInput.length);
-      originalPreview.textContent = state.rawInput || "—";
+      if (originalPreview) originalPreview.textContent = state.rawInput || "—";
       receiveOriginalBox.textContent = state.rawInput;
 
       syncDraftsFromRaw();
