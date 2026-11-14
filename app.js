@@ -113,7 +113,7 @@
       factDemoVal: "Daily at 14:30",
       openVisitModal: "Museum & Visitor Guide",
       writeAnother: "Write Another 1962 Letter",
-      footerNote: "Built with GSAP · Bilingual archival prototype ready for Netlify",
+      footerNote: "Gallery 3 · Early Transistor & Office Computing",
       dialogTitle: "Visiting the Ferranti Sirius Exhibition",
       dialogClose: "Close ×",
       dialogLead:
@@ -237,7 +237,7 @@
       factDemoVal: "每日 14:30 现场演示",
       openVisitModal: "查看博物馆与参观信息",
       writeAnother: "再写一封 1962 年的信",
-      footerNote: "基于 GSAP 构建 · 支持中英双语状态保留 · 可直接部署至 Netlify",
+      footerNote: "三号展厅 · 早期晶体管与办公计算",
       dialogTitle: "Ferranti Sirius 馆藏展区参观指南",
       dialogClose: "关闭 ×",
       dialogLead:
