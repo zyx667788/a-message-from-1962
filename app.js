@@ -15,13 +15,14 @@
       soundOn: "Sound: On",
       replayIntro: "Intro",
       heroBadge: "Museum Web Exhibition",
-      heroTitle: "A Message from 1962?",
+      heroTitle: "< A Message from 1962? >",
       heroLead:
         "Write a short note to a friend, translate its voice to the early 1960s, and send it through a punched-tape machine inspired by the Ferranti Sirius.",
       sharedTitle: "A 1962 tape has arrived for you.",
       sharedDesc:
-        "Someone encoded a message via the Ferranti Sirius exhibition. Open the receiver to pull the paper tape and read it.",
-      sharedAction: "Open Receiver",
+        "Someone encoded a message via the Ferranti Sirius exhibition. Pull the paper tape below to read it.",
+      sharedAction: "Jump to Tape Reader",
+      consoleSub: "OPTICAL PAPER TAPE INPUT & ACOUSTIC DELAY LOOP",
       step1Tag: "Part I · Correspondence Desk",
       composeHeading: "Write a note, hear it in 1962",
       composeSubtitle:
@@ -142,13 +143,14 @@
       soundOn: "机械音：开",
       replayIntro: "重播开屏",
       heroBadge: "计算机历史博物馆 · 线上互动展",
-      heroTitle: "A Message from 1962?",
+      heroTitle: "< A Message from 1962? >",
       heroLead:
         "写一小段想对朋友说的话，把它变成一封 1960 年代语气的书信，再通过一台受 Ferranti Sirius 启发的互动机器把它拉出并读完。",
       sharedTitle: "你收到了一卷来自 1962 年的打孔纸带。",
       sharedDesc:
-        "有朋友通过 Ferranti Sirius 展览给你编码了一封信。切换到收信视角，亲手拉动纸带读信吧。",
-      sharedAction: "进入收信视角",
+        "有朋友通过 Ferranti Sirius 展览给你编码了一封信。直接拉动下方纸带即可逐字读信。",
+      sharedAction: "定位到读信纸带",
+      consoleSub: "五孔光电纸带读入器 · 声学延迟线循环示意",
       step1Tag: "第一幕 · 写信台",
       composeHeading: "写下一句话，换个年代寄出",
       composeSubtitle:
@@ -484,7 +486,11 @@
 
   function tryLoadSharePayload() {
     const params = new URLSearchParams(window.location.search);
-    const raw = params.get("msg");
+    let raw = params.get("msg");
+    if (!raw && window.location.hash && window.location.hash.includes("msg=")) {
+      const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+      raw = hashParams.get("msg");
+    }
     if (!raw) return false;
     try {
       let b64 = raw.replace(/-/g, "+").replace(/_/g, "/");
@@ -1297,50 +1303,43 @@
 
       ctx.clearRect(0, 0, w, h);
 
-      // Subtle architectural grid axes (Reference 3 minimal linework)
-      ctx.strokeStyle = "rgba(184, 177, 162, 0.35)";
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.moveTo(24, cy);
-      ctx.lineTo(w - 24, cy);
-      ctx.moveTo(cx, 18);
-      ctx.lineTo(cx, h - 18);
-      ctx.stroke();
+      // Stepped pixel grid axes
+      ctx.fillStyle = "rgba(38, 78, 54, 0.14)";
+      for (let x = 24; x <= w - 24; x += 8) {
+        ctx.fillRect(x, cy, 2, 2);
+      }
+      for (let y = 18; y <= h - 18; y += 8) {
+        ctx.fillRect(cx, y, 2, 2);
+      }
 
-      // Nickel delay-line coil track (double thin rings)
-      ctx.strokeStyle = hasData ? "#264E36" : "#CFC9BC";
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
-      ctx.stroke();
+      // Nickel delay-line pixel coil track
+      const stepCount = 56;
+      for (let s = 0; s < stepCount; s += 1) {
+        const a = (s / stepCount) * Math.PI * 2;
+        const px = Math.round((cx + Math.cos(a) * rx) / 3) * 3;
+        const py = Math.round((cy + Math.sin(a) * ry) / 3) * 3;
+        ctx.fillStyle = hasData ? "rgba(38, 78, 54, 0.55)" : "#C7C1B2";
+        ctx.fillRect(px - 1, py - 1, 3, 3);
+      }
 
-      ctx.strokeStyle = "rgba(38, 78, 54, 0.22)";
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.ellipse(cx, cy, rx - 9, ry - 9, 0, 0, Math.PI * 2);
-      ctx.stroke();
-
-      // Input injection node on left side (only active while pulling)
-      ctx.fillStyle = state.isActivelyPulling ? "#D96B27" : "#8E9287";
-      ctx.beginPath();
-      ctx.arc(cx - rx, cy, 6, 0, Math.PI * 2);
-      ctx.fill();
+      // Input injection pixel block on left side (active only while pulling)
+      ctx.fillStyle = state.isActivelyPulling ? "#D96B27" : "#767A6F";
+      ctx.fillRect(cx - rx - 6, cy - 6, 12, 12);
 
       // Re-amplification / Refresh gate on right side
-      ctx.fillStyle = hasData && !state.isLoopPaused ? "#264E36" : "#8E9287";
+      ctx.fillStyle = hasData && !state.isLoopPaused ? "#264E36" : "#767A6F";
       ctx.fillRect(cx + rx - 6, cy - 10, 12, 20);
 
-      // Draw acoustic data pulses circulating inside the loop
+      // Draw pixel-art acoustic data pulses circulating inside the loop
       if (hasData) {
         const pulseCount = Math.min(26, Math.max(2, Math.ceil(revealedCount / 5)));
         for (let i = 0; i < pulseCount; i += 1) {
           const theta = this.loopAngle + (i / pulseCount) * Math.PI * 2;
-          const px = cx + Math.cos(theta) * rx;
-          const py = cy + Math.sin(theta) * ry;
+          const px = Math.round((cx + Math.cos(theta) * rx) / 2) * 2;
+          const py = Math.round((cy + Math.sin(theta) * ry) / 2) * 2;
+          const sz = i % 5 === 0 ? 8 : 6;
           ctx.fillStyle = i % 5 === 0 ? "#C84B31" : "#264E36";
-          ctx.beginPath();
-          ctx.arc(px, py, i % 5 === 0 ? 4.2 : 3.2, 0, Math.PI * 2);
-          ctx.fill();
+          ctx.fillRect(px - sz / 2, py - sz / 2, sz, sz);
         }
       }
 
@@ -1503,6 +1502,11 @@
 
     const sharedBanner = document.getElementById("shared-banner");
     const sharedOpenReceiveBtn = document.getElementById("shared-open-receive-btn");
+    const heroLead = document.getElementById("hero-lead");
+    const recipientRouteBadge = document.getElementById("recipient-route-badge");
+    const introWindowTitle = document.getElementById("intro-window-title");
+    const introDialogGreeting = document.getElementById("intro-dialog-greeting");
+    const startIntroBtn = document.getElementById("start-intro-btn");
 
     const recipientInput = document.getElementById("recipient-input");
     const senderInput = document.getElementById("sender-input");
@@ -1533,6 +1537,13 @@
     const siriusMachine = new SiriusMachineController();
     renderSiriusArchivePlate();
 
+    function updateRecipientBadge() {
+      if (!recipientRouteBadge) return;
+      const fromText = state.sender || (state.lang === "zh" ? "1962 寄信人" : "1962");
+      const toText = state.recipient || (state.lang === "zh" ? "收信人" : "READER");
+      recipientRouteBadge.textContent = `FROM: ${fromText} -> TO: ${toText}`;
+    }
+
     function applyLanguage(nextLang) {
       state.lang = nextLang;
       document.documentElement.lang = nextLang === "zh" ? "zh-CN" : "en";
@@ -1546,6 +1557,31 @@
           el.textContent = dict[key];
         }
       });
+
+      if (state.hasSharedArrival) {
+        if (introWindowTitle) {
+          introWindowTitle.textContent =
+            nextLang === "zh" ? "SIRIUS.REC // 1962 来信抵达" : "SIRIUS.REC // 1962 LETTER INBOUND";
+        }
+        if (introDialogGreeting) {
+          introDialogGreeting.textContent =
+            nextLang === "zh"
+              ? `< 收到来自 ${state.sender || "1962"} 的来信 >`
+              : `< Incoming 1962 Tape from ${state.sender || "1962"} >`;
+        }
+        if (startIntroBtn) {
+          startIntroBtn.textContent = nextLang === "zh" ? "打开纸带" : "Open Tape";
+        }
+        if (heroLead) {
+          heroLead.textContent =
+            nextLang === "zh"
+              ? `${state.recipient || "朋友"}，${state.sender || "1962 寄信人"} 通过 Ferranti Sirius 向你发来一封跨时代纸带信件。下方已自动载入收信机，拖动或点击即可逐字破译。`
+              : `${state.recipient || "Friend"}, ${state.sender || "a 1962 sender"} dispatched a Ferranti Sirius punched-tape letter to you. The receiver below is preloaded — drag or step the tape to decode it.`;
+        }
+      } else if (introWindowTitle) {
+        introWindowTitle.textContent =
+          nextLang === "zh" ? "SIRIUS.BOOT // 1962" : "SIRIUS.BOOT // 1962";
+      }
 
       // Update placeholders and sound label
       recipientInput.placeholder = dict.placeholderTo;
@@ -1566,6 +1602,7 @@
 
       receiveOriginalBox.textContent = state.rawInput;
       toggleOriginalBtn.textContent = receiveOriginalBox.hidden ? dict.peekOriginal : dict.hideOriginal;
+      updateRecipientBadge();
 
       if (state.isConfirmed) {
         shareUrlInput.value = encodeSharePayload();
@@ -1575,7 +1612,7 @@
       siriusMachine.rebuildTape();
     }
 
-    function switchStage(targetStage) {
+    function switchStage(targetStage, shouldScroll = true) {
       state.stage = targetStage;
       Object.entries(stageSections).forEach(([key, section]) => {
         const isTarget = key === targetStage;
@@ -1592,6 +1629,7 @@
       });
 
       if (targetStage === "receive") {
+        updateRecipientBadge();
         siriusMachine.rebuildTape();
       }
 
@@ -1603,14 +1641,21 @@
           { autoAlpha: 1, y: 0, duration: 0.35, ease: "power2.out", clearProps: "transform" }
         );
       }
-      window.scrollTo({ top: 0, behavior: "smooth" });
+
+      if (shouldScroll) {
+        if (targetStage === "receive" && stageSections.receive) {
+          stageSections.receive.scrollIntoView({ behavior: "smooth", block: "start" });
+        } else {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }
     }
 
     // Intro Controller
     const intro = new IntroController(() => {
       mainContent.focus();
-      if (loadedFromUrl) {
-        switchStage("receive");
+      if (loadedFromUrl || state.hasSharedArrival) {
+        switchStage("receive", true);
       }
     });
 
@@ -1725,7 +1770,7 @@
     goReceiveBtn.addEventListener("click", () => switchStage("receive"));
 
     if (sharedOpenReceiveBtn) {
-      sharedOpenReceiveBtn.addEventListener("click", () => switchStage("receive"));
+      sharedOpenReceiveBtn.addEventListener("click", () => switchStage("receive", true));
     }
 
     copyLinkBtn.addEventListener("click", async () => {
@@ -1782,6 +1827,7 @@
     if (state.hasSharedArrival) {
       sharedBanner.hidden = false;
       dispatchPanel.hidden = false;
+      switchStage("receive", false);
     }
   });
 })();

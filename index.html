@@ -13,7 +13,7 @@
   <script src="app.js" defer></script>
 </head>
 <body>
-  <!-- Retro Pixel Opening Overlay (Inspired by Reference 1) -->
+  <!-- Retro Pixel Opening Overlay -->
   <div id="intro-overlay" class="intro-overlay" role="dialog" aria-modal="true" aria-labelledby="intro-dialog-greeting">
     <canvas id="intro-canvas" class="intro-canvas" aria-hidden="true"></canvas>
 
@@ -23,19 +23,16 @@
     </div>
 
     <div id="intro-stage" class="intro-stage">
-      <!-- Stacked clone frames for fan-out effect -->
       <div class="pixel-window-clone" data-clone="4" aria-hidden="true"></div>
       <div class="pixel-window-clone" data-clone="3" aria-hidden="true"></div>
       <div class="pixel-window-clone" data-clone="2" aria-hidden="true"></div>
       <div class="pixel-window-clone" data-clone="1" aria-hidden="true"></div>
 
-      <!-- Pop-out pixel icons (rendered around window during fan-out) -->
       <div id="intro-stamps" class="intro-stamps" aria-hidden="true"></div>
 
-      <!-- Main pixel dialog window -->
       <div id="pixel-dialog" class="pixel-window">
         <div class="pixel-window-bar">
-          <span class="pixel-window-title">SIRIUS_1962.EXE</span>
+          <span class="pixel-window-title" id="intro-window-title">SIRIUS_1962.EXE</span>
           <button type="button" id="intro-close-x" class="pixel-close-x" aria-label="Skip intro">×</button>
         </div>
         <div class="pixel-window-body">
@@ -88,24 +85,30 @@
     </header>
 
     <main id="main-content" class="main-content" tabindex="-1">
-      <!-- Editorial Hero -->
+      <!-- Retro Pixel Editorial Hero -->
       <section class="hero-band">
         <div class="hero-kicker">
           <span class="kicker-badge" data-i18n="heroBadge">Museum Web Exhibition</span>
           <span class="kicker-meta">Ferranti Sirius · Manchester, c. 1962</span>
         </div>
-        <h1 class="hero-title" data-i18n="heroTitle">A Message from 1962?</h1>
-        <p class="hero-lead" data-i18n="heroLead">
+        <h1 class="hero-title" data-i18n="heroTitle">&lt; A Message from 1962? &gt;</h1>
+        <p id="hero-lead" class="hero-lead" data-i18n="heroLead">
           Write a short note to a friend, translate its voice to the early 1960s, and send it through a punched-tape machine inspired by the Ferranti Sirius.
         </p>
 
         <!-- Shared Link Arrival Banner -->
         <div id="shared-banner" class="shared-banner" hidden>
-          <div class="shared-banner-text">
-            <strong data-i18n="sharedTitle">A 1962 tape has arrived for you.</strong>
-            <span data-i18n="sharedDesc">Someone encoded a message via the Ferranti Sirius exhibition. Switch to the receiver to pull the paper tape and read it.</span>
+          <div class="pixel-bar-mini">
+            <span>INCOMING_TAPE.MSG</span>
+            <span aria-hidden="true">■ □ ×</span>
           </div>
-          <button type="button" id="shared-open-receive-btn" class="btn-primary btn-sm" data-i18n="sharedAction">Open Receiver</button>
+          <div class="shared-banner-inner">
+            <div class="shared-banner-text">
+              <strong id="shared-banner-title" data-i18n="sharedTitle">A 1962 tape has arrived for you.</strong>
+              <span id="shared-banner-desc" data-i18n="sharedDesc">Someone encoded a message via the Ferranti Sirius exhibition. Pull the paper tape below to read it.</span>
+            </div>
+            <button type="button" id="shared-open-receive-btn" class="btn-primary btn-sm" data-i18n="sharedAction">Go to Tape Reader</button>
+          </div>
         </div>
       </section>
 
@@ -122,89 +125,93 @@
         </div>
 
         <div class="compose-grid">
-          <!-- Left: User Input -->
-          <div class="panel-card input-panel">
-            <div class="panel-bar">
-              <span class="panel-code">INPUT // TODAY</span>
+          <!-- Left Window: User Input -->
+          <div class="pixel-box input-panel">
+            <div class="box-titlebar">
+              <span>INPUT_TODAY.TXT</span>
               <span class="char-counter"><span id="raw-char-count">0</span> / 400</span>
             </div>
 
-            <div class="meta-inputs">
+            <div class="box-body">
+              <div class="meta-inputs">
+                <div class="field-group">
+                  <label for="recipient-input" class="field-label" data-i18n="labelTo">To</label>
+                  <input type="text" id="recipient-input" class="text-input" maxlength="40" autocomplete="off">
+                </div>
+                <div class="field-group">
+                  <label for="sender-input" class="field-label" data-i18n="labelFrom">From</label>
+                  <input type="text" id="sender-input" class="text-input" maxlength="40" autocomplete="off">
+                </div>
+              </div>
+
               <div class="field-group">
-                <label for="recipient-input" class="field-label" data-i18n="labelTo">To</label>
-                <input type="text" id="recipient-input" class="text-input" maxlength="40" autocomplete="off">
+                <label for="raw-message-input" class="field-label" data-i18n="labelMessage">Your note to a friend</label>
+                <textarea id="raw-message-input" class="textarea-input" rows="5" maxlength="400"></textarea>
               </div>
-              <div class="field-group">
-                <label for="sender-input" class="field-label" data-i18n="labelFrom">From</label>
-                <input type="text" id="sender-input" class="text-input" maxlength="40" autocomplete="off">
+
+              <div class="samples-block">
+                <span class="samples-label" data-i18n="samplesLabel">Quick prompts:</span>
+                <div class="sample-chips">
+                  <button type="button" class="sample-chip" data-sample="0" data-i18n="sample1Label">Friday café</button>
+                  <button type="button" class="sample-chip" data-sample="1" data-i18n="sample2Label">Late lab report</button>
+                  <button type="button" class="sample-chip" data-sample="2" data-i18n="sample3Label">Museum weekend</button>
+                </div>
               </div>
-            </div>
 
-            <div class="field-group">
-              <label for="raw-message-input" class="field-label" data-i18n="labelMessage">Your note to a friend</label>
-              <textarea id="raw-message-input" class="textarea-input" rows="5" maxlength="400"></textarea>
-            </div>
-
-            <div class="samples-block">
-              <span class="samples-label" data-i18n="samplesLabel">Quick prompts:</span>
-              <div class="sample-chips">
-                <button type="button" class="sample-chip" data-sample="0" data-i18n="sample1Label">Friday café</button>
-                <button type="button" class="sample-chip" data-sample="1" data-i18n="sample2Label">Late lab report</button>
-                <button type="button" class="sample-chip" data-sample="2" data-i18n="sample3Label">Museum weekend</button>
+              <div class="original-echo">
+                <span class="echo-label" data-i18n="originalEchoLabel">Original Text Snapshot</span>
+                <p id="original-preview" class="echo-text"></p>
               </div>
-            </div>
-
-            <div class="original-echo">
-              <span class="echo-label" data-i18n="originalEchoLabel">Original Text Snapshot</span>
-              <p id="original-preview" class="echo-text"></p>
             </div>
           </div>
 
-          <!-- Right: 1962 Rewritten Letter (Editable Comparison) -->
-          <div class="panel-card letter-panel">
-            <div class="panel-bar">
-              <span class="panel-code">DRAFT // 1962 EDITION</span>
-              <button type="button" id="reset-rewrite-btn" class="link-btn" data-i18n="resetDraft">Reset to auto-draft</button>
+          <!-- Right Window: 1962 Rewritten Letter -->
+          <div class="pixel-box letter-panel">
+            <div class="box-titlebar">
+              <span>DRAFT_1962.DOC</span>
+              <button type="button" id="reset-rewrite-btn" class="bar-action-btn" data-i18n="resetDraft">Reset draft</button>
             </div>
 
-            <div class="letter-paper">
-              <div class="letter-paper-head">
-                <span class="postmark-stamp">14 NOV 1962 · SIRIUS POST</span>
-                <span id="edited-badge" class="edited-badge" hidden data-i18n="editedBadge">Edited</span>
+            <div class="box-body">
+              <div class="letter-paper">
+                <div class="letter-paper-head">
+                  <span class="postmark-stamp">14 NOV 1962 · SIRIUS POST</span>
+                  <span id="edited-badge" class="edited-badge" hidden data-i18n="editedBadge">Edited</span>
+                </div>
+
+                <label for="rewritten-letter-input" class="sr-only" data-i18n="labelRewritten">1962 rewritten letter</label>
+                <textarea id="rewritten-letter-input" class="letter-textarea" rows="10"></textarea>
+
+                <p class="tone-footnote" data-i18n="toneFootnote">
+                  You may review or edit every line above before encoding it onto punched paper tape.
+                </p>
               </div>
 
-              <label for="rewritten-letter-input" class="sr-only" data-i18n="labelRewritten">1962 rewritten letter</label>
-              <textarea id="rewritten-letter-input" class="letter-textarea" rows="10"></textarea>
-
-              <p class="tone-footnote" data-i18n="toneFootnote">
-                You may review or edit every line above before encoding it onto punched paper tape.
-              </p>
-            </div>
-
-            <div class="compose-actions">
-              <button type="button" id="confirm-encode-btn" class="btn-primary" data-i18n="confirmEncode">
-                Confirm &amp; Encode to Punched Tape
-              </button>
-            </div>
-
-            <!-- Simulated Dispatch & Link Panel -->
-            <div id="dispatch-panel" class="dispatch-panel" hidden>
-              <div class="dispatch-status">
-                <span class="status-dot" aria-hidden="true"></span>
-                <span data-i18n="dispatchReady">5-track punched tape encoded and ready to transmit.</span>
-              </div>
-              <div class="dispatch-buttons">
-                <button type="button" id="go-receive-btn" class="btn-primary" data-i18n="openAsRecipient">
-                  Open as Recipient (Pull the Tape)
-                </button>
-                <button type="button" id="copy-link-btn" class="btn-secondary" data-i18n="copyShareLink">
-                  Copy Shareable Link
+              <div class="compose-actions">
+                <button type="button" id="confirm-encode-btn" class="btn-primary" data-i18n="confirmEncode">
+                  Confirm &amp; Encode to Punched Tape
                 </button>
               </div>
-              <div class="share-url-row">
-                <label for="share-url-input" class="sr-only">Shareable link</label>
-                <input type="text" id="share-url-input" class="share-url-input" readonly>
-                <span id="copy-feedback" class="copy-feedback" role="status" aria-live="polite"></span>
+
+              <!-- Simulated Dispatch & Link Panel -->
+              <div id="dispatch-panel" class="dispatch-panel" hidden>
+                <div class="dispatch-status">
+                  <span class="status-dot" aria-hidden="true"></span>
+                  <span data-i18n="dispatchReady">5-track punched tape encoded and ready to transmit.</span>
+                </div>
+                <div class="dispatch-buttons">
+                  <button type="button" id="go-receive-btn" class="btn-primary" data-i18n="openAsRecipient">
+                    Open as Recipient (Pull the Tape)
+                  </button>
+                  <button type="button" id="copy-link-btn" class="btn-secondary" data-i18n="copyShareLink">
+                    Copy Shareable Link
+                  </button>
+                </div>
+                <div class="share-url-row">
+                  <label for="share-url-input" class="sr-only">Shareable link</label>
+                  <input type="text" id="share-url-input" class="share-url-input" readonly>
+                  <span id="copy-feedback" class="copy-feedback" role="status" aria-live="polite"></span>
+                </div>
               </div>
             </div>
           </div>
@@ -223,168 +230,165 @@
           </p>
         </div>
 
-        <!-- Contemporary Ferranti Sirius Interactive Apparatus -->
-        <div class="sirius-console">
-          <!-- Console Top Bezel & Decimal Indicator Strip -->
-          <div class="console-top">
-            <div class="console-nameplate">
-              <span class="plate-title">SIRIUS // EXHIBITION READER</span>
-              <span class="plate-model">5-TRACK OPTICAL INPUT &amp; DELAY LOOP</span>
-            </div>
-            <div class="decimal-strip" aria-hidden="true">
-              <span class="strip-label">REGISTER</span>
-              <div id="decimal-lamps" class="lamp-row">
-                <span class="lamp">0</span>
-                <span class="lamp">1</span>
-                <span class="lamp">2</span>
-                <span class="lamp">3</span>
-                <span class="lamp">4</span>
-                <span class="lamp">5</span>
-                <span class="lamp">6</span>
-                <span class="lamp">7</span>
-                <span class="lamp">8</span>
-                <span class="lamp">9</span>
-              </div>
-            </div>
+        <!-- Contemporary Ferranti Sirius Pixel-Window Apparatus -->
+        <div class="pixel-box sirius-console">
+          <div class="box-titlebar">
+            <span>SIRIUS_READER.SYS // 5-TRACK OPTICAL CONSOLE</span>
+            <span id="recipient-route-badge" class="route-badge">TO: FRIEND</span>
           </div>
 
-          <!-- Core Split: Left = Paper Tape & Teleprinter Sheet, Right = Internal Delay-Line Loop -->
-          <div class="console-workspace">
-            <!-- Left Side: Physical Tape Puller + Letter Reveal -->
-            <div class="reader-column">
-              <div class="reader-housing">
-                <div class="reader-meta-bar">
-                  <span data-i18n="tapeTrackLabel">5-TRACK OILED PAPER TAPE</span>
-                  <span id="tape-percent-label" class="tape-percent">0% READ</span>
-                </div>
-
-                <!-- Interactive Punched Paper Tape Viewport -->
-                <div id="tape-viewport" class="tape-viewport">
-                  <!-- Optical Reading Head Gate -->
-                  <div class="optical-head" aria-hidden="true">
-                    <span class="head-tag">OPTICAL READ HEAD</span>
-                    <div id="head-sensors" class="head-sensors">
-                      <span class="sensor-led"></span>
-                      <span class="sensor-led"></span>
-                      <span class="sensor-led is-sprocket"></span>
-                      <span class="sensor-led"></span>
-                      <span class="sensor-led"></span>
-                      <span class="sensor-led"></span>
-                    </div>
-                  </div>
-
-                  <!-- Draggable Tape Ribbon -->
-                  <div id="tape-ribbon" class="tape-ribbon">
-                    <div id="tape-holes-canvas-wrap" class="tape-holes-wrap">
-                      <canvas id="tape-canvas" class="tape-canvas" height="84" aria-hidden="true"></canvas>
-                    </div>
-                    <button type="button" id="tape-pull-handle" class="tape-handle" aria-label="Drag left to pull paper tape">
-                      <span class="handle-grip" aria-hidden="true">⋮⋮</span>
-                      <span class="handle-text" data-i18n="pullHandle">PULL</span>
-                    </button>
-                  </div>
-                </div>
-
-                <!-- Accessible Controls / Fine Scrubber -->
-                <div class="tape-controls-row">
-                  <label for="tape-scrubber" class="sr-only" data-i18n="scrubberAria">Paper tape reading progress</label>
-                  <input type="range" id="tape-scrubber" class="tape-scrubber" min="0" max="1000" value="0">
-                  <div class="tape-btn-group">
-                    <button type="button" id="hold-pull-btn" class="btn-secondary btn-sm" data-i18n="holdToPull">Hold to Pull</button>
-                    <button type="button" id="reset-tape-btn" class="btn-ghost btn-sm" data-i18n="resetTape">Rewind</button>
-                  </div>
-                </div>
-                <p class="drag-hint" data-i18n="dragHint">
-                  Drag the paper tape leftward out of the slot—or press and hold “Hold to Pull”—to feed characters into memory.
-                </p>
+          <div class="console-body">
+            <!-- Console Decimal Register Bar -->
+            <div class="console-top">
+              <div class="console-nameplate">
+                <span class="plate-title">FERRANTI SIRIUS · EXHIBITION APPARATUS</span>
+                <span class="plate-model" data-i18n="consoleSub">OPTICAL PAPER TAPE INPUT &amp; ACOUSTIC DELAY LOOP</span>
               </div>
-
-              <!-- Unfurling Teleprinter Letter Output -->
-              <div class="teleprinter-frame">
-                <div class="teleprinter-header">
-                  <span data-i18n="decodedLetterLabel">DECODED CORRESPONDENCE</span>
-                  <span id="char-progress-label" class="char-progress">0 / 0 chars</span>
-                </div>
-                <div class="letter-sheet" aria-live="off">
-                  <pre id="decoded-letter-text" class="decoded-text"></pre>
-                  <span id="decoded-cursor" class="decoded-cursor" aria-hidden="true">_</span>
-                  <p id="tape-empty-prompt" class="tape-empty-prompt" data-i18n="tapeEmptyPrompt">
-                    [ Pull the paper tape above to reveal the message waiting inside... ]
-                  </p>
-                </div>
-                <div class="letter-compare-toggle">
-                  <button type="button" id="toggle-original-in-receive" class="link-btn" data-i18n="peekOriginal">
-                    Compare with sender's original note
-                  </button>
-                  <p id="receive-original-box" class="receive-original-box" hidden></p>
+              <div class="decimal-strip" aria-hidden="true">
+                <span class="strip-label">REG</span>
+                <div id="decimal-lamps" class="lamp-row">
+                  <span class="lamp">0</span>
+                  <span class="lamp">1</span>
+                  <span class="lamp">2</span>
+                  <span class="lamp">3</span>
+                  <span class="lamp">4</span>
+                  <span class="lamp">5</span>
+                  <span class="lamp">6</span>
+                  <span class="lamp">7</span>
+                  <span class="lamp">8</span>
+                  <span class="lamp">9</span>
                 </div>
               </div>
             </div>
 
-            <!-- Right Side: Internal Circulation Schematic (Reading vs Storing) -->
-            <aside class="loop-column" aria-labelledby="loop-heading">
-              <div class="loop-card">
-                <div class="loop-card-top">
-                  <div>
-                    <span class="panel-code">INTERNAL MEMORY // DELAY LINE</span>
-                    <h3 id="loop-heading" class="loop-title" data-i18n="loopTitle">How the machine holds your letter</h3>
+            <div class="console-workspace">
+              <!-- Left Column: Paper Tape Puller + Teleprinter Letter -->
+              <div class="reader-column">
+                <div class="reader-housing">
+                  <div class="reader-meta-bar">
+                    <span data-i18n="tapeTrackLabel">5-TRACK OILED PAPER TAPE</span>
+                    <span id="tape-percent-label" class="tape-percent">0% READ</span>
                   </div>
-                  <button type="button" id="toggle-loop-btn" class="btn-ghost btn-xs" data-i18n="pauseLoop">Pause</button>
-                </div>
 
-                <!-- Two Distinct Process Indicators -->
-                <div class="process-states">
-                  <div id="state-reading" class="process-pill is-idle">
-                    <span class="pill-dot" aria-hidden="true"></span>
-                    <div class="pill-copy">
-                      <span class="pill-name" data-i18n="procReadingName">1. Reading Tape</span>
-                      <span id="proc-reading-status" class="pill-status" data-i18n="statusWaiting">Waiting</span>
+                  <div id="tape-viewport" class="tape-viewport">
+                    <div class="optical-head" aria-hidden="true">
+                      <span class="head-tag">READ</span>
+                      <div id="head-sensors" class="head-sensors">
+                        <span class="sensor-led"></span>
+                        <span class="sensor-led"></span>
+                        <span class="sensor-led is-sprocket"></span>
+                        <span class="sensor-led"></span>
+                        <span class="sensor-led"></span>
+                        <span class="sensor-led"></span>
+                      </div>
+                    </div>
+
+                    <div id="tape-ribbon" class="tape-ribbon">
+                      <div id="tape-holes-canvas-wrap" class="tape-holes-wrap">
+                        <canvas id="tape-canvas" class="tape-canvas" height="84" aria-hidden="true"></canvas>
+                      </div>
+                      <button type="button" id="tape-pull-handle" class="tape-handle" aria-label="Drag left to pull paper tape">
+                        <span class="handle-grip" aria-hidden="true">⋮⋮</span>
+                        <span class="handle-text" data-i18n="pullHandle">PULL</span>
+                      </button>
                     </div>
                   </div>
-                  <div id="state-storing" class="process-pill is-idle">
-                    <span class="pill-dot" aria-hidden="true"></span>
-                    <div class="pill-copy">
-                      <span class="pill-name" data-i18n="procStoringName">2. Storing in Loop</span>
-                      <span id="proc-storing-status" class="pill-status" data-i18n="statusEmpty">Empty</span>
+
+                  <div class="tape-controls-row">
+                    <label for="tape-scrubber" class="sr-only" data-i18n="scrubberAria">Paper tape reading progress</label>
+                    <input type="range" id="tape-scrubber" class="tape-scrubber" min="0" max="1000" value="0">
+                    <div class="tape-btn-group">
+                      <button type="button" id="hold-pull-btn" class="btn-secondary btn-sm" data-i18n="holdToPull">Hold to Pull</button>
+                      <button type="button" id="reset-tape-btn" class="btn-ghost btn-sm" data-i18n="resetTape">Rewind</button>
                     </div>
                   </div>
-                </div>
-
-                <!-- Acoustic Delay Line Visual Loop Canvas -->
-                <div class="loop-visual-box">
-                  <canvas id="loop-canvas" class="loop-canvas" width="380" height="230" aria-label="Schematic animation of pulses circulating inside the internal memory loop"></canvas>
-                </div>
-
-                <!-- Dynamic Teaching Banner when user pauses pulling -->
-                <div id="pause-callout" class="pause-callout" hidden>
-                  <strong data-i18n="pauseCalloutTitle">Tape stopped — memory still circulating</strong>
-                  <p data-i18n="pauseCalloutBody">
-                    You stopped pulling the paper tape, so reading has paused. Yet the information already read keeps circulating inside the machine to remain stored. Reading and storing are two separate processes.
+                  <p class="drag-hint" data-i18n="dragHint">
+                    Drag the paper tape leftward out of the slot—or press and hold “Hold to Pull”—to feed characters into memory.
                   </p>
                 </div>
 
-                <!-- Simulated Cycle Counter + Mandatory Disclaimer -->
-                <div class="cycle-telemetry">
-                  <div class="telemetry-row">
-                    <span class="telemetry-label" data-i18n="simCycleLabel">Simulated Loop Cycles</span>
-                    <span id="loop-cycles-count" class="telemetry-value">0</span>
+                <!-- Teleprinter Letter Output -->
+                <div class="teleprinter-frame">
+                  <div class="teleprinter-header">
+                    <span data-i18n="decodedLetterLabel">DECODED CORRESPONDENCE</span>
+                    <span id="char-progress-label" class="char-progress">0 / 0 chars</span>
                   </div>
-                  <p class="telemetry-disclaimer" data-i18n="simDisclaimer">
-                    Note: This simulated cycle counter is an illustrative visual aid only—it does not represent the real acoustic speed or measured data of the original Ferranti Sirius.
-                  </p>
+                  <div class="letter-sheet" aria-live="off">
+                    <pre id="decoded-letter-text" class="decoded-text"></pre>
+                    <span id="decoded-cursor" class="decoded-cursor" aria-hidden="true">_</span>
+                    <p id="tape-empty-prompt" class="tape-empty-prompt" data-i18n="tapeEmptyPrompt">
+                      [ Pull the paper tape above to reveal the message waiting inside... ]
+                    </p>
+                  </div>
+                  <div class="letter-compare-toggle">
+                    <button type="button" id="toggle-original-in-receive" class="link-btn" data-i18n="peekOriginal">
+                      Compare with sender's original note
+                    </button>
+                    <p id="receive-original-box" class="receive-original-box" hidden></p>
+                  </div>
                 </div>
               </div>
 
-              <!-- Completion Action to Stage 4 -->
-              <div id="receive-complete-card" class="complete-card" hidden>
-                <p class="complete-text" data-i18n="completePrompt">
-                  Every character of the 1962 message has arrived. Now meet the real computer behind this story.
-                </p>
-                <button type="button" id="go-history-btn" class="btn-primary" data-i18n="meetRealSirius">
-                  Return to 1962 Real History
-                </button>
-              </div>
-            </aside>
+              <!-- Right Column: Internal Circulation Monitor -->
+              <aside class="loop-column" aria-labelledby="loop-heading">
+                <div class="loop-card">
+                  <div class="loop-card-top">
+                    <div>
+                      <span class="panel-code">MEMORY // DELAY LINE</span>
+                      <h3 id="loop-heading" class="loop-title" data-i18n="loopTitle">How the machine holds your letter</h3>
+                    </div>
+                    <button type="button" id="toggle-loop-btn" class="btn-ghost btn-xs" data-i18n="pauseLoop">Pause</button>
+                  </div>
+
+                  <div class="process-states">
+                    <div id="state-reading" class="process-pill is-idle">
+                      <span class="pill-dot" aria-hidden="true"></span>
+                      <div class="pill-copy">
+                        <span class="pill-name" data-i18n="procReadingName">1. Reading Tape</span>
+                        <span id="proc-reading-status" class="pill-status" data-i18n="statusWaiting">Waiting</span>
+                      </div>
+                    </div>
+                    <div id="state-storing" class="process-pill is-idle">
+                      <span class="pill-dot" aria-hidden="true"></span>
+                      <div class="pill-copy">
+                        <span class="pill-name" data-i18n="procStoringName">2. Storing in Loop</span>
+                        <span id="proc-storing-status" class="pill-status" data-i18n="statusEmpty">Empty</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="loop-visual-box">
+                    <canvas id="loop-canvas" class="loop-canvas" width="380" height="230" aria-label="Schematic animation of pulses circulating inside the internal memory loop"></canvas>
+                  </div>
+
+                  <div id="pause-callout" class="pause-callout" hidden>
+                    <strong data-i18n="pauseCalloutTitle">Tape stopped — memory still circulating</strong>
+                    <p data-i18n="pauseCalloutBody">
+                      You stopped pulling the paper tape, so reading has paused. Yet the information already read keeps circulating inside the machine to remain stored. Reading and storing are two separate processes.
+                    </p>
+                  </div>
+
+                  <div class="cycle-telemetry">
+                    <div class="telemetry-row">
+                      <span class="telemetry-label" data-i18n="simCycleLabel">Simulated Loop Cycles</span>
+                      <span id="loop-cycles-count" class="telemetry-value">0</span>
+                    </div>
+                    <p class="telemetry-disclaimer" data-i18n="simDisclaimer">
+                      Note: This simulated cycle counter is an illustrative visual aid only—it does not represent the real acoustic speed or measured data of the original Ferranti Sirius.
+                    </p>
+                  </div>
+                </div>
+
+                <div id="receive-complete-card" class="complete-card" hidden>
+                  <p class="complete-text" data-i18n="completePrompt">
+                    Every character of the 1962 message has arrived. Now meet the real computer behind this story.
+                  </p>
+                  <button type="button" id="go-history-btn" class="btn-primary" data-i18n="meetRealSirius">
+                    Return to 1962 Real History
+                  </button>
+                </div>
+              </aside>
+            </div>
           </div>
         </div>
       </section>
@@ -402,85 +406,100 @@
         </div>
 
         <div class="history-layout">
-          <!-- Museum Collection Photo Plate -->
-          <figure class="museum-photo-frame">
-            <div class="photo-plate-wrap">
-              <canvas id="sirius-archive-canvas" class="sirius-archive-canvas" width="760" height="500"></canvas>
-              <img id="sirius-uploaded-photo" class="sirius-uploaded-photo" alt="Ferranti Sirius museum collection artifact" hidden>
-              <span class="plate-catalog-tag">ARCHIVE PLATE · COMP.1962.SIRIUS.01</span>
+          <figure class="pixel-box museum-photo-frame">
+            <div class="box-titlebar">
+              <span>SIRIUS_ARCHIVE.IMG</span>
+              <span>COMP.1962.01</span>
             </div>
-            <figcaption class="photo-caption-row">
-              <span data-i18n="photoCaption">
-                Archival exhibition plate of the Ferranti Sirius console, transistor cabinets, and 5-track photoelectric paper tape reader (c. 1962).
-              </span>
-              <label class="upload-photo-label">
-                <input type="file" id="photo-upload-input" accept="image/*" class="sr-only">
-                <span data-i18n="uploadPhotoBtn">Load museum photo</span>
-              </label>
-            </figcaption>
+            <div class="frame-inner">
+              <div class="photo-plate-wrap">
+                <canvas id="sirius-archive-canvas" class="sirius-archive-canvas" width="760" height="500"></canvas>
+                <img id="sirius-uploaded-photo" class="sirius-uploaded-photo" alt="Ferranti Sirius museum collection artifact" hidden>
+                <span class="plate-catalog-tag">ARCHIVE PLATE · COMP.1962.SIRIUS.01</span>
+              </div>
+              <figcaption class="photo-caption-row">
+                <span data-i18n="photoCaption">
+                  Archival exhibition plate of the Ferranti Sirius console, transistor cabinets, and 5-track photoelectric paper tape reader (c. 1962).
+                </span>
+                <label class="upload-photo-label">
+                  <input type="file" id="photo-upload-input" accept="image/*" class="sr-only">
+                  <span data-i18n="uploadPhotoBtn">Load museum photo</span>
+                </label>
+              </figcaption>
+            </div>
           </figure>
 
-          <!-- Three Historical Stories -->
           <div class="history-cards">
-            <article class="history-card">
-              <span class="card-num">01</span>
-              <h3 data-i18n="histCard1Title">A Transistor Computer for Ordinary Rooms</h3>
-              <p data-i18n="histCard1Body">
-                Built by Ferranti Ltd. in Manchester between 1958 and 1962, the Sirius replaced glowing vacuum tubes with compact transistors. It needed no special air conditioning and plugged into standard office mains—bringing digital computing out of giant air-conditioned halls.
-              </p>
+            <article class="pixel-box history-card">
+              <div class="box-titlebar"><span>FACT_01.TXT</span><span>1958–1962</span></div>
+              <div class="card-body">
+                <h3 data-i18n="histCard1Title">A Transistor Computer for Ordinary Rooms</h3>
+                <p data-i18n="histCard1Body">
+                  Built by Ferranti Ltd. in Manchester between 1958 and 1962, the Sirius replaced glowing vacuum tubes with compact transistors. It needed no special air conditioning and plugged into standard office mains—bringing digital computing out of giant air-conditioned halls.
+                </p>
+              </div>
             </article>
 
-            <article class="history-card">
-              <span class="card-num">02</span>
-              <h3 data-i18n="histCard2Title">Why 5-Track Punched Paper Tape?</h3>
-              <p data-i18n="histCard2Body">
-                In 1962, you did not type directly into live screen editors. Programs, calculations, and messages were punched as 5-hole patterns onto paper strips using an offline teleprinter, then fed through a photoelectric reader into the Sirius.
-              </p>
+            <article class="pixel-box history-card">
+              <div class="box-titlebar"><span>FACT_02.TXT</span><span>5-TRACK TAPE</span></div>
+              <div class="card-body">
+                <h3 data-i18n="histCard2Title">Why 5-Track Punched Paper Tape?</h3>
+                <p data-i18n="histCard2Body">
+                  In 1962, you did not type directly into live screen editors. Programs, calculations, and messages were punched as 5-hole patterns onto paper strips using an offline teleprinter, then fed through a photoelectric reader into the Sirius.
+                </p>
+              </div>
             </article>
 
-            <article class="history-card">
-              <span class="card-num">03</span>
-              <h3 data-i18n="histCard3Title">Saving Data as Traveling Echoes</h3>
-              <p data-i18n="histCard3Body">
-                Rather than expensive magnetic core arrays, the Sirius stored numbers inside nickel magnetostrictive acoustic delay lines—sending mechanical ripples around a coil of wire and re-amplifying them endlessly so memory would not fade.
-              </p>
+            <article class="pixel-box history-card">
+              <div class="box-titlebar"><span>FACT_03.TXT</span><span>DELAY LINE</span></div>
+              <div class="card-body">
+                <h3 data-i18n="histCard3Title">Saving Data as Traveling Echoes</h3>
+                <p data-i18n="histCard3Body">
+                  Rather than expensive magnetic core arrays, the Sirius stored numbers inside nickel magnetostrictive acoustic delay lines—sending mechanical ripples around a coil of wire and re-amplifying them endlessly so memory would not fade.
+                </p>
+              </div>
             </article>
           </div>
         </div>
 
-        <!-- Museum Visit Information Bar -->
-        <div class="museum-visit-banner">
-          <div class="visit-info-grid">
-            <div>
-              <span class="visit-kicker" data-i18n="visitKicker">Computer History Museum · Gallery 3</span>
-              <h3 class="visit-headline" data-i18n="visitHeadline">See the surviving Ferranti Sirius hardware in person</h3>
-              <p class="visit-desc" data-i18n="visitDesc">
-                Inspect authentic 5-track paper tapes, transistor logic boards, and nickel delay-line trays in our Early Office Computing wing.
-              </p>
-            </div>
-            <div class="visit-facts">
-              <div class="fact-item">
-                <span class="fact-label" data-i18n="factHoursLabel">Hours</span>
-                <span class="fact-val" data-i18n="factHoursVal">Tue – Sun · 10:00 – 17:30</span>
-              </div>
-              <div class="fact-item">
-                <span class="fact-label" data-i18n="factTicketLabel">Students</span>
-                <span class="fact-val" data-i18n="factTicketVal">Free with University ID</span>
-              </div>
-              <div class="fact-item">
-                <span class="fact-label" data-i18n="factDemoLabel">Tape Reader Demo</span>
-                <span class="fact-val" data-i18n="factDemoVal">Daily at 14:30</span>
-              </div>
-            </div>
+        <div class="pixel-box museum-visit-banner">
+          <div class="box-titlebar">
+            <span>MUSEUM_VISIT.INF</span>
+            <span>GALLERY 03</span>
           </div>
+          <div class="visit-body">
+            <div class="visit-info-grid">
+              <div>
+                <span class="visit-kicker" data-i18n="visitKicker">Computer History Museum · Gallery 3</span>
+                <h3 class="visit-headline" data-i18n="visitHeadline">See the surviving Ferranti Sirius hardware in person</h3>
+                <p class="visit-desc" data-i18n="visitDesc">
+                  Inspect authentic 5-track paper tapes, transistor logic boards, and nickel delay-line trays in our Early Office Computing wing.
+                </p>
+              </div>
+              <div class="visit-facts">
+                <div class="fact-item">
+                  <span class="fact-label" data-i18n="factHoursLabel">Hours</span>
+                  <span class="fact-val" data-i18n="factHoursVal">Tue – Sun · 10:00 – 17:30</span>
+                </div>
+                <div class="fact-item">
+                  <span class="fact-label" data-i18n="factTicketLabel">Students</span>
+                  <span class="fact-val" data-i18n="factTicketVal">Free with University ID</span>
+                </div>
+                <div class="fact-item">
+                  <span class="fact-label" data-i18n="factDemoLabel">Tape Reader Demo</span>
+                  <span class="fact-val" data-i18n="factDemoVal">Daily at 14:30</span>
+                </div>
+              </div>
+            </div>
 
-          <div class="visit-cta-row">
-            <button type="button" id="open-visit-modal-btn" class="btn-primary" data-i18n="openVisitModal">
-              Museum &amp; Visitor Guide
-            </button>
-            <button type="button" id="write-another-btn" class="btn-secondary" data-i18n="writeAnother">
-              Write Another 1962 Letter
-            </button>
+            <div class="visit-cta-row">
+              <button type="button" id="open-visit-modal-btn" class="btn-primary" data-i18n="openVisitModal">
+                Museum &amp; Visitor Guide
+              </button>
+              <button type="button" id="write-another-btn" class="btn-secondary" data-i18n="writeAnother">
+                Write Another 1962 Letter
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -494,17 +513,20 @@
     </footer>
   </div>
 
-  <!-- Native Accessible Modal Dialog for Museum & Visit Information -->
+  <!-- Native Accessible Modal Dialog -->
   <dialog id="visit-dialog" class="visit-dialog" closedby="any" aria-labelledby="visit-dialog-title">
+    <div class="dialog-titlebar">
+      <span>MUSEUM_GUIDE.INF</span>
+      <form method="dialog">
+        <button type="submit" class="pixel-close-x" aria-label="Close visitor guide">×</button>
+      </form>
+    </div>
     <div class="dialog-shell">
       <div class="dialog-header">
         <div>
-          <span class="panel-code">MUSEUM GUIDE // GALLERY 03</span>
+          <span class="panel-code">GALLERY 03 · VISITOR INFO</span>
           <h2 id="visit-dialog-title" class="dialog-title" data-i18n="dialogTitle">Visiting the Ferranti Sirius Exhibition</h2>
         </div>
-        <form method="dialog">
-          <button type="submit" class="dialog-close-btn" aria-label="Close visitor guide" data-i18n="dialogClose">Close ×</button>
-        </form>
       </div>
 
       <div class="dialog-body">
