@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>A Message from 1962? | Ferranti Sirius 博物馆互动展</title>
-  <meta name="description" content="一场面向当代观众的 1962 年计算机历史博物馆互动展：写一封短简给朋友，让它进入 Ferranti Sirius 五孔打孔纸带与声学延迟线循环记忆，再亲手拉动纸带破译来自 1962 年的来信。">
+  <title>A Message from 1962? | 莫纳什大学 Ferranti Sirius 博物馆互动展</title>
+  <meta name="description" content="莫纳什大学计算机历史博物馆（Monash Museum of Computing History）线上互动展：写一封短简给朋友，让它进入 1962 年 Ferranti Sirius 五孔打孔纸带与镍丝声波延迟线循环，再亲手拉出破译。馆址：Building B, Foyer, Level 2, Caulfield East VIC 3145, Australia。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Noto+Serif+SC:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&family=VT323&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=VT323&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
   <script src="app.js" defer></script>
@@ -18,7 +18,7 @@
     <canvas id="intro-canvas" class="intro-canvas" aria-hidden="true"></canvas>
 
     <div class="intro-topbar">
-      <span class="intro-tag">CHM // 1962 · FERRANTI SIRIUS</span>
+      <span class="intro-tag">MONASH MUSEUM // 1962 · FERRANTI SIRIUS</span>
       <div class="intro-top-actions">
         <div class="lang-switch intro-lang-switch" role="group" aria-label="Opening language switch">
           <button type="button" id="intro-lang-zh" class="lang-btn is-active">中文</button>
@@ -38,17 +38,24 @@
 
       <div id="pixel-dialog" class="pixel-window">
         <div class="pixel-window-bar">
-          <span class="pixel-window-title" id="intro-window-title">1962 · FERRANTI SIRIUS // 时空展厅</span>
+          <span class="pixel-window-title" id="intro-window-title">1962 · FERRANTI SIRIUS // 馆藏时空入口</span>
           <button type="button" id="intro-close-x" class="pixel-close-x" aria-label="跳过开场动画">×</button>
         </div>
         <div class="pixel-window-body">
-          <span id="intro-exhibit-badge" class="intro-exhibit-badge" data-i18n="introExhibitBadge">馆藏展品：FERRANTI SIRIUS · 1962</span>
+          <div class="intro-photo-frame">
+            <img src="assets/museum/sirius-full-desk.jpg" alt="Ferranti Sirius console on display at Monash University Building B Level 2" class="intro-photo-img">
+            <span class="intro-photo-tag" data-i18n="introPhotoTag">实拍馆藏 · Building B, Level 2</span>
+          </div>
+          <span id="intro-exhibit-badge" class="intro-exhibit-badge" data-i18n="introExhibitBadge">馆藏展品：1962 FERRANTI SIRIUS（Monash 第一台计算机）</span>
           <h1 id="intro-dialog-greeting" class="pixel-greeting" data-i18n="introHeadline">
             寄出一封穿越 1962 年的打孔纸带信
           </h1>
           <p id="intro-dialog-desc" class="intro-dialog-desc" data-i18n="introDesc">
-            写一段话给朋友，由 1962 年英国 Ferranti Sirius 晶体管计算机将其编码为五孔纸带，并在镍金属丝声波回路里日夜循环保存，等待收信人亲手拉出破译。
+            写一段话给朋友，由澳大利亚莫纳什大学计算机历史博物馆镇馆藏品——1962 年 Ferranti Sirius 晶体管计算机将其编码为五孔纸带，并在镍金属丝声波回路里日夜循环保存，等待收信人亲手拉出破译。
           </p>
+          <div class="intro-location-pill" data-i18n="introLocation">
+            📍 Building B, Foyer, Level 2, Caulfield East VIC 3145, Australia
+          </div>
           <button type="button" id="start-intro-btn" class="pixel-start-btn" data-i18n="introStart">进入 1962 年 · 开始写信</button>
         </div>
       </div>
@@ -61,8 +68,8 @@
       <div class="header-inner">
         <div class="brand-lockup">
           <span class="brand-dot" aria-hidden="true"></span>
-          <span class="brand-code">CHM // 1962</span>
-          <span class="brand-sub" data-i18n="brandSub">Ferranti Sirius 馆藏互动展</span>
+          <span class="brand-code">MONASH // 1962</span>
+          <span class="brand-sub" data-i18n="brandSub">Ferranti Sirius · Building B Level 2</span>
         </div>
 
         <div class="utility-controls">
@@ -85,25 +92,25 @@
         <div class="pixel-box screen-banner">
           <div class="box-titlebar">
             <span>DESK_1962.EXE // CORRESPONDENCE STATION</span>
-            <span>MANCHESTER · 1962</span>
+            <span>CAULFIELD EAST · VIC 3145</span>
           </div>
           <div class="screen-banner-body">
             <div class="screen-banner-copy">
-              <span class="kicker-badge" data-i18n="composeBadge">1962 写信台 · 线上互动体验</span>
+              <span class="kicker-badge" data-i18n="composeBadge">1962 写信台 · 莫纳什计算机历史博物馆线上互动</span>
               <h1 id="compose-heading" class="section-title" data-i18n="composeHeading">写下一句话，交由 1962 年的打孔纸带寄出</h1>
               <p class="section-note" data-i18n="composeSubtitle">
-                你的日常表达会被改写成温和含蓄的 1960 年代书信（严格保留原意），实时打成五孔光电纸带；生成链接发给朋友，或自己直接体验拉纸带收信。
+                选择 1962 年通信口吻与馆藏邮戳，你的日常话语会被实时打成五孔光电纸带（严格保留原意）；还能生成复古慢递卡片分享到社交动态，或发给朋友亲手拉纸带破译。
               </p>
             </div>
             <div class="screen-nav-actions">
               <button type="button" id="compose-to-receive-btn" class="btn-secondary btn-sm" data-i18n="jumpToReceiver">前往收信机 →</button>
-              <button type="button" id="compose-to-history-btn" class="btn-ghost btn-sm" data-i18n="learnExhibit">了解 1962 展品 →</button>
+              <button type="button" id="compose-to-history-btn" class="btn-ghost btn-sm" data-i18n="learnExhibit">参观馆藏实景档案 →</button>
             </div>
           </div>
         </div>
 
         <div class="compose-grid">
-          <!-- Left Window: User Input -->
+          <!-- Left Window: User Input + Tone/Stamp Tuners -->
           <div class="pixel-box input-panel">
             <div class="box-titlebar">
               <span>INPUT_TODAY.TXT</span>
@@ -124,11 +131,30 @@
 
               <div class="field-group">
                 <label for="raw-message-input" class="field-label" data-i18n="labelMessage">想对朋友说的话</label>
-                <textarea id="raw-message-input" class="textarea-input" rows="5" maxlength="400"></textarea>
+                <textarea id="raw-message-input" class="textarea-input" rows="4" maxlength="400"></textarea>
+              </div>
+
+              <div class="tuner-block">
+                <span class="tuner-label" data-i18n="toneModeLabel">1962 语气频段：</span>
+                <div id="tone-selector" class="chip-row" role="group" aria-label="1962 letter style">
+                  <button type="button" class="tone-chip is-active" data-tone="gentle" data-i18n="toneGentle">温雅书简</button>
+                  <button type="button" class="tone-chip" data-tone="lab" data-i18n="toneLab">实验室电报</button>
+                  <button type="button" class="tone-chip" data-tone="postcard" data-i18n="tonePostcard">时空慢递卡</button>
+                </div>
+              </div>
+
+              <div class="tuner-block">
+                <span class="tuner-label" data-i18n="stampLabel">选择馆藏纪念邮戳：</span>
+                <div id="stamp-selector" class="chip-row" role="group" aria-label="1962 postmark stamp">
+                  <button type="button" class="stamp-chip is-active" data-stamp="MONASH SIRIUS · 1962">MONASH SIRIUS · 1962</button>
+                  <button type="button" class="stamp-chip" data-stamp="BLDG B · LEVEL 2">BLDG B · LEVEL 2</button>
+                  <button type="button" class="stamp-chip" data-stamp="5-TRACK EXPRESS">5-TRACK EXPRESS</button>
+                  <button type="button" class="stamp-chip" data-stamp="NICKEL ECHO 1962">NICKEL ECHO 1962</button>
+                </div>
               </div>
 
               <div class="samples-block">
-                <span class="samples-label" data-i18n="samplesLabel">示例灵感：</span>
+                <span class="samples-label" data-i18n="samplesLabel">日常灵感：</span>
                 <div class="sample-chips">
                   <button type="button" class="sample-chip" data-sample="0" data-i18n="sample1Label">周五大课后</button>
                   <button type="button" class="sample-chip" data-sample="1" data-i18n="sample2Label">赶实验报告</button>
@@ -153,12 +179,12 @@
             <div class="box-body">
               <div class="letter-paper">
                 <div class="letter-paper-head">
-                  <span class="postmark-stamp">14 NOV 1962 · SIRIUS POST</span>
+                  <span id="postmark-stamp-badge" class="postmark-stamp">MONASH SIRIUS · 1962</span>
                   <span id="edited-badge" class="edited-badge" hidden data-i18n="editedBadge">已手动微调</span>
                 </div>
 
                 <label for="rewritten-letter-input" class="sr-only" data-i18n="labelRewritten">1962 年代感书信稿</label>
-                <textarea id="rewritten-letter-input" class="letter-textarea" rows="10"></textarea>
+                <textarea id="rewritten-letter-input" class="letter-textarea" rows="9"></textarea>
 
                 <p class="tone-footnote" data-i18n="toneFootnote">
                   你可以先对比原文与改写稿，并直接修改上方任意一句，确认后再编码为纸带。
@@ -180,11 +206,11 @@
                 </button>
               </div>
 
-              <!-- Simulated Dispatch & Link Panel -->
+              <!-- Simulated Dispatch, IG Story & Link Panel -->
               <div id="dispatch-panel" class="dispatch-panel" hidden>
                 <div class="dispatch-status">
                   <span class="status-dot" aria-hidden="true"></span>
-                  <span data-i18n="dispatchReady">五单位打孔纸带已生成，正送入声波延迟线并可分享收信链接。</span>
+                  <span data-i18n="dispatchReady">五单位打孔纸带已生成，正送入声波延迟线循环保存，可分享链接或生成慢递海报。</span>
                 </div>
                 <div class="dispatch-buttons">
                   <button type="button" id="go-receive-btn" class="btn-primary" data-i18n="openAsRecipient">
@@ -192,6 +218,9 @@
                   </button>
                   <button type="button" id="copy-link-btn" class="btn-secondary" data-i18n="copyShareLink">
                     复制收信链接发给朋友
+                  </button>
+                  <button type="button" id="open-ig-card-btn" class="btn-secondary" data-i18n="openIgCardBtn">
+                    生成复古慢递海报（IG Story）
                   </button>
                   <button type="button" id="compose-more-history-btn" class="btn-ghost" data-i18n="learnMoreSirius">
                     了解更多：Ferranti Sirius 展品档案 →
@@ -203,6 +232,29 @@
                   <span id="copy-feedback" class="copy-feedback" role="status" aria-live="polite"></span>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screen 1 Real Exhibit Context Strip -->
+        <div class="pixel-box compose-exhibit-strip">
+          <div class="box-titlebar">
+            <span>REAL_ARTIFACT.IMG // MONASH BUILDING B, LEVEL 2</span>
+            <span data-i18n="realExhibitTag">馆藏实拍联结</span>
+          </div>
+          <div class="compose-exhibit-body">
+            <div class="compose-exhibit-thumbs">
+              <img src="assets/museum/sirius-full-desk.jpg" alt="1962 Ferranti Sirius console desk and brown leather chair at Monash University" class="exhibit-mini-img">
+              <img src="assets/museum/sirius-console-closeup.jpg" alt="Closeup of Ferranti Sirius keypad controller and 5-track paper tape reel" class="exhibit-mini-img">
+            </div>
+            <div class="compose-exhibit-copy">
+              <h2 class="exhibit-mini-title" data-i18n="composeExhibitTitle">这台机器此刻就静静陈列在莫纳什大学 Caulfield 校区</h2>
+              <p data-i18n="composeExhibitDesc">
+                左侧皮椅、绿色指示灯板、桌面数字键盘控制台与黑白手写机房日志，均来自 1962 年莫纳什大学第一台计算机 Ferranti Sirius 原物。你刚刚编写的每个字，正按照它的五孔纸带规制打孔编码。
+              </p>
+              <button type="button" id="compose-strip-gallery-btn" class="link-btn" data-i18n="viewAllSevenPhotos">
+                查看全部 7 张馆藏实拍图与展厅指南 →
+              </button>
             </div>
           </div>
         </div>
@@ -220,17 +272,17 @@
               <span class="kicker-badge" data-i18n="receiveBadge">纸带收信台 · 逐字破译</span>
               <h2 id="receive-heading" class="section-title" data-i18n="receiveHeading">拉动打孔纸带，让 1962 年的信慢慢显现</h2>
               <p class="apparatus-disclaimer" data-i18n="apparatusDisclaimer">
-                这是一台专为本次展览设计的当代互动装置，灵感源自 1962 年 Ferranti Sirius 晶体管计算机，帮助你感受“读取纸带”与“声波循环记忆”的不同。
+                灵感源自莫纳什大学馆藏 1962 年 Ferranti Sirius 晶体管计算机——你可以直观感受“拉纸带读取”与“镍金属丝声波永续循环”两个分离的过程。
               </p>
             </div>
             <div class="screen-nav-actions">
               <button type="button" id="receive-back-compose-btn" class="btn-ghost btn-sm" data-i18n="backToWrite">← 返回写信台</button>
-              <button type="button" id="receive-to-history-btn" class="btn-secondary btn-sm" data-i18n="learnExhibit">了解更多：1962 展品 →</button>
+              <button type="button" id="receive-to-history-btn" class="btn-secondary btn-sm" data-i18n="learnExhibit">参观馆藏实景档案 →</button>
             </div>
           </div>
         </div>
 
-        <!-- Prominent Pre-Receive Endless Acoustic Loop Callout -->
+        <!-- Prominent Pre-Receive Endless Acoustic Loop Callout + Elapsed Timer -->
         <div id="loop-waiting-banner" class="pixel-box loop-waiting-banner">
           <div class="box-titlebar box-titlebar-crimson">
             <span>ACOUSTIC_MEMORY_LOOP.LOG // 镍金属丝声学延迟线</span>
@@ -242,6 +294,10 @@
               <div class="waiting-counter-digits">
                 <span id="waiting-cycles-count" class="waiting-cycles-number">18,420</span>
                 <span class="waiting-cycles-unit" data-i18n="waitingUnit">次</span>
+              </div>
+              <div class="waiting-timer-row">
+                <span data-i18n="waitingTimeLabel">已在线圈中停留：</span>
+                <span id="waiting-elapsed-timer" class="waiting-elapsed-timer">00:00:00</span>
               </div>
             </div>
             <div class="loop-waiting-copy">
@@ -266,7 +322,7 @@
             <!-- Console Decimal Register Bar -->
             <div class="console-top">
               <div class="console-nameplate">
-                <span class="plate-title">FERRANTI SIRIUS · EXHIBITION APPARATUS</span>
+                <span class="plate-title">FERRANTI SIRIUS · MONASH 1962 APPARATUS</span>
                 <span class="plate-model" data-i18n="consoleSub">五孔光电纸带读入器 · 声学延迟线循环示意</span>
               </div>
               <div class="decimal-strip" aria-hidden="true">
@@ -354,7 +410,7 @@
                 </div>
               </div>
 
-              <!-- Right Column: Internal Circulation Monitor -->
+              <!-- Right Column: Internal Circulation Monitor + Acoustic Ping -->
               <aside class="loop-column" aria-labelledby="loop-heading">
                 <div class="loop-card">
                   <div class="loop-card-top">
@@ -377,13 +433,19 @@
                       <span class="pill-dot" aria-hidden="true"></span>
                       <div class="pill-copy">
                         <span class="pill-name" data-i18n="procStoringName">2. 内部循环保存</span>
-                        <span id="proc-storing-status" class="pill-status" data-i18n="statusLoopStandby">待机循环中</span>
+                        <span id="proc-storing-status" class="pill-status" data-i18n="statusLoopStandby">待机循环保存中</span>
                       </div>
                     </div>
                   </div>
 
                   <div class="loop-visual-box">
                     <canvas id="loop-canvas" class="loop-canvas" width="380" height="240" aria-label="Schematic animation of pulses circulating inside the internal memory loop"></canvas>
+                  </div>
+
+                  <div class="ping-control-row">
+                    <button type="button" id="ping-loop-btn" class="btn-secondary btn-sm ping-loop-btn" data-i18n="pingLoopBtn">
+                      🔊 注入声波回响脉冲 (Ping Nickel Wire)
+                    </button>
                   </div>
 
                   <div id="pause-callout" class="pause-callout" hidden>
@@ -406,10 +468,10 @@
 
                 <div id="receive-complete-card" class="complete-card" hidden>
                   <p class="complete-text" data-i18n="completePrompt">
-                    这封来自 1962 年的信已经读完。现在，去看看机器背后的真实历史吧。
+                    这封来自 1962 年的信已经读完。现在，去看看这台计算机在莫纳什大学博物馆的实拍馆藏档案吧。
                   </p>
                   <button type="button" id="go-history-btn" class="btn-primary" data-i18n="meetRealSirius">
-                    了解更多：认识真实的 1962 Ferranti Sirius →
+                    了解更多：莫纳什馆藏 1962 Ferranti Sirius →
                   </button>
                 </div>
               </aside>
@@ -427,19 +489,19 @@
         </div>
       </section>
 
-      <!-- SCREEN 3: STANDALONE 1962 ARCHIVE & MUSEUM PORTAL -->
+      <!-- SCREEN 3: STANDALONE MONASH MUSEUM GALLERY & ARCHIVE -->
       <section id="stage-history" class="stage-section" aria-labelledby="history-heading" hidden>
         <div class="pixel-box screen-banner">
           <div class="box-titlebar">
-            <span>ARCHIVE_1962.DOC // FERRANTI SIRIUS</span>
-            <span>GALLERY 03 · EXHIBIT</span>
+            <span>MONASH_MUSEUM.ARC // BUILDING B, LEVEL 2</span>
+            <span>CAULFIELD EAST · VIC 3145</span>
           </div>
           <div class="screen-banner-body">
             <div class="screen-banner-copy">
-              <span class="kicker-badge" data-i18n="historyBadge">真实馆藏档案 · Ferranti Sirius</span>
+              <span class="kicker-badge" data-i18n="historyBadge">真实馆藏实景 · 莫纳什大学计算机历史博物馆</span>
               <h2 id="history-heading" class="section-title" data-i18n="historyHeading">真实的 Ferranti Sirius（1961–1962）</h2>
               <p class="section-note" data-i18n="historySubtitle">
-                剥开互动故事的外衣，这台出自曼彻斯特的早期晶体管计算机，曾用普通办公室电源和金属丝里的“回声”记住了整整一代数据。
+                在澳大利亚莫纳什大学 Caulfield 校区 Building B 二楼大厅的玻璃展柜里，静静陈列着学校 1962 年引入的第一台计算机 Ferranti Sirius。点击下方照片与拆解热点，走近这台“靠声音回声记住数据”的早期晶体管主机。
               </p>
             </div>
             <div class="screen-nav-actions">
@@ -452,22 +514,60 @@
         <div class="history-layout">
           <figure class="pixel-box museum-photo-frame">
             <div class="box-titlebar">
-              <span>SIRIUS_ARCHIVE.IMG</span>
-              <span>COMP.1962.01</span>
+              <span>COLLECTION_VIEWER.IMG // 7 EXHIBITS</span>
+              <span id="museum-active-counter">1 / 7</span>
             </div>
             <div class="frame-inner">
               <div class="photo-plate-wrap">
-                <canvas id="sirius-archive-canvas" class="sirius-archive-canvas" width="760" height="500"></canvas>
-                <img id="sirius-uploaded-photo" class="sirius-uploaded-photo" alt="Ferranti Sirius museum collection artifact" hidden>
-                <span class="plate-catalog-tag">ARCHIVE PLATE · COMP.1962.SIRIUS.01</span>
+                <img id="museum-active-photo" class="museum-active-photo" src="assets/museum/sirius-full-desk.jpg" alt="Ferranti Sirius console panoramic view at Monash Museum of Computing History">
+                <div id="photo-hotspots" class="photo-hotspots" aria-label="Exhibit inspection pins"></div>
+                <span id="museum-active-tag" class="plate-catalog-tag">MONASH ARCHIVE · COMP.1962.01</span>
               </div>
+
+              <div id="hotspot-detail-box" class="hotspot-detail-box" role="status" aria-live="polite">
+                <strong id="hotspot-title">点击图片上的编号热点 ①②③④，查看 Ferranti Sirius 原机结构细节</strong>
+                <p id="hotspot-desc">上图完整保留了 1962 年操作台的棕色皮椅、绿色仪表板、圆形挂钟、桌面键盘控制盒与右侧电传打字机。</p>
+              </div>
+
+              <!-- 7-Photo Filmstrip Gallery Selector -->
+              <div id="museum-filmstrip" class="museum-filmstrip" role="listbox" aria-label="Monash Museum Exhibit Photos">
+                <button type="button" class="filmstrip-thumb is-active" data-photo-idx="0">
+                  <img src="assets/museum/sirius-full-desk.jpg" alt="Sirius operation desk">
+                  <span data-i18n="thumb0Label">01 Sirius 操作台</span>
+                </button>
+                <button type="button" class="filmstrip-thumb" data-photo-idx="1">
+                  <img src="assets/museum/sirius-console-closeup.jpg" alt="Sirius console closeup">
+                  <span data-i18n="thumb1Label">02 控制台特写</span>
+                </button>
+                <button type="button" class="filmstrip-thumb" data-photo-idx="2">
+                  <img src="assets/museum/sirius-cabinet-visitors.webp" alt="Sirius delay line cabinet with visitors">
+                  <span data-i18n="thumb2Label">03 延迟线机柜</span>
+                </button>
+                <button type="button" class="filmstrip-thumb" data-photo-idx="3">
+                  <img src="assets/museum/monash-gallery-foyer.jpg" alt="Building B Foyer Level 2 exhibition hall">
+                  <span data-i18n="thumb3Label">04 二楼展厅走廊</span>
+                </button>
+                <button type="button" class="filmstrip-thumb" data-photo-idx="4">
+                  <img src="assets/museum/digital-evolution-wing.jpg" alt="A Digital Evolution gallery wing">
+                  <span data-i18n="thumb4Label">05 数字演进展区</span>
+                </button>
+                <button type="button" class="filmstrip-thumb" data-photo-idx="5">
+                  <img src="assets/museum/early-calculators.jpg" alt="Early mechanical calculators display">
+                  <span data-i18n="thumb5Label">06 早期机械计算器</span>
+                </button>
+                <button type="button" class="filmstrip-thumb" data-photo-idx="6">
+                  <img src="assets/museum/visitor-calculators.webp" alt="Visitor inspecting mechanical calculators">
+                  <span data-i18n="thumb6Label">07 馆内参观实景</span>
+                </button>
+              </div>
+
               <figcaption class="photo-caption-row">
-                <span data-i18n="photoCaption">
-                  Ferranti Sirius 馆藏档案图版：桌面控制台、晶体管机柜与光电五孔纸带读入器（约 1962 年）。
+                <span id="museum-active-caption">
+                  镇馆之宝 Ferranti Sirius 操作台全景：1962 年莫纳什大学引入的第一台计算机，皮椅、绿色面板、圆形时钟与电传打字机均按当年工作状态陈列。
                 </span>
                 <label class="upload-photo-label">
                   <input type="file" id="photo-upload-input" accept="image/*" class="sr-only">
-                  <span data-i18n="uploadPhotoBtn">替换馆藏实拍图</span>
+                  <span data-i18n="uploadPhotoBtn">替换本地照片预览</span>
                 </label>
               </figcaption>
             </div>
@@ -479,7 +579,7 @@
               <div class="card-body">
                 <h3 data-i18n="histCard1Title">不用空调机房的晶体管计算机</h3>
                 <p data-i18n="histCard1Body">
-                  Ferranti Sirius 由英国曼彻斯特的 Ferranti 公司于 1958 至 1962 年间研制。它用晶体管取代了耗电发热的真空管，插上普通办公室电源就能运转，让计算机第一次有机会走进日常工作间。
+                  Ferranti Sirius 由英国曼彻斯特的 Ferranti 公司于 1958 至 1962 年间研制。它用晶体管取代了耗电发热的真空管，插上普通办公室电源就能运转，也是莫纳什大学于 1962 年启用的首台数字计算机。
                 </p>
               </div>
             </article>
@@ -489,7 +589,7 @@
               <div class="card-body">
                 <h3 data-i18n="histCard2Title">为什么要用五孔打孔纸带？</h3>
                 <p data-i18n="histCard2Body">
-                  在 1962 年，人们还不能直接在屏幕上实时编辑文字。消息与程序会先在电传打字机上打成带孔纸带，再送入 Sirius 的光电读带机，由光线透过小孔逐列辨认字符。
+                  在 1962 年，人们还不能直接在屏幕上实时编辑文字。消息与程序会先在电传打字机（即馆藏操作台右侧那台灰色机器）上打成五孔纸带，再送入光电读带机由光线逐列读取。
                 </p>
               </div>
             </article>
@@ -499,7 +599,7 @@
               <div class="card-body">
                 <h3 data-i18n="histCard3Title">靠“声音回声”把信息留在机器里</h3>
                 <p data-i18n="histCard3Body">
-                  为了节省昂贵的磁芯存储器，Sirius 采用镍磁致伸缩声学延迟线作为内部记忆：把电信号变成细微的机械脉冲，在镍丝线圈里一圈圈循环传播，只要循环不断，记忆就不会消失。
+                  为了节省昂贵的磁芯存储器，Sirius 采用镍磁致伸缩声学延迟线作为内部记忆：把电信号变成细微的机械声波脉冲，在镍丝线圈里一圈圈循环传播，只要循环不断，记忆就不会消失。
                 </p>
               </div>
             </article>
@@ -508,37 +608,37 @@
 
         <div class="pixel-box museum-visit-banner">
           <div class="box-titlebar">
-            <span>MUSEUM_VISIT.INF</span>
-            <span>GALLERY 03</span>
+            <span>MUSEUM_VISIT.INF // BUILDING B, LEVEL 2</span>
+            <span>VIC 3145 · AUSTRALIA</span>
           </div>
           <div class="visit-body">
             <div class="visit-info-grid">
               <div>
-                <span class="visit-kicker" data-i18n="visitKicker">计算机历史博物馆 · 三号展厅</span>
-                <h3 class="visit-headline" data-i18n="visitHeadline">欢迎来博物馆亲眼看看 Ferranti Sirius 实物</h3>
+                <span class="visit-kicker" data-i18n="visitKicker">莫纳什大学计算机历史博物馆 · Building B 二楼大厅</span>
+                <h3 class="visit-headline" data-i18n="visitHeadline">欢迎来 Caulfield 校区亲眼看看 Ferranti Sirius 原机</h3>
                 <p class="visit-desc" data-i18n="visitDesc">
-                  在「早期晶体管与办公计算」展区，你可以近距离观察 1962 年的五孔纸带原件、晶体管插件板与镍延迟线存储盘。
+                  位于澳大利亚莫纳什大学 Caulfield 校区 Building B 二楼大厅（Building B, Foyer, Level 2, Caulfield East VIC 3145），玻璃展柜内完整保存了 Ferranti Sirius、早期机械计算器与数字技术演进藏品。
                 </p>
               </div>
               <div class="visit-facts">
                 <div class="fact-item">
+                  <span class="fact-label" data-i18n="factLocationLabel">详细地址</span>
+                  <span class="fact-val" data-i18n="factLocationVal">Building B, Foyer, Level 2, Caulfield East VIC 3145</span>
+                </div>
+                <div class="fact-item">
                   <span class="fact-label" data-i18n="factHoursLabel">开放时间</span>
-                  <span class="fact-val" data-i18n="factHoursVal">周二至周日 10:00 – 17:30</span>
+                  <span class="fact-val" data-i18n="factHoursVal">校园开放时段 · 免费开放参观</span>
                 </div>
                 <div class="fact-item">
-                  <span class="fact-label" data-i18n="factTicketLabel">大学生礼遇</span>
-                  <span class="fact-val" data-i18n="factTicketVal">凭学生证免费入馆</span>
-                </div>
-                <div class="fact-item">
-                  <span class="fact-label" data-i18n="factDemoLabel">纸带机讲解</span>
-                  <span class="fact-val" data-i18n="factDemoVal">每日 14:30 现场演示</span>
+                  <span class="fact-label" data-i18n="factDemoLabel">镇馆展品</span>
+                  <span class="fact-val" data-i18n="factDemoVal">1962 Ferranti Sirius 操作台与延展柜</span>
                 </div>
               </div>
             </div>
 
             <div class="visit-cta-row">
               <button type="button" id="open-visit-modal-btn" class="btn-primary" data-i18n="openVisitModal">
-                查看博物馆与参观信息
+                查看完整展馆地址与参观指南
               </button>
               <button type="button" id="write-another-btn" class="btn-secondary" data-i18n="writeAnother">
                 再写一封 1962 年的信
@@ -551,16 +651,16 @@
 
     <footer class="site-footer">
       <div class="footer-inner">
-        <span>A Message from 1962? · Computer History Museum</span>
-        <span data-i18n="footerNote">三号展厅 · 早期晶体管与办公计算</span>
+        <span>A Message from 1962? · Monash Museum of Computing History</span>
+        <span data-i18n="footerNote">Building B, Foyer, Level 2, Caulfield East VIC 3145, Australia</span>
       </div>
     </footer>
   </div>
 
-  <!-- Native Accessible Modal Dialog -->
+  <!-- Native Accessible Modal Dialog: Museum Guide -->
   <dialog id="visit-dialog" class="visit-dialog" closedby="any" aria-labelledby="visit-dialog-title">
     <div class="dialog-titlebar">
-      <span>MUSEUM_GUIDE.INF</span>
+      <span>MUSEUM_GUIDE.INF // VIC 3145</span>
       <form method="dialog">
         <button type="submit" class="pixel-close-x" aria-label="关闭参观指南">×</button>
       </form>
@@ -568,32 +668,32 @@
     <div class="dialog-shell">
       <div class="dialog-header">
         <div>
-          <span class="panel-code">GALLERY 03 · VISITOR INFO</span>
-          <h2 id="visit-dialog-title" class="dialog-title" data-i18n="dialogTitle">Ferranti Sirius 馆藏展区参观指南</h2>
+          <span class="panel-code">MONASH MUSEUM OF COMPUTING HISTORY</span>
+          <h2 id="visit-dialog-title" class="dialog-title" data-i18n="dialogTitle">莫纳什大学计算机历史博物馆参观指南</h2>
         </div>
       </div>
 
       <div class="dialog-body">
         <p data-i18n="dialogLead">
-          面向高校同学与首次到访的观众，「早期办公计算」常设展将今天的即时通讯与 1962 年的手工穿孔纸带连接在一起。
+          展区位于莫纳什大学 Caulfield 校区 Building B 二楼大厅，面向所有在校学生与公众开放，免费近距离观看 1962 年莫纳什第一台计算机 Ferranti Sirius。
         </p>
 
         <dl class="dialog-details">
           <div>
-            <dt data-i18n="dlgLocationDt">展厅位置</dt>
-            <dd data-i18n="dlgLocationDd">北翼三号展厅 · 早期晶体管与办公计算单元</dd>
+            <dt data-i18n="dlgLocationDt">精确地址</dt>
+            <dd data-i18n="dlgLocationDd">Building B, Foyer, Level 2, Caulfield East VIC 3145, Australia（莫纳什大学 Caulfield 校区 Building B 二楼大厅）</dd>
           </div>
           <div>
             <dt data-i18n="dlgExhibitDt">核心馆藏</dt>
-            <dd data-i18n="dlgExhibitDd">Ferranti Sirius 主机控制台、镍声学延迟线存储组件、1961–1962 年五孔纸带档案</dd>
+            <dd data-i18n="dlgExhibitDd">1962 Ferranti Sirius 操作台与晶体管延迟线机柜、Millionaire 机械计算器、A Digital Evolution 展区</dd>
           </div>
           <div>
-            <dt data-i18n="dlgAdmissionDt">高校学生票务</dt>
-            <dd data-i18n="dlgAdmissionDd">持全日制大学学生证免票入馆；周末 14:30 设有 15 分钟策展人导览</dd>
+            <dt data-i18n="dlgAdmissionDt">门票与参观方式</dt>
+            <dd data-i18n="dlgAdmissionDd">免费向学生与访客开放；可自由沿二楼大厅玻璃展柜长廊自助参观，配合本网页体验 1962 写信互动</dd>
           </div>
           <div>
-            <dt data-i18n="dlgTransitDt">交通路线</dt>
-            <dd data-i18n="dlgTransitDd">地铁 2 号线科学园站 B 口出站，向北步行约 6 分钟</dd>
+            <dt data-i18n="dlgTransitDt">公共交通</dt>
+            <dd data-i18n="dlgTransitDd">墨尔本轻轨/火车 Pakenham · Cranbourne · Frankston 线至 Caulfield Station，出站步行即达 Caulfield 校区 Building B</dd>
           </div>
         </dl>
       </div>
@@ -601,6 +701,40 @@
       <div class="dialog-footer">
         <form method="dialog">
           <button type="submit" class="btn-primary" data-i18n="dialogDone">返回线上展览</button>
+        </form>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Native Accessible Modal Dialog: Simulated Instagram Story / Slow-Mail Share Card -->
+  <dialog id="ig-card-dialog" class="visit-dialog ig-card-dialog" closedby="any" aria-labelledby="ig-dialog-title">
+    <div class="dialog-titlebar">
+      <span>IG_STORY_CARD.PNG // 1962 SLOW MAIL</span>
+      <form method="dialog">
+        <button type="submit" class="pixel-close-x" aria-label="关闭卡片预览">×</button>
+      </form>
+    </div>
+    <div class="dialog-shell">
+      <div class="dialog-header">
+        <div>
+          <span class="panel-code">SHAREABLE 1962 ARCHIVE CARD</span>
+          <h2 id="ig-dialog-title" class="dialog-title" data-i18n="igDialogTitle">1962 复古慢递分享卡片</h2>
+        </div>
+      </div>
+
+      <div class="dialog-body ig-preview-body">
+        <p class="ig-preview-note" data-i18n="igDialogDesc">
+          已为你生成融合莫纳什大学馆藏原机实拍、邮戳、五孔打孔纸带条与书信摘录的复古竖版卡片，可直接保存分享到 Instagram Story 或朋友圈。
+        </p>
+        <div class="ig-canvas-wrap">
+          <canvas id="ig-story-canvas" class="ig-story-canvas" width="540" height="960"></canvas>
+        </div>
+      </div>
+
+      <div class="dialog-footer ig-dialog-footer">
+        <button type="button" id="download-ig-card-btn" class="btn-primary" data-i18n="downloadIgCardBtn">保存卡片图片 (.PNG)</button>
+        <form method="dialog">
+          <button type="submit" class="btn-secondary" data-i18n="closeIgCardBtn">关闭</button>
         </form>
       </div>
     </div>

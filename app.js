@@ -7,21 +7,23 @@
   const I18N = {
     en: {
       introSkip: "Enter Directly",
-      introExhibitBadge: "EXHIBIT: FERRANTI SIRIUS · 1962",
+      introPhotoTag: "Real Exhibit · Building B, Level 2",
+      introExhibitBadge: "EXHIBIT: 1962 FERRANTI SIRIUS (MONASH’S FIRST COMPUTER)",
       introHeadline: "Send a 1962 Punched-Tape Letter Across Time",
       introDesc:
-        "Write a note to a friend. Inspired by Britain's 1962 Ferranti Sirius transistor computer, your letter is punched onto 5-track tape and kept alive in a ceaseless acoustic delay loop until the reader pulls it free.",
+        "Write a note to a friend. Inspired by the real 1962 Ferranti Sirius housed in Monash University’s Building B Level 2 foyer, your letter is punched onto 5-track paper tape and kept alive in a ceaseless acoustic delay loop until the reader pulls it free.",
+      introLocation: "Monash Museum of Computing History · Building B, Foyer, Level 2, Caulfield East VIC 3145",
       introStart: "Enter 1962 · Write a Letter",
-      brandSub: "Ferranti Sirius Interactive",
+      brandSub: "Monash Museum · Building B, Level 2",
       soundOff: "Sound: Off",
       soundOn: "Sound: On",
       replayIntro: "Replay Intro",
       composeBadge: "1962 CORRESPONDENCE DESK",
       composeHeading: "Write a note today, punch it onto 1962 paper tape",
       composeSubtitle:
-        "Your everyday words are adapted into a gentle 1960s letter—keeping your exact meaning without invented promises—while punching live 5-track paper tape below.",
+        "Choose a 1962 tone and archival postmark below—keeping your exact meaning without invented promises—while watching live 5-track paper tape punch in real time.",
       jumpToReceiver: "Go to Receiver →",
-      learnExhibit: "Learn More: 1962 Exhibit →",
+      learnExhibit: "Learn More: 7 Museum Photos →",
       livePunchLabel: "LIVE 5-TRACK PAPER TAPE PUNCH PREVIEW",
       labelTo: "To",
       labelFrom: "From",
@@ -32,28 +34,40 @@
       samplesLabel: "Quick prompts:",
       sample1Label: "Friday café",
       sample2Label: "Late lab report",
-      sample3Label: "Museum weekend",
+      sample3Label: "Meet at Building B",
+      toneModeLabel: "1962 Tone",
+      toneGentle: "Gentle Letter",
+      toneLab: "Lab Cable",
+      tonePostcard: "Time Postcard",
+      stampLabel: "Archival Postmark",
       originalEchoLabel: "Original Text Snapshot",
       resetDraft: "Reset to auto-draft",
       editedBadge: "Edited",
       labelRewritten: "1962 rewritten letter",
       toneFootnote:
-        "You may review or edit every line above before encoding it onto punched paper tape.",
+        "Compare your modern note with the 1962 adaptation and edit any word freely before punching.",
       confirmEncode: "Confirm & Encode to Punched Tape",
       dispatchReady: "5-track punched tape encoded—circulating in acoustic memory and ready to share.",
       openAsRecipient: "Go to Receiver (Pull Tape to Read) →",
       copyShareLink: "Copy Shareable Recipient Link",
-      learnMoreSirius: "Learn More: Ferranti Sirius Archive →",
+      openIgCardBtn: "Save IG Story Letter Card",
+      learnMoreSirius: "Explore the 7 Real Museum Photos →",
       copiedOk: "Link copied to clipboard",
       copiedFallback: "Link ready—copy from field",
+      realExhibitTag: "ON DISPLAY IN CAULFIELD · BUILDING B LEVEL 2",
+      composeExhibitTitle: "The real computer behind this site sits inside Monash University’s Caulfield Campus",
+      composeExhibitDesc:
+        "Donated to Monash University in 1962, this Ferranti Sirius transistor computer used 5-track punched tape and nickel acoustic delay lines. Its original desk console, brown leather chair, and cabinets still stand in Building B, Foyer, Level 2.",
+      viewAllSevenPhotos: "Explore 7 Museum Photos & Hardware Pins →",
       receiveBadge: "1962 PAPER TAPE RECEIVER",
       receiveHeading: "Pull the tape to read the message",
       apparatusDisclaimer:
-        "A contemporary interactive apparatus inspired by the 1962 Ferranti Sirius — built to let you feel the contrast between reading tape and circulating memory.",
+        "A contemporary interactive apparatus inspired by the 1962 Ferranti Sirius at Monash University — built to let you feel the contrast between reading tape and circulating memory.",
       backToWrite: "← Back to Write Desk",
       liveLoopTag: "● LOOPING ENDLESSLY",
       waitingCountLabel: "CIRCULATED BEFORE YOU ARRIVED",
       waitingUnit: "cycles",
+      waitingTimeLabel: "KEEPING MEMORY ALIVE",
       waitingHeadline: "Before you pulled the tape, this letter had already raced tens of thousands of loops waiting for you",
       waitingDesc:
         "Today's messages rest quietly inside solid-state drives or cloud servers. In 1962, the Ferranti Sirius had no static disk: to keep this letter from vanishing, it had to travel nonstop as acoustic ripples through a nickel wire coil until you opened it.",
@@ -82,6 +96,7 @@
       statusLoopStandby: "Circulating (Ready)",
       statusCirculating: "Circulating",
       statusLoopStopped: "Display Paused",
+      pingLoopBtn: "Ping Delay Loop (+Acoustic Echo)",
       pauseCalloutTitle: "Tape stopped — memory still circulating",
       pauseCalloutBody:
         "You stopped pulling the paper tape, so reading has paused. Yet the information already read keeps circulating inside the machine to remain stored. Reading and storing are two separate processes.",
@@ -89,73 +104,85 @@
       simDisclaimer:
         "Note: This counter illustrates continuous acoustic delay-line recirculation—it does not represent the exact kHz clock speed of the original Ferranti Sirius.",
       completePrompt:
-        "Every character of the 1962 message has arrived. Now step inside the archive of the real Ferranti Sirius.",
-      meetRealSirius: "Learn More: The Real 1962 Ferranti Sirius →",
+        "Every character of the 1962 message has arrived. Now inspect all 7 real photographs of the Ferranti Sirius inside Monash University.",
+      meetRealSirius: "Explore the 7 Museum Photos & Hardware Pins →",
       writeReplyLetter: "← Write a 1962 Letter",
-      historyBadge: "ARCHIVAL FACT · FERRANTI SIRIUS",
-      historyHeading: "The Real Ferranti Sirius (1961–1962)",
+      historyBadge: "MONASH MUSEUM OF COMPUTING HISTORY · 1962",
+      historyHeading: "The Real Ferranti Sirius (Building B, Level 2)",
       historySubtitle:
-        "Beyond the interactive letter sits a milestone of early British transistor computing—quiet enough for an ordinary office, clever enough to store memory as sound.",
+        "Walk inside Monash University Caulfield Campus: inspect 7 real collection photographs, click the hardware pins on the 1962 console, and trace how memory traveled as sound.",
       backToReceive: "← Back to Tape Receiver",
-      photoCaption:
-        "Archival exhibition plate of the Ferranti Sirius console, transistor cabinets, and 5-track photoelectric paper tape reader (c. 1962).",
-      uploadPhotoBtn: "Load museum photo",
-      histCard1Title: "A Transistor Computer for Ordinary Rooms",
+      thumb0Label: "01 Sirius Console Desk",
+      thumb1Label: "02 Console Closeup",
+      thumb2Label: "03 Open Delay Cabinet",
+      thumb3Label: "04 Building B Foyer",
+      thumb4Label: "05 Digital Evolution Wing",
+      thumb5Label: "06 Early Calculators",
+      thumb6Label: "07 Visitors in Gallery",
+      uploadPhotoBtn: "Load Local Exhibition Photo",
+      histCard1Title: "Monash University's First Computer (1962)",
       histCard1Body:
-        "Built by Ferranti Ltd. in Manchester between 1958 and 1962, the Sirius replaced glowing vacuum tubes with compact transistors. It needed no special air conditioning and plugged into standard office mains—bringing digital computing out of giant air-conditioned halls.",
+        "Installed at Monash in 1962, the transistorized Ferranti Sirius replaced fragile vacuum tubes and plugged into ordinary campus mains electricity—becoming a generation of students' first direct encounter with digital computing.",
       histCard2Title: "Why 5-Track Punched Paper Tape?",
       histCard2Body:
-        "In 1962, you did not type directly into live screen editors. Programs, calculations, and messages were punched as 5-hole patterns onto paper strips using an offline teleprinter, then fed through a photoelectric reader into the Sirius.",
+        "In 1962, you did not type directly into live screen editors. Programs and messages were punched as 5-hole patterns onto oiled paper strips via teleprinter, then read optically into the Sirius console.",
       histCard3Title: "Saving Data as Traveling Echoes",
       histCard3Body:
-        "Rather than expensive magnetic core arrays, the Sirius stored numbers inside nickel magnetostrictive acoustic delay lines—sending mechanical ripples around a coil of wire and re-amplifying them endlessly so memory would not fade.",
-      visitKicker: "Computer History Museum · Gallery 3",
-      visitHeadline: "See the surviving Ferranti Sirius hardware in person",
+        "Instead of magnetic core memory, the Sirius sent acoustic torsion pulses endlessly around coiled nickel wires. Stop circulating, and every letter inside would vanish immediately.",
+      visitKicker: "Monash Museum of Computing History · Caulfield Campus",
+      visitHeadline: "Visit the surviving 1962 Ferranti Sirius in person",
       visitDesc:
-        "Inspect authentic 5-track paper tapes, transistor logic boards, and nickel delay-line trays in our Early Office Computing wing.",
-      factHoursLabel: "Hours",
-      factHoursVal: "Tue – Sun · 10:00 – 17:30",
-      factTicketLabel: "Students",
-      factTicketVal: "Free with University ID",
-      factDemoLabel: "Tape Reader Demo",
-      factDemoVal: "Daily at 14:30",
-      openVisitModal: "Museum & Visitor Guide",
+        "Located in Building B, Foyer, Level 2, Caulfield East VIC 3145, Australia—inspect the actual blue-grey console, transistor delay-line cabinets, and neighboring computing artifacts.",
+      factLocationLabel: "Address",
+      factLocationVal: "Building B, Foyer, Level 2, Caulfield East VIC 3145",
+      factHoursLabel: "Access",
+      factHoursVal: "Mon – Fri · Building B Campus Hours (Free)",
+      factDemoLabel: "Core Exhibit",
+      factDemoVal: "1962 Ferranti Sirius Console & 5-Track Paper Tape",
+      openVisitModal: "Full Museum & Visitor Guide",
       writeAnother: "Write Another 1962 Letter",
-      footerNote: "Gallery 3 · Early Transistor & Office Computing",
-      dialogTitle: "Visiting the Ferranti Sirius Exhibition",
+      footerNote: "Building B, Foyer, Level 2, Caulfield East VIC 3145 · Vintage Oil Palette",
+      dialogTitle: "Monash Museum of Computing History",
       dialogLead:
-        "Designed especially for university students and first-time visitors, the Early Office Computing gallery connects today’s instant messaging with the tactile machinery of 1962.",
-      dlgLocationDt: "Location",
-      dlgLocationDd: "Gallery 3, North Wing — Early Transistor & Office Computing",
-      dlgExhibitDt: "On Display",
+        "Housed inside an open university foyer at Caulfield Campus, the museum preserves Monash University’s 1962 Ferranti Sirius alongside mechanical calculators and four decades of digital evolution.",
+      dlgLocationDt: "Museum Address",
+      dlgLocationDd: "Building B, Foyer, Level 2, Caulfield East VIC 3145, Australia",
+      dlgExhibitDt: "Highlight Exhibit",
       dlgExhibitDd:
-        "Ferranti Sirius console unit, nickel delay-line storage tray, 1961–1962 5-track punched paper tapes",
-      dlgAdmissionDt: "Student Admission",
+        "1962 Ferranti Sirius L-shaped console desk, original leather chair, open nickel delay-line cabinet & 5-track paper tape reader",
+      dlgAdmissionDt: "Admission & Hours",
       dlgAdmissionDd:
-        "Free general entry with valid university student card; weekend curator talk at 14:30",
-      dlgTransitDt: "Transit",
-      dlgTransitDd: "Metro Line 2 · Science Park Station (Exit B, 6 min walk)",
-      dialogDone: "Back to Exhibition",
+        "Free open access during Monash Caulfield Building B foyer hours; ideal for students, drop-in visitors, and exhibition classes",
+      dlgTransitDt: "Getting There",
+      dlgTransitDd: "Directly beside Caulfield Railway Station (Frankston / Cranbourne / Pakenham lines), Building B Level 2 Foyer",
+      dialogDone: "Back to Online Exhibition",
+      igDialogTitle: "Your 1962 Slow-Mail Share Card",
+      igDialogDesc:
+        "Save this 9:16 portrait card stamped with your 1962 postmark, punched-tape excerpt, and Monash Museum address—ready for Instagram Story, Moments, or Xiaohongshu.",
+      downloadIgCardBtn: "Download PNG Story Card",
+      closeIgCardBtn: "Close",
       charsSuffix: "chars",
       readSuffix: "READ"
     },
     zh: {
       introSkip: "直接进入",
-      introExhibitBadge: "馆藏展品：FERRANTI SIRIUS · 1962",
+      introPhotoTag: "馆藏实拍 · Building B 二楼大厅",
+      introExhibitBadge: "馆藏展品：1962 FERRANTI SIRIUS（Monash 第一台计算机）",
       introHeadline: "寄出一封穿越 1962 年的打孔纸带信",
       introDesc:
-        "写一段话给朋友，由 1962 年英国 Ferranti Sirius 晶体管计算机将其编码为五孔纸带，并在镍金属丝声波回路里日夜循环保存，等待收信人亲手拉出破译。",
+        "写一段话给朋友，由陈列在莫纳什大学 Caulfield 校区 Building B 二楼的 1962 年 Ferranti Sirius 晶体管计算机将其编码为五孔纸带，并在镍金属丝声波回路里日夜循环保存，等待收信人亲手拉出破译。",
+      introLocation: "Monash Museum of Computing History · Building B, Foyer, Level 2, Caulfield East VIC 3145",
       introStart: "进入 1962 年 · 开始写信",
-      brandSub: "Ferranti Sirius 馆藏互动展",
+      brandSub: "Monash 博物馆 · Building B Level 2",
       soundOff: "机械音：关",
       soundOn: "机械音：开",
       replayIntro: "重播开屏",
       composeBadge: "1962 写信台 · 线上互动体验",
       composeHeading: "写下一句话，交由 1962 年的打孔纸带寄出",
       composeSubtitle:
-        "你的日常表达会被改写成温和含蓄的 1960 年代书信（严格保留原意），实时打成五孔光电纸带；生成链接发给朋友，或自己直接体验拉纸带收信。",
+        "挑选 1962 书信口吻与档案邮戳印章，系统在严格保留你原意的前提下改写书信稿，并在下方实时打出五孔光电纸带；可生成收信链接或保存 9:16 分享卡片。",
       jumpToReceiver: "前往收信机 →",
-      learnExhibit: "了解更多：1962 展品 →",
+      learnExhibit: "了解更多：7 张馆藏实拍 →",
       livePunchLabel: "实时五孔纸带打孔预览",
       labelTo: "收信人",
       labelFrom: "署名",
@@ -166,27 +193,39 @@
       samplesLabel: "示例灵感：",
       sample1Label: "周五大课后",
       sample2Label: "赶实验报告",
-      sample3Label: "周末看展",
+      sample3Label: "约看 Building B 真机",
+      toneModeLabel: "1962 书信口吻",
+      toneGentle: "温柔书简",
+      toneLab: "实验室电报",
+      tonePostcard: "时空慢递卡",
+      stampLabel: "盖章邮戳",
       originalEchoLabel: "原文对照",
       resetDraft: "恢复自动改写",
       editedBadge: "已手动微调",
       labelRewritten: "1962 年代感书信稿",
-      toneFootnote: "你可以先对比原文与改写稿，并直接修改上方任意一句，确认后再编码为纸带。",
+      toneFootnote: "可自由切换书信口吻并直接修改上方任意一句，确认后再编码为打孔纸带。",
       confirmEncode: "确认信件并编码为打孔纸带",
-      dispatchReady: "五单位打孔纸带已生成，正送入声波延迟线循环保存，可前往收信或复制链接。",
+      dispatchReady: "五单位打孔纸带已生成，正送入声波延迟线循环保存，可前往收信、复制链接或导出 IG 慢递卡片。",
       openAsRecipient: "前往收信机（亲手拉出纸带读信）→",
       copyShareLink: "复制收信链接发给朋友",
-      learnMoreSirius: "了解更多：Ferranti Sirius 展品档案 →",
+      openIgCardBtn: "生成 IG Story 分享图卡",
+      learnMoreSirius: "浏览 7 张莫纳什馆藏实拍档案 →",
       copiedOk: "链接已复制到剪贴板",
       copiedFallback: "链接已生成，请手动复制",
+      realExhibitTag: "真实展品所在地 · CAULFIELD BUILDING B二楼",
+      composeExhibitTitle: "这台机器此刻就静静陈列在莫纳什大学 Caulfield 校区",
+      composeExhibitDesc:
+        "1962 年入驻莫纳什大学的 Ferranti Sirius 晶体管计算机，靠五孔纸带读入、靠镍丝声波回路留存记忆。它的原装操作桌、棕色皮椅与存储机柜，今天仍完整陈列在 Building B 二楼大堂。",
+      viewAllSevenPhotos: "查看 7 张馆藏实拍与机台细节标注 →",
       receiveBadge: "纸带收信台 · 逐字破译",
       receiveHeading: "拉动打孔纸带，让 1962 年的信慢慢显现",
       apparatusDisclaimer:
-        "这是一台专为本次展览设计的当代互动装置，灵感源自 1962 年 Ferranti Sirius 晶体管计算机，帮助你感受“读取纸带”与“声波循环记忆”的不同。",
+        "这是一台专为本次展览设计的当代互动装置，灵感源自莫纳什大学馆藏的 1962 年 Ferranti Sirius 晶体管计算机，帮助你感受“读取纸带”与“声波循环记忆”的不同。",
       backToWrite: "← 返回写信台",
       liveLoopTag: "● 持续循环中",
       waitingCountLabel: "等待收信期间已持续循环",
       waitingUnit: "次",
+      waitingTimeLabel: "持续守候保存计时",
       waitingHeadline: "在你还没点开这封信时，它已经在镍金属丝里不停奔跑了上万圈",
       waitingDesc:
         "今天的微信、邮件会安静地躺在硬盘或云服务器里等你查看；但 1962 年的 Ferranti Sirius 没有静态硬盘——为了不让这封信消失，机器只能把它化作一串机械声波脉冲，沿着镍丝线圈永不停止地循环回荡。只要循环不断，记忆就在。",
@@ -214,57 +253,68 @@
       statusLoopStandby: "待机循环保存中",
       statusCirculating: "持续循环中",
       statusLoopStopped: "示意已暂停",
+      pingLoopBtn: "拨动镍丝（听一声回响 / Ping Delay Loop）",
       pauseCalloutTitle: "纸带停下了——内部循环仍在继续",
       pauseCalloutBody:
         "你停下了拉纸带的动作，「读取信息」随之暂停；但已经读入机器的信息仍在内部不断循环以保持记忆。「读取」和「保存」是两个不同的过程。",
       simCycleLabel: "本次读取后循环圈数",
       simDisclaimer:
         "说明：此处显示的循环次数仅用于帮助理解声波循环概念，并非 Ferranti Sirius 原机的真实运行速度或测量数据。",
-      completePrompt: "这封来自 1962 年的信已经读完。现在，去看看机器背后的真实历史吧。",
-      meetRealSirius: "了解更多：认识真实的 1962 Ferranti Sirius →",
+      completePrompt: "这封来自 1962 年的信已经读完。现在，点击查看莫纳什大学大楼里真实的 7 张博物馆照片吧。",
+      meetRealSirius: "前往第三屏：看 7 张莫纳什馆藏实拍 →",
       writeReplyLetter: "← 我也写一封 1962 年的信",
-      historyBadge: "真实馆藏档案 · Ferranti Sirius",
-      historyHeading: "真实的 Ferranti Sirius（1961–1962）",
+      historyBadge: "MONASH MUSEUM OF COMPUTING HISTORY · 1962",
+      historyHeading: "真实的 Ferranti Sirius 与莫纳什展厅（7 张实拍档案）",
       historySubtitle:
-        "剥开互动故事的外衣，这台出自曼彻斯特的早期晶体管计算机，曾用普通办公室电源和金属丝里的“回声”记住了整整一代数据。",
+        "无需预约专门场馆，这台 1962 年的计算机就在墨尔本莫纳什大学 Caulfield 校区 Building B 二楼开放走廊里。点击照片上的圆点，拆解机台上的每个时代细节。",
       backToReceive: "← 返回纸带收信机",
-      photoCaption:
-        "Ferranti Sirius 馆藏档案图版：桌面控制台、晶体管机柜与光电五孔纸带读入器（约 1962 年）。",
-      uploadPhotoBtn: "替换馆藏实拍图",
+      thumb0Label: "01 Sirius 操作台",
+      thumb1Label: "02 控制台特写",
+      thumb2Label: "03 延迟线机柜",
+      thumb3Label: "04 二楼展厅走廊",
+      thumb4Label: "05 数字演进展区",
+      thumb5Label: "06 早期机械计算器",
+      thumb6Label: "07 馆内参观实景",
+      uploadPhotoBtn: "上传本地展厅照片预览",
       histCard1Title: "不用空调机房的晶体管计算机",
       histCard1Body:
-        "Ferranti Sirius 由英国曼彻斯特的 Ferranti 公司于 1958 至 1962 年间研制。它用晶体管取代了耗电发热的真空管，插上普通办公室电源就能运转，让计算机第一次有机会走进日常工作间。",
+        "Ferranti Sirius 于 1962 年落户莫纳什大学。它用晶体管取代了耗电发热的真空管，插上普通校园市电就能运转，让当年师生第一次把电脑搬进了日常工作间。",
       histCard2Title: "为什么要用五孔打孔纸带？",
       histCard2Body:
-        "在 1962 年，人们还不能直接在屏幕上实时编辑文字。消息与程序会先在电传打字机上打成带孔纸带，再送入 Sirius 的光电读带机，由光线透过小孔逐列辨认字符。",
+        "在 1962 年，人们还不能直接在屏幕上实时编辑文字。消息与程序会先在电传打字机上打成五孔带孔纸带，再送入 Sirius 的光电读带机，由光线透过小孔逐列辨认字符。",
       histCard3Title: "靠“声音回声”把信息留在机器里",
       histCard3Body:
-        "为了节省昂贵的磁芯存储器，Sirius 采用镍磁致伸缩声学延迟线作为内部记忆：把电信号变成细微的机械脉冲，在镍丝线圈里一圈圈循环传播，只要循环不断，记忆就不会消失。",
-      visitKicker: "计算机历史博物馆 · 三号展厅",
-      visitHeadline: "欢迎来博物馆亲眼看看 Ferranti Sirius 实物",
+        "Sirius 采用镍磁致伸缩声学延迟线作为内部记忆：把电信号变成细微的机械脉冲，在盘绕的镍丝线圈里一圈圈循环传播，只要循环不断，记忆就不会消失。",
+      visitKicker: "Monash Museum of Computing History · Caulfield Campus",
+      visitHeadline: "欢迎来莫纳什大学 Caulfield 校区亲眼看看 Sirius 实物",
       visitDesc:
-        "在「早期晶体管与办公计算」展区，你可以近距离观察 1962 年的五孔纸带原件、晶体管插件板与镍延迟线存储盘。",
-      factHoursLabel: "开放时间",
-      factHoursVal: "周二至周日 10:00 – 17:30",
-      factTicketLabel: "大学生礼遇",
-      factTicketVal: "凭学生证免费入馆",
-      factDemoLabel: "纸带机讲解",
-      factDemoVal: "每日 14:30 现场演示",
-      openVisitModal: "查看博物馆与参观信息",
+        "位于 Building B, Foyer, Level 2, Caulfield East VIC 3145, Australia（澳大利亚墨尔本莫纳什大学考菲尔德校区 B 栋二楼大堂），对在校学生与访客常年免费开放。",
+      factLocationLabel: "准确馆址",
+      factLocationVal: "Building B, Foyer, Level 2, Caulfield East VIC 3145",
+      factHoursLabel: "开放方式",
+      factHoursVal: "周一至周五教学楼开放时段 · 免费参观",
+      factDemoLabel: "核心馆藏",
+      factDemoVal: "1962 Ferranti Sirius 全套操作台与五孔纸带机",
+      openVisitModal: "查看博物馆地址与参观交通指南",
       writeAnother: "再写一封 1962 年的信",
-      footerNote: "三号展厅 · 早期晶体管与办公计算",
-      dialogTitle: "Ferranti Sirius 馆藏展区参观指南",
+      footerNote: "Building B, Foyer, Level 2, Caulfield East VIC 3145 · 复古油画展陈配色",
+      dialogTitle: "莫纳什计算历史博物馆 · 参观指南",
       dialogLead:
-        "面向高校同学与首次到访的观众，「早期办公计算」常设展将今天的即时通讯与 1962 年的手工穿孔纸带连接在一起。",
-      dlgLocationDt: "展厅位置",
-      dlgLocationDd: "北翼三号展厅 · 早期晶体管与办公计算单元",
-      dlgExhibitDt: "核心馆藏",
-      dlgExhibitDd: "Ferranti Sirius 主机控制台、镍声学延迟线存储组件、1961–1962 年五孔纸带档案",
-      dlgAdmissionDt: "高校学生票务",
-      dlgAdmissionDd: "持全日制大学学生证免票入馆；周末 14:30 设有 15 分钟策展人导览",
-      dlgTransitDt: "交通路线",
-      dlgTransitDd: "地铁 2 号线科学园站 B 口出站，向北步行约 6 分钟",
+        "这座展厅并没有藏在高门槛展馆深处，而是直接设在莫纳什大学 Caulfield 校区教学楼大厅二层——下课路过就能与 1962 年的打孔纸带历史面对面。",
+      dlgLocationDt: "博物馆精确地址",
+      dlgLocationDd: "Building B, Foyer, Level 2, Caulfield East VIC 3145, Australia",
+      dlgExhibitDt: "核心馆藏实物",
+      dlgExhibitDd: "1962 年 Ferranti Sirius 蓝灰色 L 型控制台、原装棕色皮椅、镍声波延迟线晶体管机柜与早期机械计算器展柜",
+      dlgAdmissionDt: "门票与参观时段",
+      dlgAdmissionDd: "常年免费免预约开放（Building B 校园大堂开放时间即可自由驻足观看）",
+      dlgTransitDt: "交通路线指引",
+      dlgTransitDd: "墨尔本城铁 Caulfield Station 下车步行约 3 分钟即达 Monash Caulfield 校区 Building B，乘扶梯或楼梯至二楼（Level 2）大堂",
       dialogDone: "返回线上展览",
+      igDialogTitle: "你的 1962 慢递信件分享图卡",
+      igDialogDesc:
+        "点击下方按钮保存这张 9:16 竖版纪念卡——带有你选择的档案邮戳、五孔纸带纹样与莫纳什博物馆地址，可直接分享到 Instagram Story、朋友圈或小红书。",
+      downloadIgCardBtn: "下载 PNG 纪念卡片",
+      closeIgCardBtn: "关闭",
       charsSuffix: "字",
       readSuffix: "已读"
     }
@@ -299,12 +349,12 @@
       en: {
         to: "Hannah",
         from: "Leo",
-        text: "I found this strange 1962 computer at the museum today. Come see it with me this weekend!"
+        text: "I walked past Building B Level 2 today and saw this real 1962 Ferranti Sirius computer! Come see it with me after class."
       },
       zh: {
         to: "舒婷",
         from: "周明",
-        text: "今天在博物馆看到一台1962年的奇妙老式计算机，周末一起来看实物吧！"
+        text: "今天路过 Building B 二楼大厅，居然看见一台 1962 年真实的 Ferranti Sirius 计算机！下课一起去看实物吧！"
       }
     }
   ];
@@ -318,6 +368,10 @@
     sender: SAMPLES[0].zh.from,
     recipient: SAMPLES[0].zh.to,
     rawInput: SAMPLES[0].zh.text,
+    tone: "gentle", // 'gentle' | 'lab' | 'postcard'
+    stamp: "MONASH SIRIUS · 1962",
+    activePhotoIdx: 0,
+    activeHotspotIdx: 0,
     letterEn: "",
     letterZh: "",
     isCustomEditedEn: false,
@@ -417,7 +471,7 @@
     return text;
   }
 
-  function buildLetter1962(rawText, sender, recipient, lang) {
+  function buildLetter1962(rawText, sender, recipient, lang, tone = state.tone) {
     const cleanRaw = (rawText || "").trim();
     if (lang === "zh") {
       const rec = (recipient || "").trim() || "挚友";
@@ -425,6 +479,32 @@
       const body = cleanRaw
         ? polishChinese1960s(cleanRaw)
         : "今借纸带寄去短简一纸，盼你近来顺遂安康。";
+
+      if (tone === "lab") {
+        return [
+          `[PAPER-TAPE DISPATCH // 1962]`,
+          `致：${rec}   发自：${snd}`,
+          "--------------------------------",
+          `正文：${body}`,
+          "--------------------------------",
+          "备注：此段文字已送入镍丝延迟线循环保存，待你拉出纸带签收。",
+          "CAULFIELD BLDG B · LEVEL 2 · 1962"
+        ].join("\n");
+      }
+
+      if (tone === "postcard") {
+        return [
+          `「1962 时空慢递明信片」`,
+          `${rec} 展信安：`,
+          "",
+          body,
+          "",
+          "这几句话此刻正随声波脉冲一圈圈守候在纸带深处，读完若经过 Building B 二楼，不妨来看看真的 Sirius 机器。",
+          "",
+          `${snd} 寄自 1962`
+        ].join("\n");
+      }
+
       return [
         `亲爱的${rec}：`,
         "",
@@ -446,6 +526,30 @@
       ? polishEnglish1960s(cleanRaw)
       : "I send you a brief line today to hope that all is well with you.";
 
+    if (tone === "lab") {
+      return [
+        "[5-TRACK TAPE CABLE // MONASH SIRIUS 1962]",
+        `TO: ${rec.toUpperCase()}   FROM: ${snd.toUpperCase()}`,
+        "----------------------------------------",
+        body,
+        "----------------------------------------",
+        "STATUS: RECIRCULATING IN NICKEL DELAY COIL UNTIL PULLED FREE."
+      ].join("\n");
+    }
+
+    if (tone === "postcard") {
+      return [
+        "TIME-LOOP POSTCARD · BLDG B LEVEL 2",
+        `Dear ${rec},`,
+        "",
+        body,
+        "",
+        "While you waited, these words ran endless acoustic laps inside the 1962 Sirius console.",
+        "",
+        `Warmly across time, ${snd}`
+      ].join("\n");
+    }
+
     return [
       "14th November, 1962",
       "",
@@ -462,10 +566,10 @@
 
   function syncDraftsFromRaw() {
     if (!state.isCustomEditedEn) {
-      state.letterEn = buildLetter1962(state.rawInput, state.sender, state.recipient, "en");
+      state.letterEn = buildLetter1962(state.rawInput, state.sender, state.recipient, "en", state.tone);
     }
     if (!state.isCustomEditedZh) {
-      state.letterZh = buildLetter1962(state.rawInput, state.sender, state.recipient, "zh");
+      state.letterZh = buildLetter1962(state.rawInput, state.sender, state.recipient, "zh", state.tone);
     }
   }
 
@@ -484,6 +588,8 @@
       e: state.letterEn,
       z: state.letterZh,
       l: state.lang,
+      m: state.tone,
+      p: state.stamp,
       t: state.dispatchedAt || Date.now()
     };
     const json = JSON.stringify(payload);
@@ -520,8 +626,20 @@
         state.sender = typeof parsed.s === "string" ? parsed.s : state.sender;
         state.recipient = typeof parsed.r === "string" ? parsed.r : state.recipient;
         state.rawInput = typeof parsed.o === "string" ? parsed.o : state.rawInput;
-        state.letterEn = typeof parsed.e === "string" && parsed.e ? parsed.e : buildLetter1962(state.rawInput, state.sender, state.recipient, "en");
-        state.letterZh = typeof parsed.z === "string" && parsed.z ? parsed.z : buildLetter1962(state.rawInput, state.sender, state.recipient, "zh");
+        if (parsed.m === "gentle" || parsed.m === "lab" || parsed.m === "postcard") {
+          state.tone = parsed.m;
+        }
+        if (typeof parsed.p === "string" && parsed.p.trim()) {
+          state.stamp = parsed.p;
+        }
+        state.letterEn =
+          typeof parsed.e === "string" && parsed.e
+            ? parsed.e
+            : buildLetter1962(state.rawInput, state.sender, state.recipient, "en", state.tone);
+        state.letterZh =
+          typeof parsed.z === "string" && parsed.z
+            ? parsed.z
+            : buildLetter1962(state.rawInput, state.sender, state.recipient, "zh", state.tone);
         state.isCustomEditedEn = true;
         state.isCustomEditedZh = true;
         if (parsed.l === "zh" || parsed.l === "en") {
@@ -543,7 +661,7 @@
   }
 
   /* ========================================================================
-     5. Optional Web Audio Mechanical / Relay Click Synthesizer (Opt-in Only)
+     5. Optional Web Audio Mechanical / Relay Click Synthesizer
      ======================================================================== */
   class SoundEngine {
     constructor() {
@@ -584,6 +702,26 @@
       gain.connect(this.ctx.destination);
       osc.start(t);
       osc.stop(t + 0.032);
+    }
+
+    playPingEcho() {
+      if (!state.soundEnabled) return;
+      this.ensureContext();
+      if (!this.ctx) return;
+
+      const t = this.ctx.currentTime;
+      [0, 0.14, 0.28].forEach((offset, idx) => {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(860 - idx * 95, t + offset);
+        gain.gain.setValueAtTime(0.06 / (idx + 1), t + offset);
+        gain.gain.exponentialRampToValueAtTime(0.0008, t + offset + 0.18);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(t + offset);
+        osc.stop(t + offset + 0.2);
+      });
     }
   }
   const soundEngine = new SoundEngine();
@@ -1030,6 +1168,7 @@
       this.pauseCalloutEl = document.getElementById("pause-callout");
       this.cyclesCountEl = document.getElementById("loop-cycles-count");
       this.waitingCyclesEl = document.getElementById("waiting-cycles-count");
+      this.waitingTimerEl = document.getElementById("waiting-elapsed-timer");
 
       this.colWidth = 14;
       this.leaderCols = 6;
@@ -1045,6 +1184,7 @@
       this.lastRevealedCount = 0;
       this.loopAngle = 0;
       this.waitingAccum = 0;
+      this.pingPulses = [];
       this.lastFrameTime = performance.now();
 
       // GSAP quickTo for compositor-friendly tape translation
@@ -1359,6 +1499,23 @@
             }
           }
 
+          if (this.waitingTimerEl) {
+            const rawSec = Math.max(1, Math.floor((Date.now() - (state.dispatchedAt || Date.now())) / 1000));
+            const hrs = String(Math.floor(rawSec / 3600)).padStart(2, "0");
+            const mins = String(Math.floor((rawSec % 3600) / 60)).padStart(2, "0");
+            const secs = String(rawSec % 60).padStart(2, "0");
+            this.waitingTimerEl.textContent = `${hrs}:${mins}:${secs}`;
+          }
+
+          // Advance active acoustic ping echoes along the coil
+          for (let p = this.pingPulses.length - 1; p >= 0; p -= 1) {
+            this.pingPulses[p].life -= dt * 0.9;
+            this.pingPulses[p].angle += dt * 7.2;
+            if (this.pingPulses[p].life <= 0) {
+              this.pingPulses.splice(p, 1);
+            }
+          }
+
           if (hasData && nextRevs > prevRevs) {
             state.simulatedCycles += 1;
             this.cyclesCountEl.textContent = state.simulatedCycles.toLocaleString();
@@ -1370,6 +1527,15 @@
       };
 
       requestAnimationFrame(draw);
+    }
+
+    triggerPing() {
+      this.pingPulses.push({ angle: 0, life: 1 });
+      state.waitingCycles += 8;
+      if (this.waitingCyclesEl) {
+        this.waitingCyclesEl.textContent = state.waitingCycles.toLocaleString();
+      }
+      soundEngine.playPingEcho();
     }
 
     renderLoopCanvas(hasData, revealedCount, letterText = "") {
@@ -1391,6 +1557,20 @@
       for (let y = 16; y <= h - 16; y += 8) {
         ctx.fillRect(cx, y, 2, 2);
       }
+
+      // Active acoustic ping echo waves
+      this.pingPulses.forEach((pulse) => {
+        const alpha = Math.max(0, Math.min(1, pulse.life));
+        ctx.strokeStyle = `rgba(125, 32, 39, ${(alpha * 0.72).toFixed(2)})`;
+        ctx.lineWidth = 2;
+        const spread = (1 - alpha) * 28;
+        ctx.strokeRect(cx - rx - spread, cy - ry - spread * 0.55, (rx + spread) * 2, (ry + spread * 0.55) * 2);
+
+        const ex = Math.round((cx + Math.cos(pulse.angle) * rx) / 2) * 2;
+        const ey = Math.round((cy + Math.sin(pulse.angle) * ry) / 2) * 2;
+        ctx.fillStyle = "#7D2027";
+        ctx.fillRect(ex - 6, ey - 6, 12, 12);
+      });
 
       // Nickel delay-line pixel coil track
       const stepCount = 60;
@@ -1470,116 +1650,201 @@
   }
 
   /* ========================================================================
-     8. Archival Ferranti Sirius Collection Plate Renderer (Canvas)
+     8. Monash Museum 7-Photo Interactive Gallery & IG Story Card Renderer
      ======================================================================== */
-  function renderSiriusArchivePlate() {
-    const canvas = document.getElementById("sirius-archive-canvas");
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    const w = canvas.width;
-    const h = canvas.height;
-
-    // Warm oil-painting archival backdrop (#ECE6D8 -> #D9C4B1 -> #A39670)
-    const bgGrad = ctx.createLinearGradient(0, 0, 0, h);
-    bgGrad.addColorStop(0, "#ECE6D8");
-    bgGrad.addColorStop(0.62, "#D9C4B1");
-    bgGrad.addColorStop(1, "#A39670");
-    ctx.fillStyle = bgGrad;
-    ctx.fillRect(0, 0, w, h);
-
-    // Subtle gallery wall panel lines
-    ctx.strokeStyle = "rgba(55, 39, 19, 0.1)";
-    ctx.lineWidth = 1;
-    for (let x = 80; x < w; x += 140) {
-      ctx.beginPath();
-      ctx.moveTo(x, 0);
-      ctx.lineTo(x, h * 0.72);
-      ctx.stroke();
+  const MUSEUM_GALLERY = [
+    {
+      src: "assets/museum/sirius-full-desk.jpg",
+      tag: "MONASH ARCHIVE · COMP.1962.01",
+      captionZh: "莫纳什大学 Caulfield 校区 Building B 二楼实景：1962 年 Ferranti Sirius L 型蓝色操作台、棕色工作椅与晶体管控制柜。",
+      captionEn: "Ferranti Sirius full operator console on open display in Building B, Foyer, Level 2, Monash University Caulfield Campus.",
+      hotspots: [
+        {
+          x: 49,
+          y: 16,
+          badge: "1",
+          titleZh: "① 绿色主指示面板与展厅挂钟",
+          titleEn: "1. Green Status Facia & Wall Clock",
+          descZh: "上方绿色指示区配合操作面板提示机器传输状态；后方即日常通行的 Building B 二楼墙面。",
+          descEn: "Green header facia and register display perched above the main operating desk inside Building B foyer."
+        },
+        {
+          x: 41,
+          y: 31,
+          badge: "2",
+          titleZh: "② 桌面指令键盘与控制台",
+          titleEn: "2. Desktop Control Keypad",
+          descZh: "1962 年没有鼠标与图形屏幕，操作员在这里逐条启动纸带读取并观察寄存器变化。",
+          descEn: "No mouse or monitor in 1962—operators stepped programs and checked decimal registers from this desk keypad."
+        },
+        {
+          x: 82,
+          y: 62,
+          badge: "3",
+          titleZh: "③ 电传打字机与纸带送入工位",
+          titleEn: "3. Teleprinter & Paper Tape Station",
+          descZh: "消息先在电传打字机上离线打成五孔纸带，再经由光电读带机逐孔识别。",
+          descEn: "Letters and code were punched offline onto 5-track paper strips here before optical feeding into Sirius."
+        },
+        {
+          x: 26,
+          y: 62,
+          badge: "4",
+          titleZh: "④ 原装棕色皮椅与逻辑存储柜",
+          titleEn: "4. Operator Chair & Logic Cabinet",
+          descZh: "棕色皮质工作椅旁便是收纳早期锗晶体管电路与镍声波延迟线存储器的金属机柜。",
+          descEn: "The period leather chair sits directly beside the vertical bay holding germanium transistors and delay lines."
+        }
+      ]
+    },
+    {
+      src: "assets/museum/sirius-console-closeup.jpg",
+      tag: "MONASH ARCHIVE · CONSOLE.02",
+      captionZh: "操作台近景：可以清楚看见白色指令按键阵列、十进制寄存器仪表以及左侧保留的黄色五孔纸带卷。",
+      captionEn: "Closeup of the Sirius desktop control console, mechanical keyswitches, and surviving yellow 5-track punched tape reels.",
+      hotspots: [
+        {
+          x: 49,
+          y: 12,
+          badge: "1",
+          titleZh: "① 十进制状态指示窗",
+          titleEn: "1. Decimal Status Indicators",
+          descZh: "成排小型指示灯直接对应机器内部十进制小数运算与缓冲器数据。",
+          descEn: "Status lamps directly reflected internal decimal registers while paper-tape programs executed."
+        },
+        {
+          x: 50,
+          y: 45,
+          badge: "2",
+          titleZh: "② 机械指令拨盘与按键区",
+          titleEn: "2. Mechanical Switches & Keys",
+          descZh: "白色与红色物理按键用来控制“停止、单步、读带、复位”等低阶指令。",
+          descEn: "Tactile push-buttons gave engineers direct manual control over load, step, clear, and tape feed."
+        },
+        {
+          x: 16,
+          y: 62,
+          badge: "3",
+          titleZh: "③ 黄色五孔纸带与运行手册",
+          titleEn: "3. 5-Track Paper Tape & Logs",
+          descZh: "右侧与左下角展示的黄色纸带正是本网站灵感来源：文字曾真正被打在一条条窄纸带上。",
+          descEn: "Oiled yellow paper tape rolls kept beside original binders—every bit of text traveled as physical holes."
+        }
+      ]
+    },
+    {
+      src: "assets/museum/sirius-cabinet-visitors.webp",
+      tag: "MONASH ARCHIVE · DELAY.LINE.03",
+      captionZh: "访客现场观察敞开的机柜内部：紧凑的晶体管插板与依靠机械声波保存记忆的镍延迟线模块。",
+      captionEn: "Visitors examining the open Ferranti Sirius logic bay revealing germanium transistor cards and delay-line storage assemblies.",
+      hotspots: [
+        {
+          x: 24,
+          y: 50,
+          badge: "1",
+          titleZh: "① 镍延迟线与分立晶体管插板",
+          titleEn: "1. Nickel Delay Line & Logic Bay",
+          descZh: "不同与今天的固态硬盘，Sirius 用镍金属丝传播声音回波来“循环记住”数据，断电或停转即逝。",
+          descEn: "Inside this bay sit discrete transistor boards and coiled nickel acoustic delay lines—memory existed only while moving."
+        }
+      ]
+    },
+    {
+      src: "assets/museum/monash-gallery-foyer.jpg",
+      tag: "BLDG B · FOYER LEVEL 2",
+      captionZh: "莫纳什大学 Caulfield 校区 Building B 二楼开放式走廊展厅：同学们下课路过就能走进 1962 年。",
+      captionEn: "View along Monash Museum of Computing History on Level 2 of Building B foyer at Caulfield Campus.",
+      hotspots: [
+        {
+          x: 28,
+          y: 48,
+          badge: "1",
+          titleZh: "① 开放式校园大堂微博物馆",
+          titleEn: "1. Open Campus Foyer Corridor",
+          descZh: "展区不收门票、不设闸机，就安放在教学楼日常通道一侧（Building B, Foyer, Level 2）。",
+          descEn: "Unfettered campus access: computing artifacts line the everyday walkway of Building B Level 2."
+        },
+        {
+          x: 68,
+          y: 44,
+          badge: "2",
+          titleZh: "② 年代序列化实体展柜",
+          titleEn: "2. Chronological Hardware Cases",
+          descZh: "沿廊陈列了莫纳什大学 1962 年购入 Sirius 以来的教学与科研计算设备档案。",
+          descEn: "Glass showcases chronicle how Monash moved from Ferranti Sirius punched tape to modern terminals."
+        }
+      ]
+    },
+    {
+      src: "assets/museum/digital-evolution-wing.jpg",
+      tag: "GALLERY · DIGITAL EVOLUTION",
+      captionZh: "「A Digital Evolution」展墙全景：从 1962 年莫纳什第一台电脑出发，延伸出长达四十余年的数字演进。",
+      captionEn: "Panoramic view of the 'A Digital Evolution' wing stretching past Ferranti Sirius into minicomputers and terminals.",
+      hotspots: [
+        {
+          x: 52,
+          y: 18,
+          badge: "1",
+          titleZh: "① A Digital Evolution 主展墙",
+          titleEn: "1. 'A Digital Evolution' Banner",
+          descZh: "用完整实物时间线解释计算机如何从占据整桌的硬件缩进指尖的屏幕里。",
+          descEn: "Exhibition header introducing the leap from room-warmers and paper tapes to handheld instant messaging."
+        },
+        {
+          x: 24,
+          y: 64,
+          badge: "2",
+          titleZh: "② 磁带机、终端与微型机展陈",
+          titleEn: "2. Mainframe & Storage Artifacts",
+          descZh: "对比磁带与早期磁盘存储介质，更能体会 1962 年镍声波循环保存信息有多么特别。",
+          descEn: "Compare tape transports and early removable disks with Sirius's ceaseless nickel-wire loop memory."
+        }
+      ]
+    },
+    {
+      src: "assets/museum/early-calculators.jpg",
+      tag: "PRE-1962 · MECHANICAL ERA",
+      captionZh: "电子计算机前的算力起点：老式机械手摇计算器与算具陈列柜，构成走进 1962 年的前传。",
+      captionEn: "Pre-1962 mechanical crank calculators and early desktop reckoning machines on display near Sirius.",
+      hotspots: [
+        {
+          x: 34,
+          y: 58,
+          badge: "1",
+          titleZh: "① 手摇齿轮机械计算器",
+          titleEn: "1. Hand-Crank Pinwheel Calculators",
+          descZh: "在 Sirius 到来之前，全校的统计与工程数值计算都得一圈圈手摇齿轮完成。",
+          descEn: "Before Monash installed Ferranti Sirius in 1962, complex calculations relied on mechanical gear wheels."
+        },
+        {
+          x: 72,
+          y: 55,
+          badge: "2",
+          titleZh: "② 卡片与纸带前夜的算具",
+          titleEn: "2. Early Computing Bridge",
+          descZh: "从纯手动算具进化到能自动读纸带的存储程序电脑，只相隔短短十几年。",
+          descEn: "Only a short technological leap separated manual cranking from Sirius reading stored programs off paper tape."
+        }
+      ]
+    },
+    {
+      src: "assets/museum/visitor-calculators.webp",
+      tag: "CAMPUS · OPEN TO ALL",
+      captionZh: "莫纳什展厅实拍：无需专门请假去市中心大馆，学生和游客随时可以近距离贴近展柜细看。",
+      captionEn: "Visitors exploring the Monash computing exhibition displays along the accessible Caulfield Building B foyer.",
+      hotspots: [
+        {
+          x: 54,
+          y: 48,
+          badge: "1",
+          titleZh: "① 欢迎实地打卡：Caulfield East VIC 3145",
+          titleEn: "1. Free Campus Visit Anytime",
+          descZh: "线上写完、收完这封 1962 年的信，顺着地址去 Building B, Foyer, Level 2 找一找真正的 Sirius 吧。",
+          descEn: "Finished pulling the tape online? Walk straight into Building B, Foyer, Level 2, Caulfield East VIC 3145."
+        }
+      ]
     }
-
-    // Floor shadow
-    ctx.fillStyle = "rgba(55, 39, 19, 0.22)";
-    ctx.beginPath();
-    ctx.ellipse(385, 426, 290, 24, 0, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Rear Transistor Cabinet Bay (Ferranti Sirius upright logic unit in olive-bronze & umber)
-    ctx.fillStyle = "#372713";
-    ctx.fillRect(110, 96, 225, 310);
-    ctx.fillStyle = "#4D4828";
-    ctx.fillRect(116, 102, 213, 298);
-    // Cabinet doors & ventilation louvres
-    ctx.strokeStyle = "#372713";
-    ctx.lineWidth = 2;
-    ctx.strokeRect(126, 114, 92, 274);
-    ctx.strokeRect(226, 114, 92, 274);
-
-    // Upper decimal indicator strip on Sirius cabinet
-    ctx.fillStyle = "#372713";
-    ctx.fillRect(136, 128, 172, 42);
-    for (let i = 0; i < 10; i += 1) {
-      ctx.fillStyle = i === 2 || i === 6 || i === 9 ? "#7D2027" : "#6E644C";
-      ctx.fillRect(144 + i * 16, 142, 10, 14);
-    }
-
-    // Ventilation slots
-    ctx.fillStyle = "#372713";
-    for (let y = 290; y < 370; y += 8) {
-      ctx.fillRect(138, y, 68, 3);
-      ctx.fillRect(238, y, 68, 3);
-    }
-
-    // Main L-shaped operator desk
-    ctx.fillStyle = "#A39670";
-    ctx.fillRect(290, 244, 370, 22);
-    ctx.fillStyle = "#4D4828";
-    ctx.fillRect(306, 266, 28, 146);
-    ctx.fillRect(614, 266, 28, 146);
-
-    // Ferranti TR5 Optical Paper Tape Reader mounted on desk
-    ctx.fillStyle = "#372713";
-    ctx.fillRect(350, 178, 142, 66);
-    ctx.fillStyle = "#ECE6D8";
-    ctx.fillRect(360, 188, 122, 44);
-    // Tape reels
-    ctx.strokeStyle = "#372713";
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.arc(386, 210, 16, 0, Math.PI * 2);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.arc(454, 210, 16, 0, Math.PI * 2);
-    ctx.stroke();
-    // Warm bisque paper tape bridge
-    ctx.strokeStyle = "#D9C4B1";
-    ctx.lineWidth = 5;
-    ctx.beginPath();
-    ctx.moveTo(386, 194);
-    ctx.lineTo(454, 194);
-    ctx.stroke();
-
-    // Operator control console & manual switches
-    ctx.fillStyle = "#372713";
-    ctx.fillRect(512, 206, 122, 38);
-    for (let k = 0; k < 8; k += 1) {
-      ctx.fillStyle = k === 1 || k === 5 ? "#7D2027" : "#D9C4B1";
-      ctx.fillRect(522 + k * 13, 220, 8, 14);
-    }
-
-    // Subtle canvas grain & warm oil vignette
-    ctx.fillStyle = "rgba(55, 39, 19, 0.045)";
-    for (let i = 0; i < 650; i += 1) {
-      const gx = (i * 97) % w;
-      const gy = (i * 53) % h;
-      ctx.fillRect(gx, gy, 2, 2);
-    }
-
-    const vig = ctx.createRadialGradient(w / 2, h / 2, h * 0.3, w / 2, h / 2, w * 0.65);
-    vig.addColorStop(0, "rgba(0,0,0,0)");
-    vig.addColorStop(1, "rgba(55, 39, 19, 0.34)");
-    ctx.fillStyle = vig;
-    ctx.fillRect(0, 0, w, h);
-  }
+  ];
 
   /* ========================================================================
      9. Main Application Wiring & State-Preserving Bilingual Controller
@@ -1620,6 +1885,7 @@
     const rewrittenLetterInput = document.getElementById("rewritten-letter-input");
     const editedBadge = document.getElementById("edited-badge");
     const resetRewriteBtn = document.getElementById("reset-rewrite-btn");
+    const postmarkStampBadge = document.getElementById("postmark-stamp-badge");
     const livePunchCanvas = document.getElementById("live-punch-canvas");
     const livePunchMeta = document.getElementById("live-punch-meta");
     const confirmEncodeBtn = document.getElementById("confirm-encode-btn");
@@ -1628,6 +1894,26 @@
     const copyLinkBtn = document.getElementById("copy-link-btn");
     const shareUrlInput = document.getElementById("share-url-input");
     const copyFeedback = document.getElementById("copy-feedback");
+
+    // Youth / Gallery / IG interactive elements
+    const toneChips = Array.from(document.querySelectorAll(".tone-chip"));
+    const stampChips = Array.from(document.querySelectorAll(".stamp-chip"));
+    const composeStripGalleryBtn = document.getElementById("compose-strip-gallery-btn");
+    const pingLoopBtn = document.getElementById("ping-loop-btn");
+
+    const museumActivePhoto = document.getElementById("museum-active-photo");
+    const museumActiveTag = document.getElementById("museum-active-tag");
+    const museumActiveCaption = document.getElementById("museum-active-caption");
+    const museumActiveCounter = document.getElementById("museum-active-counter");
+    const photoHotspotsContainer = document.getElementById("photo-hotspots");
+    const hotspotTitleEl = document.getElementById("hotspot-title");
+    const hotspotDescEl = document.getElementById("hotspot-desc");
+    const filmstripThumbs = Array.from(document.querySelectorAll(".filmstrip-thumb"));
+
+    const openIgCardBtn = document.getElementById("open-ig-card-btn");
+    const igCardDialog = document.getElementById("ig-card-dialog");
+    const igStoryCanvas = document.getElementById("ig-story-canvas");
+    const downloadIgCardBtn = document.getElementById("download-ig-card-btn");
 
     // Standalone Screen Navigation Buttons
     const composeToReceiveBtn = document.getElementById("compose-to-receive-btn");
@@ -1648,11 +1934,247 @@
     const openVisitModalBtn = document.getElementById("open-visit-modal-btn");
     const visitDialog = document.getElementById("visit-dialog");
     const photoUploadInput = document.getElementById("photo-upload-input");
-    const siriusArchiveCanvas = document.getElementById("sirius-archive-canvas");
-    const siriusUploadedPhoto = document.getElementById("sirius-uploaded-photo");
 
     const siriusMachine = new SiriusMachineController();
-    renderSiriusArchivePlate();
+    let customPhotoObjectUrl = "";
+
+    function renderHotspotDetail(slide, pinIdx) {
+      if (!hotspotTitleEl || !hotspotDescEl) return;
+      const hotspots = slide && Array.isArray(slide.hotspots) ? slide.hotspots : [];
+      const spot = hotspots[pinIdx] || hotspots[0];
+      if (!spot) {
+        hotspotTitleEl.textContent = state.lang === "zh" ? "馆藏自定义预览" : "Custom Museum Image Preview";
+        hotspotDescEl.textContent =
+          state.lang === "zh"
+            ? "点击下方缩略图可切换回 7 张莫纳什大学馆藏原片并交互查看各机台零件注释。"
+            : "Click any of the 7 Monash thumbnails below to inspect the original hardware annotations.";
+        return;
+      }
+      hotspotTitleEl.textContent = state.lang === "zh" ? spot.titleZh : spot.titleEn;
+      hotspotDescEl.textContent = state.lang === "zh" ? spot.descZh : spot.descEn;
+    }
+
+    function renderMuseumGallery(idx = state.activePhotoIdx, hotspotIdx = 0) {
+      const safeIdx = Math.max(0, Math.min(MUSEUM_GALLERY.length - 1, idx));
+      state.activePhotoIdx = safeIdx;
+      state.activeHotspotIdx = hotspotIdx;
+      const slide = MUSEUM_GALLERY[safeIdx];
+      customPhotoObjectUrl = "";
+
+      if (museumActivePhoto) {
+        museumActivePhoto.src = slide.src;
+        museumActivePhoto.alt = state.lang === "zh" ? slide.captionZh : slide.captionEn;
+      }
+      if (museumActiveTag) {
+        museumActiveTag.textContent = slide.tag;
+      }
+      if (museumActiveCaption) {
+        museumActiveCaption.textContent = state.lang === "zh" ? slide.captionZh : slide.captionEn;
+      }
+      if (museumActiveCounter) {
+        museumActiveCounter.textContent = `0${safeIdx + 1} / 0${MUSEUM_GALLERY.length}`;
+      }
+
+      filmstripThumbs.forEach((btn) => {
+        const thumbIdx = Number(btn.getAttribute("data-photo-idx"));
+        btn.classList.toggle("is-active", thumbIdx === safeIdx);
+      });
+
+      if (photoHotspotsContainer) {
+        photoHotspotsContainer.innerHTML = "";
+        slide.hotspots.forEach((spot, pinIndex) => {
+          const pin = document.createElement("button");
+          pin.type = "button";
+          pin.className = "hotspot-pin" + (pinIndex === hotspotIdx ? " is-active" : "");
+          pin.style.left = `${spot.x}%`;
+          pin.style.top = `${spot.y}%`;
+          pin.textContent = spot.badge;
+          pin.setAttribute("aria-label", state.lang === "zh" ? spot.titleZh : spot.titleEn);
+          pin.addEventListener("click", () => {
+            state.activeHotspotIdx = pinIndex;
+            Array.from(photoHotspotsContainer.querySelectorAll(".hotspot-pin")).forEach((el, j) => {
+              el.classList.toggle("is-active", j === pinIndex);
+            });
+            renderHotspotDetail(slide, pinIndex);
+            soundEngine.playTapeTick();
+          });
+          photoHotspotsContainer.appendChild(pin);
+        });
+      }
+
+      renderHotspotDetail(slide, hotspotIdx);
+    }
+
+    function wrapCanvasLines(ctx, text, maxWidth, maxLines) {
+      const lines = [];
+      const paragraphs = (text || "").split("\n");
+      for (const para of paragraphs) {
+        if (!para.trim()) {
+          if (lines.length && lines[lines.length - 1] !== "") lines.push("");
+          continue;
+        }
+        let current = "";
+        for (const ch of para) {
+          const test = current + ch;
+          if (ctx.measureText(test).width > maxWidth && current) {
+            lines.push(current);
+            current = ch;
+            if (lines.length >= maxLines) return lines;
+          } else {
+            current = test;
+          }
+        }
+        if (current) lines.push(current);
+        if (lines.length >= maxLines) return lines;
+      }
+      return lines.slice(0, maxLines);
+    }
+
+    function renderIgStoryCard(canvas) {
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      const w = canvas.width;
+      const h = canvas.height;
+
+      const drawCard = (photoImg) => {
+        // Warm oil canvas background (#ECE6D8 -> #D9C4B1)
+        const bg = ctx.createLinearGradient(0, 0, 0, h);
+        bg.addColorStop(0, "#FAF6EE");
+        bg.addColorStop(0.55, "#ECE6D8");
+        bg.addColorStop(1, "#D9C4B1");
+        ctx.fillStyle = bg;
+        ctx.fillRect(0, 0, w, h);
+
+        // Outer museum pixel frame
+        ctx.strokeStyle = "#372713";
+        ctx.lineWidth = 4;
+        ctx.strokeRect(18, 18, w - 36, h - 36);
+        ctx.strokeStyle = "#A39670";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(26, 26, w - 52, h - 52);
+
+        // Top Header Band
+        ctx.fillStyle = "#372713";
+        ctx.fillRect(36, 36, w - 72, 54);
+        ctx.fillStyle = "#ECE6D8";
+        ctx.font = 'bold 26px "VT323", "IBM Plex Mono", monospace';
+        ctx.textAlign = "left";
+        ctx.fillText("A MESSAGE FROM 1962?", 50, 71);
+
+        // Red postmark stamp
+        ctx.save();
+        ctx.translate(w - 135, 134);
+        ctx.rotate(-0.08);
+        ctx.strokeStyle = "#7D2027";
+        ctx.lineWidth = 3;
+        ctx.strokeRect(-92, -20, 184, 38);
+        ctx.fillStyle = "#7D2027";
+        ctx.font = 'bold 14px "IBM Plex Mono", monospace';
+        ctx.textAlign = "center";
+        ctx.fillText(state.stamp || "MONASH SIRIUS · 1962", 0, 4);
+        ctx.restore();
+
+        // Museum real photograph frame
+        const photoX = 38;
+        const photoY = 108;
+        const photoW = w - 76;
+        const photoH = 228;
+        ctx.fillStyle = "#D9C4B1";
+        ctx.fillRect(photoX, photoY, photoW, photoH);
+        if (photoImg && photoImg.naturalWidth > 0) {
+          const scale = Math.max(photoW / photoImg.naturalWidth, photoH / photoImg.naturalHeight);
+          const sw = photoW / scale;
+          const sh = photoH / scale;
+          const sx = (photoImg.naturalWidth - sw) / 2;
+          const sy = (photoImg.naturalHeight - sh) / 2;
+          ctx.drawImage(photoImg, sx, sy, sw, sh, photoX, photoY, photoW, photoH);
+        }
+        ctx.strokeStyle = "#372713";
+        ctx.lineWidth = 3;
+        ctx.strokeRect(photoX, photoY, photoW, photoH);
+
+        // Caption strip under photo
+        ctx.fillStyle = "#4D4828";
+        ctx.fillRect(photoX, photoY + photoH - 28, photoW, 28);
+        ctx.fillStyle = "#FAF6EE";
+        ctx.font = 'bold 13px "IBM Plex Mono", monospace';
+        ctx.textAlign = "left";
+        ctx.fillText("FERRANTI SIRIUS · MONASH FIRST COMPUTER (1962)", photoX + 10, photoY + photoH - 9);
+
+        // Letter excerpt card
+        const cardY = 358;
+        ctx.fillStyle = "#FAF6EE";
+        ctx.fillRect(38, cardY, w - 76, 360);
+        ctx.strokeStyle = "#4D4828";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(38, cardY, w - 76, 360);
+
+        ctx.fillStyle = "#7D2027";
+        ctx.font = 'bold 13px "IBM Plex Mono", monospace';
+        ctx.fillText(
+          `FROM ${state.sender || "1962"} -> TO ${state.recipient || "FRIEND"}`,
+          54,
+          cardY + 28
+        );
+
+        ctx.fillStyle = "#372713";
+        ctx.font = '17px "DotGothic16", "IBM Plex Mono", monospace';
+        const lines = wrapCanvasLines(ctx, getActiveLetterText(), w - 116, 11);
+        lines.forEach((line, idx) => {
+          ctx.fillText(line, 54, cardY + 62 + idx * 25);
+        });
+
+        // 5-track punched paper tape strip
+        const tapeY = 742;
+        ctx.fillStyle = "#D9C4B1";
+        ctx.fillRect(38, tapeY, w - 76, 62);
+        ctx.strokeStyle = "#372713";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(38, tapeY, w - 76, 62);
+        const cols = siriusMachine.encodeTextToColumns(getActiveLetterText()).slice(0, 36);
+        const ys = [tapeY + 11, tapeY + 21, tapeY + 38, tapeY + 47, tapeY + 54];
+        cols.forEach((bits, ci) => {
+          const cx = 56 + ci * 12;
+          ctx.fillStyle = "#7D2027";
+          ctx.fillRect(cx - 1, tapeY + 29, 2, 2);
+          for (let b = 0; b < 5; b += 1) {
+            if ((bits >> b) & 1) {
+              ctx.fillStyle = "#372713";
+              ctx.beginPath();
+              ctx.arc(cx, ys[b], 2.2, 0, Math.PI * 2);
+              ctx.fill();
+            }
+          }
+        });
+
+        // Acoustic cycle telemetry & Monash museum address footer
+        ctx.fillStyle = "#4D4828";
+        ctx.font = 'bold 14px "IBM Plex Mono", monospace';
+        ctx.fillText(
+          `NICKEL DELAY MEMORY · ${state.waitingCycles.toLocaleString()} CYCLES`,
+          42,
+          836
+        );
+
+        ctx.fillStyle = "#372713";
+        ctx.fillRect(38, 854, w - 76, 68);
+        ctx.fillStyle = "#ECE6D8";
+        ctx.font = 'bold 14px "IBM Plex Mono", monospace';
+        ctx.fillText("Monash Museum of Computing History", 52, 882);
+        ctx.font = '12px "IBM Plex Mono", monospace';
+        ctx.fillStyle = "#D9C4B1";
+        ctx.fillText("Building B, Foyer, Level 2, Caulfield East VIC 3145", 52, 904);
+      };
+
+      const heroImg = new Image();
+      heroImg.onload = () => drawCard(heroImg);
+      heroImg.src = "assets/museum/sirius-full-desk.jpg";
+      if (heroImg.complete && heroImg.naturalWidth > 0) {
+        drawCard(heroImg);
+      } else {
+        drawCard(null);
+      }
+    }
 
     function renderLivePunchPreview() {
       if (!livePunchCanvas) return;
@@ -1701,6 +2223,18 @@
       recipientRouteBadge.textContent = `FROM: ${fromText} -> TO: ${toText}`;
     }
 
+    function updateToneAndStampUI() {
+      toneChips.forEach((chip) => {
+        chip.classList.toggle("is-active", chip.getAttribute("data-tone") === state.tone);
+      });
+      stampChips.forEach((chip) => {
+        chip.classList.toggle("is-active", chip.getAttribute("data-stamp") === state.stamp);
+      });
+      if (postmarkStampBadge) {
+        postmarkStampBadge.textContent = state.stamp;
+      }
+    }
+
     function applyLanguage(nextLang) {
       state.lang = nextLang;
       document.documentElement.lang = nextLang === "zh" ? "zh-CN" : "en";
@@ -1733,8 +2267,8 @@
         if (introDialogDesc) {
           introDialogDesc.textContent =
             nextLang === "zh"
-              ? `${state.recipient || "朋友"}，在你打开这封信前，它已在 1962 年 Ferranti Sirius 展品的镍金属丝声波回路里持续循环了 ${state.waitingCycles.toLocaleString()} 次。进入收信台，亲手拉出纸带读信吧。`
-              : `${state.recipient || "Friend"}, before you opened this link, your letter circulated ${state.waitingCycles.toLocaleString()} times inside the Ferranti Sirius nickel acoustic loop. Step inside to pull the tape free.`;
+              ? `${state.recipient || "朋友"}，在你打开这封信前，它已在莫纳什大学 Building B 二楼 1962 年 Ferranti Sirius 展品的镍金属丝声波回路里持续循环了 ${state.waitingCycles.toLocaleString()} 次。进入收信台，亲手拉出纸带读信吧。`
+              : `${state.recipient || "Friend"}, before you opened this link, your letter circulated ${state.waitingCycles.toLocaleString()} times inside Monash's 1962 Ferranti Sirius nickel acoustic loop. Step inside to pull the tape free.`;
         }
         if (startIntroBtn) {
           startIntroBtn.textContent =
@@ -1743,8 +2277,8 @@
       } else if (introWindowTitle) {
         introWindowTitle.textContent =
           nextLang === "zh"
-            ? "1962 · FERRANTI SIRIUS // 时空展厅"
-            : "1962 · FERRANTI SIRIUS // EXHIBITION";
+            ? "1962 · FERRANTI SIRIUS // MONASH EXHIBITION"
+            : "1962 · FERRANTI SIRIUS // MONASH EXHIBITION";
       }
 
       // Update placeholders and sound label
@@ -1766,8 +2300,12 @@
 
       receiveOriginalBox.textContent = state.rawInput;
       toggleOriginalBtn.textContent = receiveOriginalBox.hidden ? dict.peekOriginal : dict.hideOriginal;
+      updateToneAndStampUI();
       updateRecipientBadge();
       renderLivePunchPreview();
+      if (!customPhotoObjectUrl) {
+        renderMuseumGallery(state.activePhotoIdx, state.activeHotspotIdx);
+      }
 
       if (state.isConfirmed) {
         shareUrlInput.value = encodeSharePayload();
@@ -1787,6 +2325,8 @@
       if (targetStage === "receive") {
         updateRecipientBadge();
         siriusMachine.rebuildTape();
+      } else if (targetStage === "history" && !customPhotoObjectUrl) {
+        renderMuseumGallery(state.activePhotoIdx, state.activeHotspotIdx);
       }
 
       const activeSec = stageSections[targetStage];
@@ -1857,6 +2397,40 @@
     senderInput.addEventListener("input", handleComposeInput);
     rawMessageInput.addEventListener("input", handleComposeInput);
 
+    // 1962 Tone Mode Selector
+    toneChips.forEach((chip) => {
+      chip.addEventListener("click", () => {
+        const nextTone = chip.getAttribute("data-tone");
+        if (!nextTone) return;
+        state.tone = nextTone;
+        state.isCustomEditedEn = false;
+        state.isCustomEditedZh = false;
+        editedBadge.hidden = true;
+        syncDraftsFromRaw();
+        rewrittenLetterInput.value = getActiveLetterText();
+        updateToneAndStampUI();
+        renderLivePunchPreview();
+        if (state.isConfirmed) {
+          shareUrlInput.value = encodeSharePayload();
+        }
+        soundEngine.playTapeTick();
+      });
+    });
+
+    // Collectible Archival Stamp Selector
+    stampChips.forEach((chip) => {
+      chip.addEventListener("click", () => {
+        const nextStamp = chip.getAttribute("data-stamp");
+        if (!nextStamp) return;
+        state.stamp = nextStamp;
+        updateToneAndStampUI();
+        if (state.isConfirmed) {
+          shareUrlInput.value = encodeSharePayload();
+        }
+        soundEngine.playTapeTick();
+      });
+    });
+
     // Sample prompt chips
     document.querySelectorAll(".sample-chip").forEach((chip) => {
       chip.addEventListener("click", () => {
@@ -1893,10 +2467,10 @@
     resetRewriteBtn.addEventListener("click", () => {
       if (state.lang === "zh") {
         state.isCustomEditedZh = false;
-        state.letterZh = buildLetter1962(state.rawInput, state.sender, state.recipient, "zh");
+        state.letterZh = buildLetter1962(state.rawInput, state.sender, state.recipient, "zh", state.tone);
       } else {
         state.isCustomEditedEn = false;
-        state.letterEn = buildLetter1962(state.rawInput, state.sender, state.recipient, "en");
+        state.letterEn = buildLetter1962(state.rawInput, state.sender, state.recipient, "en", state.tone);
       }
       editedBadge.hidden = true;
       rewrittenLetterInput.value = getActiveLetterText();
@@ -1920,16 +2494,63 @@
 
     goReceiveBtn.addEventListener("click", () => switchStage("receive"));
 
+    // Interactive Acoustic Ping Button on Screen 2
+    if (pingLoopBtn) {
+      pingLoopBtn.addEventListener("click", () => {
+        siriusMachine.triggerPing();
+      });
+    }
+
+    // IG Story Letter Card Preview + Download
+    if (openIgCardBtn && igCardDialog) {
+      openIgCardBtn.addEventListener("click", () => {
+        renderIgStoryCard(igStoryCanvas);
+        if (typeof igCardDialog.showModal === "function") {
+          igCardDialog.showModal();
+        } else {
+          igCardDialog.setAttribute("open", "");
+        }
+      });
+
+      igCardDialog.addEventListener("click", (e) => {
+        if (e.target === igCardDialog) {
+          igCardDialog.close();
+        }
+      });
+    }
+
+    if (downloadIgCardBtn && igStoryCanvas) {
+      downloadIgCardBtn.addEventListener("click", () => {
+        renderIgStoryCard(igStoryCanvas);
+        const a = document.createElement("a");
+        a.download = `message-from-1962-${state.stamp.replace(/[^a-z0-9]+/gi, "-").toLowerCase()}.png`;
+        a.href = igStoryCanvas.toDataURL("image/png");
+        a.click();
+      });
+    }
+
     // Standalone screen-to-screen flow buttons
     if (composeToReceiveBtn) composeToReceiveBtn.addEventListener("click", () => switchStage("receive"));
     if (composeToHistoryBtn) composeToHistoryBtn.addEventListener("click", () => switchStage("history"));
     if (composeMoreHistoryBtn) composeMoreHistoryBtn.addEventListener("click", () => switchStage("history"));
+    if (composeStripGalleryBtn) composeStripGalleryBtn.addEventListener("click", () => switchStage("history"));
     if (receiveBackComposeBtn) receiveBackComposeBtn.addEventListener("click", () => switchStage("compose"));
     if (receiveToHistoryBtn) receiveToHistoryBtn.addEventListener("click", () => switchStage("history"));
     if (receiveWriteBtn) receiveWriteBtn.addEventListener("click", () => switchStage("compose"));
     if (receiveFooterHistoryBtn) receiveFooterHistoryBtn.addEventListener("click", () => switchStage("history"));
     if (historyToComposeBtn) historyToComposeBtn.addEventListener("click", () => switchStage("compose"));
     if (historyToReceiveBtn) historyToReceiveBtn.addEventListener("click", () => switchStage("receive"));
+
+    // Screen 3 7-Photo Filmstrip Switcher
+    filmstripThumbs.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const nextIdx = Number(btn.getAttribute("data-photo-idx"));
+        if (!Number.isNaN(nextIdx)) {
+          renderMuseumGallery(nextIdx, 0);
+          soundEngine.playTapeTick();
+        }
+      });
+    });
 
     copyLinkBtn.addEventListener("click", async () => {
       const link = encodeSharePayload();
@@ -1971,16 +2592,26 @@
     });
 
     // Optional museum photograph upload preview
-    photoUploadInput.addEventListener("change", () => {
-      const file = photoUploadInput.files && photoUploadInput.files[0];
-      if (!file) return;
-      const objUrl = URL.createObjectURL(file);
-      siriusUploadedPhoto.src = objUrl;
-      siriusUploadedPhoto.hidden = false;
-      siriusArchiveCanvas.hidden = true;
-    });
+    if (photoUploadInput && museumActivePhoto) {
+      photoUploadInput.addEventListener("change", () => {
+        const file = photoUploadInput.files && photoUploadInput.files[0];
+        if (!file) return;
+        customPhotoObjectUrl = URL.createObjectURL(file);
+        museumActivePhoto.src = customPhotoObjectUrl;
+        if (museumActiveTag) museumActiveTag.textContent = "CUSTOM UPLOAD · EXHIBITION";
+        if (museumActiveCaption) {
+          museumActiveCaption.textContent =
+            state.lang === "zh"
+              ? `已加载本地博物馆实拍预览：${file.name}`
+              : `Loaded local exhibition preview: ${file.name}`;
+        }
+        if (photoHotspotsContainer) photoHotspotsContainer.innerHTML = "";
+        renderHotspotDetail(null, 0);
+      });
+    }
 
     // Initial render
+    renderMuseumGallery(0, 0);
     applyLanguage(state.lang);
     if (state.hasSharedArrival) {
       dispatchPanel.hidden = false;
