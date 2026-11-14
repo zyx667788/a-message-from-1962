@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>A Message from 1962? | Ferranti Sirius Museum Experience</title>
-  <meta name="description" content="An interactive Computer History Museum web exhibition: write a message to a friend, encode it into 1962 correspondence, and read it by pulling punched paper tape through a contemporary Ferranti Sirius apparatus.">
+  <title>A Message from 1962? | Ferranti Sirius 博物馆互动展</title>
+  <meta name="description" content="一场面向当代观众的 1962 年计算机历史博物馆互动展：写一封短简给朋友，让它进入 Ferranti Sirius 五孔打孔纸带与声学延迟线循环记忆，再亲手拉动纸带破译来自 1962 年的来信。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Noto+Serif+SC:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&family=VT323&display=swap" rel="stylesheet">
@@ -13,13 +13,19 @@
   <script src="app.js" defer></script>
 </head>
 <body>
-  <!-- Retro Pixel Opening Overlay -->
+  <!-- Vintage Oil-Painting Pixel Opening Overlay -->
   <div id="intro-overlay" class="intro-overlay" role="dialog" aria-modal="true" aria-labelledby="intro-dialog-greeting">
     <canvas id="intro-canvas" class="intro-canvas" aria-hidden="true"></canvas>
 
     <div class="intro-topbar">
-      <span class="intro-tag">CHM // 1962.SIRIUS</span>
-      <button type="button" id="skip-intro-btn" class="pixel-skip-btn" data-i18n="introSkip">Skip Intro</button>
+      <span class="intro-tag">CHM // 1962 · FERRANTI SIRIUS</span>
+      <div class="intro-top-actions">
+        <div class="lang-switch intro-lang-switch" role="group" aria-label="Opening language switch">
+          <button type="button" id="intro-lang-zh" class="lang-btn is-active">中文</button>
+          <button type="button" id="intro-lang-en" class="lang-btn">EN</button>
+        </div>
+        <button type="button" id="skip-intro-btn" class="pixel-skip-btn" data-i18n="introSkip">直接进入</button>
+      </div>
     </div>
 
     <div id="intro-stage" class="intro-stage">
@@ -32,14 +38,18 @@
 
       <div id="pixel-dialog" class="pixel-window">
         <div class="pixel-window-bar">
-          <span class="pixel-window-title" id="intro-window-title">SIRIUS_1962.EXE</span>
-          <button type="button" id="intro-close-x" class="pixel-close-x" aria-label="Skip intro">×</button>
+          <span class="pixel-window-title" id="intro-window-title">1962 · FERRANTI SIRIUS // 时空展厅</span>
+          <button type="button" id="intro-close-x" class="pixel-close-x" aria-label="跳过开场动画">×</button>
         </div>
         <div class="pixel-window-body">
-          <p id="intro-dialog-greeting" class="pixel-greeting">
-            &lt; Hello,<br>Welcome &gt;
+          <span id="intro-exhibit-badge" class="intro-exhibit-badge" data-i18n="introExhibitBadge">馆藏展品：FERRANTI SIRIUS · 1962</span>
+          <h1 id="intro-dialog-greeting" class="pixel-greeting" data-i18n="introHeadline">
+            寄出一封穿越 1962 年的打孔纸带信
+          </h1>
+          <p id="intro-dialog-desc" class="intro-dialog-desc" data-i18n="introDesc">
+            写一段话给朋友，由 1962 年英国 Ferranti Sirius 晶体管计算机将其编码为五孔纸带，并在镍金属丝声波回路里日夜循环保存，等待收信人亲手拉出破译。
           </p>
-          <button type="button" id="start-intro-btn" class="pixel-start-btn">Start</button>
+          <button type="button" id="start-intro-btn" class="pixel-start-btn" data-i18n="introStart">进入 1962 年 · 开始写信</button>
         </div>
       </div>
     </div>
@@ -52,76 +62,44 @@
         <div class="brand-lockup">
           <span class="brand-dot" aria-hidden="true"></span>
           <span class="brand-code">CHM // 1962</span>
-          <span class="brand-sub" data-i18n="brandSub">Ferranti Sirius Interactive</span>
+          <span class="brand-sub" data-i18n="brandSub">Ferranti Sirius 馆藏互动展</span>
         </div>
-
-        <nav class="stage-nav" aria-label="Exhibition stages">
-          <button type="button" class="stage-tab is-active" data-stage-target="compose" aria-current="step">
-            <span class="tab-num">01</span>
-            <span data-i18n="navCompose">Write</span>
-          </button>
-          <button type="button" class="stage-tab" data-stage-target="receive">
-            <span class="tab-num">02</span>
-            <span data-i18n="navReceive">Receive</span>
-          </button>
-          <button type="button" class="stage-tab" data-stage-target="history">
-            <span class="tab-num">03</span>
-            <span data-i18n="navHistory">1962 Archive</span>
-          </button>
-        </nav>
 
         <div class="utility-controls">
           <button type="button" id="sound-toggle-btn" class="util-btn is-on" aria-label="Toggle mechanical sound">
             <span class="util-indicator" aria-hidden="true"></span>
-            <span id="sound-toggle-label" data-i18n="soundOn">Sound: On</span>
+            <span id="sound-toggle-label" data-i18n="soundOn">机械音：开</span>
           </button>
-          <button type="button" id="replay-intro-btn" class="util-btn" data-i18n="replayIntro">Intro</button>
+          <button type="button" id="replay-intro-btn" class="util-btn" data-i18n="replayIntro">重播开屏</button>
           <div class="lang-switch" role="group" aria-label="Language switch">
-            <button type="button" id="lang-en-btn" class="lang-btn is-active">EN</button>
-            <button type="button" id="lang-zh-btn" class="lang-btn">中文</button>
+            <button type="button" id="lang-zh-btn" class="lang-btn is-active">中文</button>
+            <button type="button" id="lang-en-btn" class="lang-btn">EN</button>
           </div>
         </div>
       </div>
     </header>
 
     <main id="main-content" class="main-content" tabindex="-1">
-      <!-- Retro Pixel Editorial Hero -->
-      <section class="hero-band">
-        <div class="hero-kicker">
-          <span class="kicker-badge" data-i18n="heroBadge">Museum Web Exhibition</span>
-          <span class="kicker-meta">Ferranti Sirius · Manchester, c. 1962</span>
-        </div>
-        <h1 class="hero-title" data-i18n="heroTitle">&lt; A Message from 1962? &gt;</h1>
-        <p id="hero-lead" class="hero-lead" data-i18n="heroLead">
-          Write a short note to a friend, translate its voice to the early 1960s, and send it through a punched-tape machine inspired by the Ferranti Sirius.
-        </p>
-
-        <!-- Shared Link Arrival Banner -->
-        <div id="shared-banner" class="shared-banner" hidden>
-          <div class="pixel-bar-mini">
-            <span>INCOMING_TAPE.MSG</span>
-            <span aria-hidden="true">■ □ ×</span>
-          </div>
-          <div class="shared-banner-inner">
-            <div class="shared-banner-text">
-              <strong id="shared-banner-title" data-i18n="sharedTitle">A 1962 tape has arrived for you.</strong>
-              <span id="shared-banner-desc" data-i18n="sharedDesc">Someone encoded a message via the Ferranti Sirius exhibition. Pull the paper tape below to read it.</span>
-            </div>
-            <button type="button" id="shared-open-receive-btn" class="btn-primary btn-sm" data-i18n="sharedAction">Go to Tape Reader</button>
-          </div>
-        </div>
-      </section>
-
-      <!-- STAGE 1 & 2: COMPOSE & REWRITE -->
+      <!-- SCREEN 1: STANDALONE WRITE DESK -->
       <section id="stage-compose" class="stage-section is-visible" aria-labelledby="compose-heading">
-        <div class="section-header-row">
-          <div>
-            <span class="step-label" data-i18n="step1Tag">Part I · Correspondence Desk</span>
-            <h2 id="compose-heading" class="section-title" data-i18n="composeHeading">Write a note, hear it in 1962</h2>
+        <div class="pixel-box screen-banner">
+          <div class="box-titlebar">
+            <span>DESK_1962.EXE // CORRESPONDENCE STATION</span>
+            <span>MANCHESTER · 1962</span>
           </div>
-          <p class="section-note" data-i18n="composeSubtitle">
-            Your everyday words are adapted into a gentle 1960s letter—keeping your exact meaning without adding invented promises or events.
-          </p>
+          <div class="screen-banner-body">
+            <div class="screen-banner-copy">
+              <span class="kicker-badge" data-i18n="composeBadge">1962 写信台 · 线上互动体验</span>
+              <h1 id="compose-heading" class="section-title" data-i18n="composeHeading">写下一句话，交由 1962 年的打孔纸带寄出</h1>
+              <p class="section-note" data-i18n="composeSubtitle">
+                你的日常表达会被改写成温和含蓄的 1960 年代书信（严格保留原意），实时打成五孔光电纸带；生成链接发给朋友，或自己直接体验拉纸带收信。
+              </p>
+            </div>
+            <div class="screen-nav-actions">
+              <button type="button" id="compose-to-receive-btn" class="btn-secondary btn-sm" data-i18n="jumpToReceiver">前往收信机 →</button>
+              <button type="button" id="compose-to-history-btn" class="btn-ghost btn-sm" data-i18n="learnExhibit">了解 1962 展品 →</button>
+            </div>
+          </div>
         </div>
 
         <div class="compose-grid">
@@ -135,61 +113,70 @@
             <div class="box-body">
               <div class="meta-inputs">
                 <div class="field-group">
-                  <label for="recipient-input" class="field-label" data-i18n="labelTo">To</label>
+                  <label for="recipient-input" class="field-label" data-i18n="labelTo">收信人</label>
                   <input type="text" id="recipient-input" class="text-input" maxlength="40" autocomplete="off">
                 </div>
                 <div class="field-group">
-                  <label for="sender-input" class="field-label" data-i18n="labelFrom">From</label>
+                  <label for="sender-input" class="field-label" data-i18n="labelFrom">署名</label>
                   <input type="text" id="sender-input" class="text-input" maxlength="40" autocomplete="off">
                 </div>
               </div>
 
               <div class="field-group">
-                <label for="raw-message-input" class="field-label" data-i18n="labelMessage">Your note to a friend</label>
+                <label for="raw-message-input" class="field-label" data-i18n="labelMessage">想对朋友说的话</label>
                 <textarea id="raw-message-input" class="textarea-input" rows="5" maxlength="400"></textarea>
               </div>
 
               <div class="samples-block">
-                <span class="samples-label" data-i18n="samplesLabel">Quick prompts:</span>
+                <span class="samples-label" data-i18n="samplesLabel">示例灵感：</span>
                 <div class="sample-chips">
-                  <button type="button" class="sample-chip" data-sample="0" data-i18n="sample1Label">Friday café</button>
-                  <button type="button" class="sample-chip" data-sample="1" data-i18n="sample2Label">Late lab report</button>
-                  <button type="button" class="sample-chip" data-sample="2" data-i18n="sample3Label">Museum weekend</button>
+                  <button type="button" class="sample-chip" data-sample="0" data-i18n="sample1Label">周五大课后</button>
+                  <button type="button" class="sample-chip" data-sample="1" data-i18n="sample2Label">赶实验报告</button>
+                  <button type="button" class="sample-chip" data-sample="2" data-i18n="sample3Label">周末看展</button>
                 </div>
               </div>
 
               <div class="original-echo">
-                <span class="echo-label" data-i18n="originalEchoLabel">Original Text Snapshot</span>
+                <span class="echo-label" data-i18n="originalEchoLabel">原文对照</span>
                 <p id="original-preview" class="echo-text"></p>
               </div>
             </div>
           </div>
 
-          <!-- Right Window: 1962 Rewritten Letter -->
+          <!-- Right Window: 1962 Rewritten Letter + Live Punch Preview -->
           <div class="pixel-box letter-panel">
             <div class="box-titlebar">
               <span>DRAFT_1962.DOC</span>
-              <button type="button" id="reset-rewrite-btn" class="bar-action-btn" data-i18n="resetDraft">Reset draft</button>
+              <button type="button" id="reset-rewrite-btn" class="bar-action-btn" data-i18n="resetDraft">恢复自动改写</button>
             </div>
 
             <div class="box-body">
               <div class="letter-paper">
                 <div class="letter-paper-head">
                   <span class="postmark-stamp">14 NOV 1962 · SIRIUS POST</span>
-                  <span id="edited-badge" class="edited-badge" hidden data-i18n="editedBadge">Edited</span>
+                  <span id="edited-badge" class="edited-badge" hidden data-i18n="editedBadge">已手动微调</span>
                 </div>
 
-                <label for="rewritten-letter-input" class="sr-only" data-i18n="labelRewritten">1962 rewritten letter</label>
+                <label for="rewritten-letter-input" class="sr-only" data-i18n="labelRewritten">1962 年代感书信稿</label>
                 <textarea id="rewritten-letter-input" class="letter-textarea" rows="10"></textarea>
 
                 <p class="tone-footnote" data-i18n="toneFootnote">
-                  You may review or edit every line above before encoding it onto punched paper tape.
+                  你可以先对比原文与改写稿，并直接修改上方任意一句，确认后再编码为纸带。
                 </p>
+              </div>
+
+              <!-- Live 5-Track Paper Tape Punch Preview -->
+              <div class="live-punch-strip">
+                <div class="live-punch-head">
+                  <span data-i18n="livePunchLabel">实时五孔纸带打孔预览</span>
+                  <span id="live-punch-meta" class="live-punch-meta">5-TRACK BAUDOT/SIRIUS</span>
+                </div>
+                <canvas id="live-punch-canvas" class="live-punch-canvas" width="520" height="44" aria-hidden="true"></canvas>
               </div>
 
               <div class="compose-actions">
                 <button type="button" id="confirm-encode-btn" class="btn-primary" data-i18n="confirmEncode">
-                  Confirm &amp; Encode to Punched Tape
+                  确认信件并编码为打孔纸带
                 </button>
               </div>
 
@@ -197,14 +184,17 @@
               <div id="dispatch-panel" class="dispatch-panel" hidden>
                 <div class="dispatch-status">
                   <span class="status-dot" aria-hidden="true"></span>
-                  <span data-i18n="dispatchReady">5-track punched tape encoded and ready to transmit.</span>
+                  <span data-i18n="dispatchReady">五单位打孔纸带已生成，正送入声波延迟线并可分享收信链接。</span>
                 </div>
                 <div class="dispatch-buttons">
                   <button type="button" id="go-receive-btn" class="btn-primary" data-i18n="openAsRecipient">
-                    Open as Recipient (Pull the Tape)
+                    前往收信机（亲手拉出纸带读信）→
                   </button>
                   <button type="button" id="copy-link-btn" class="btn-secondary" data-i18n="copyShareLink">
-                    Copy Shareable Link
+                    复制收信链接发给朋友
+                  </button>
+                  <button type="button" id="compose-more-history-btn" class="btn-ghost" data-i18n="learnMoreSirius">
+                    了解更多：Ferranti Sirius 展品档案 →
                   </button>
                 </div>
                 <div class="share-url-row">
@@ -218,23 +208,58 @@
         </div>
       </section>
 
-      <!-- STAGE 3: RECIPIENT PERSPECTIVE & SIRIUS MACHINE -->
+      <!-- SCREEN 2: STANDALONE PAPER TAPE RECEIVER & ACOUSTIC LOOP -->
       <section id="stage-receive" class="stage-section" aria-labelledby="receive-heading" hidden>
-        <div class="section-header-row">
-          <div>
-            <span class="step-label" data-i18n="step2Tag">Part II · Recipient Console</span>
-            <h2 id="receive-heading" class="section-title" data-i18n="receiveHeading">Pull the tape to read the message</h2>
+        <div class="pixel-box screen-banner">
+          <div class="box-titlebar">
+            <span>TAPE_RECEIVER.SYS // OPTICAL READER</span>
+            <span>RECIPIENT MODE</span>
           </div>
-          <p class="apparatus-disclaimer" data-i18n="apparatusDisclaimer">
-            A contemporary interactive apparatus inspired by the 1962 Ferranti Sirius — designed to guide visitors into the story, not an exact physical replica.
-          </p>
+          <div class="screen-banner-body">
+            <div class="screen-banner-copy">
+              <span class="kicker-badge" data-i18n="receiveBadge">纸带收信台 · 逐字破译</span>
+              <h2 id="receive-heading" class="section-title" data-i18n="receiveHeading">拉动打孔纸带，让 1962 年的信慢慢显现</h2>
+              <p class="apparatus-disclaimer" data-i18n="apparatusDisclaimer">
+                这是一台专为本次展览设计的当代互动装置，灵感源自 1962 年 Ferranti Sirius 晶体管计算机，帮助你感受“读取纸带”与“声波循环记忆”的不同。
+              </p>
+            </div>
+            <div class="screen-nav-actions">
+              <button type="button" id="receive-back-compose-btn" class="btn-ghost btn-sm" data-i18n="backToWrite">← 返回写信台</button>
+              <button type="button" id="receive-to-history-btn" class="btn-secondary btn-sm" data-i18n="learnExhibit">了解更多：1962 展品 →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Prominent Pre-Receive Endless Acoustic Loop Callout -->
+        <div id="loop-waiting-banner" class="pixel-box loop-waiting-banner">
+          <div class="box-titlebar box-titlebar-crimson">
+            <span>ACOUSTIC_MEMORY_LOOP.LOG // 镍金属丝声学延迟线</span>
+            <span class="live-loop-tag" data-i18n="liveLoopTag">● 持续循环中</span>
+          </div>
+          <div class="loop-waiting-body">
+            <div class="waiting-counter-card">
+              <span class="waiting-counter-label" data-i18n="waitingCountLabel">等待收信期间已持续循环</span>
+              <div class="waiting-counter-digits">
+                <span id="waiting-cycles-count" class="waiting-cycles-number">18,420</span>
+                <span class="waiting-cycles-unit" data-i18n="waitingUnit">次</span>
+              </div>
+            </div>
+            <div class="loop-waiting-copy">
+              <h3 id="loop-waiting-headline" data-i18n="waitingHeadline">
+                在你还没点开这封信时，它已经在镍金属丝里不停奔跑了上万圈
+              </h3>
+              <p id="loop-waiting-desc" data-i18n="waitingDesc">
+                今天的微信、邮件会安静地躺在硬盘或云服务器里等你查看；但 1962 年的 Ferranti Sirius 没有静态硬盘——为了不让这封信消失，机器只能把它化作一串机械声波脉冲，沿着镍丝线圈永不停止地循环回荡。只要循环不断，记忆就在。
+              </p>
+            </div>
+          </div>
         </div>
 
         <!-- Contemporary Ferranti Sirius Pixel-Window Apparatus -->
         <div class="pixel-box sirius-console">
           <div class="box-titlebar">
             <span>SIRIUS_READER.SYS // 5-TRACK OPTICAL CONSOLE</span>
-            <span id="recipient-route-badge" class="route-badge">TO: FRIEND</span>
+            <span id="recipient-route-badge" class="route-badge">FROM: 1962 -> TO: FRIEND</span>
           </div>
 
           <div class="console-body">
@@ -242,7 +267,7 @@
             <div class="console-top">
               <div class="console-nameplate">
                 <span class="plate-title">FERRANTI SIRIUS · EXHIBITION APPARATUS</span>
-                <span class="plate-model" data-i18n="consoleSub">OPTICAL PAPER TAPE INPUT &amp; ACOUSTIC DELAY LOOP</span>
+                <span class="plate-model" data-i18n="consoleSub">五孔光电纸带读入器 · 声学延迟线循环示意</span>
               </div>
               <div class="decimal-strip" aria-hidden="true">
                 <span class="strip-label">REG</span>
@@ -266,8 +291,8 @@
               <div class="reader-column">
                 <div class="reader-housing">
                   <div class="reader-meta-bar">
-                    <span data-i18n="tapeTrackLabel">5-TRACK OILED PAPER TAPE</span>
-                    <span id="tape-percent-label" class="tape-percent">0% READ</span>
+                    <span data-i18n="tapeTrackLabel">五孔油浸纸带（5-TRACK TAPE）</span>
+                    <span id="tape-percent-label" class="tape-percent">0% 已读</span>
                   </div>
 
                   <div id="tape-viewport" class="tape-viewport">
@@ -289,40 +314,40 @@
                       </div>
                       <button type="button" id="tape-pull-handle" class="tape-handle" aria-label="Drag left to pull paper tape">
                         <span class="handle-grip" aria-hidden="true">⋮⋮</span>
-                        <span class="handle-text" data-i18n="pullHandle">PULL</span>
+                        <span class="handle-text" data-i18n="pullHandle">向左拉出</span>
                       </button>
                     </div>
                   </div>
 
                   <div class="tape-controls-row">
-                    <label for="tape-scrubber" class="sr-only" data-i18n="scrubberAria">Paper tape reading progress</label>
+                    <label for="tape-scrubber" class="sr-only" data-i18n="scrubberAria">纸带拉动读取进度</label>
                     <input type="range" id="tape-scrubber" class="tape-scrubber" min="0" max="1000" value="0">
                     <div class="tape-btn-group">
-                      <button type="button" id="hold-pull-btn" class="btn-secondary btn-sm" data-i18n="holdToPull">Hold to Pull</button>
-                      <button type="button" id="reset-tape-btn" class="btn-ghost btn-sm" data-i18n="resetTape">Rewind</button>
+                      <button type="button" id="hold-pull-btn" class="btn-secondary btn-sm" data-i18n="holdToPull">按住持续拉动</button>
+                      <button type="button" id="reset-tape-btn" class="btn-ghost btn-sm" data-i18n="resetTape">倒回纸带</button>
                     </div>
                   </div>
                   <p class="drag-hint" data-i18n="dragHint">
-                    Drag the paper tape leftward out of the slot—or press and hold “Hold to Pull”—to feed characters into memory.
+                    向左拖拽纸带拉手（或按住「按住持续拉动」按钮），纸带走过读头时，信的内容会逐字浮现。
                   </p>
                 </div>
 
                 <!-- Teleprinter Letter Output -->
                 <div class="teleprinter-frame">
                   <div class="teleprinter-header">
-                    <span data-i18n="decodedLetterLabel">DECODED CORRESPONDENCE</span>
-                    <span id="char-progress-label" class="char-progress">0 / 0 chars</span>
+                    <span data-i18n="decodedLetterLabel">读出的书信内容</span>
+                    <span id="char-progress-label" class="char-progress">0 / 0 字</span>
                   </div>
                   <div class="letter-sheet" aria-live="off">
                     <pre id="decoded-letter-text" class="decoded-text"></pre>
                     <span id="decoded-cursor" class="decoded-cursor" aria-hidden="true">_</span>
                     <p id="tape-empty-prompt" class="tape-empty-prompt" data-i18n="tapeEmptyPrompt">
-                      [ Pull the paper tape above to reveal the message waiting inside... ]
+                      [ 试着拉动上方的打孔纸带，展开这封等待已久的来信…… ]
                     </p>
                   </div>
                   <div class="letter-compare-toggle">
                     <button type="button" id="toggle-original-in-receive" class="link-btn" data-i18n="peekOriginal">
-                      Compare with sender's original note
+                      对照寄信人的现代原文
                     </button>
                     <p id="receive-original-box" class="receive-original-box" hidden></p>
                   </div>
@@ -335,74 +360,93 @@
                   <div class="loop-card-top">
                     <div>
                       <span class="panel-code">MEMORY // DELAY LINE</span>
-                      <h3 id="loop-heading" class="loop-title" data-i18n="loopTitle">How the machine holds your letter</h3>
+                      <h3 id="loop-heading" class="loop-title" data-i18n="loopTitle">机器内部是如何“记住”这封信的</h3>
                     </div>
-                    <button type="button" id="toggle-loop-btn" class="btn-ghost btn-xs" data-i18n="pauseLoop">Pause</button>
+                    <button type="button" id="toggle-loop-btn" class="btn-ghost btn-xs" data-i18n="pauseLoop">暂停示意</button>
                   </div>
 
                   <div class="process-states">
                     <div id="state-reading" class="process-pill is-idle">
                       <span class="pill-dot" aria-hidden="true"></span>
                       <div class="pill-copy">
-                        <span class="pill-name" data-i18n="procReadingName">1. Reading Tape</span>
-                        <span id="proc-reading-status" class="pill-status" data-i18n="statusWaiting">Waiting</span>
+                        <span class="pill-name" data-i18n="procReadingName">1. 读取纸带信息</span>
+                        <span id="proc-reading-status" class="pill-status" data-i18n="statusWaiting">等待拉动</span>
                       </div>
                     </div>
-                    <div id="state-storing" class="process-pill is-idle">
+                    <div id="state-storing" class="process-pill is-circulating">
                       <span class="pill-dot" aria-hidden="true"></span>
                       <div class="pill-copy">
-                        <span class="pill-name" data-i18n="procStoringName">2. Storing in Loop</span>
-                        <span id="proc-storing-status" class="pill-status" data-i18n="statusEmpty">Empty</span>
+                        <span class="pill-name" data-i18n="procStoringName">2. 内部循环保存</span>
+                        <span id="proc-storing-status" class="pill-status" data-i18n="statusLoopStandby">待机循环中</span>
                       </div>
                     </div>
                   </div>
 
                   <div class="loop-visual-box">
-                    <canvas id="loop-canvas" class="loop-canvas" width="380" height="230" aria-label="Schematic animation of pulses circulating inside the internal memory loop"></canvas>
+                    <canvas id="loop-canvas" class="loop-canvas" width="380" height="240" aria-label="Schematic animation of pulses circulating inside the internal memory loop"></canvas>
                   </div>
 
                   <div id="pause-callout" class="pause-callout" hidden>
-                    <strong data-i18n="pauseCalloutTitle">Tape stopped — memory still circulating</strong>
+                    <strong data-i18n="pauseCalloutTitle">纸带停下了——内部循环仍在继续</strong>
                     <p data-i18n="pauseCalloutBody">
-                      You stopped pulling the paper tape, so reading has paused. Yet the information already read keeps circulating inside the machine to remain stored. Reading and storing are two separate processes.
+                      你停下了拉纸带的动作，「读取信息」随之暂停；但已经读入机器的信息仍在内部不断循环以保持记忆。「读取」和「保存」是两个不同的过程。
                     </p>
                   </div>
 
                   <div class="cycle-telemetry">
                     <div class="telemetry-row">
-                      <span class="telemetry-label" data-i18n="simCycleLabel">Simulated Loop Cycles</span>
+                      <span class="telemetry-label" data-i18n="simCycleLabel">本次读取后循环圈数</span>
                       <span id="loop-cycles-count" class="telemetry-value">0</span>
                     </div>
                     <p class="telemetry-disclaimer" data-i18n="simDisclaimer">
-                      Note: This simulated cycle counter is an illustrative visual aid only—it does not represent the real acoustic speed or measured data of the original Ferranti Sirius.
+                      说明：此处显示的循环次数仅用于帮助理解声波循环概念，并非 Ferranti Sirius 原机的真实运行速度或测量数据。
                     </p>
                   </div>
                 </div>
 
                 <div id="receive-complete-card" class="complete-card" hidden>
                   <p class="complete-text" data-i18n="completePrompt">
-                    Every character of the 1962 message has arrived. Now meet the real computer behind this story.
+                    这封来自 1962 年的信已经读完。现在，去看看机器背后的真实历史吧。
                   </p>
                   <button type="button" id="go-history-btn" class="btn-primary" data-i18n="meetRealSirius">
-                    Return to 1962 Real History
+                    了解更多：认识真实的 1962 Ferranti Sirius →
                   </button>
                 </div>
               </aside>
+            </div>
+
+            <div class="receive-bottom-nav">
+              <button type="button" id="receive-write-btn" class="btn-secondary" data-i18n="writeReplyLetter">
+                我也写一封 1962 年的信 ←
+              </button>
+              <button type="button" id="receive-footer-history-btn" class="btn-ghost" data-i18n="learnMoreSirius">
+                了解更多：Ferranti Sirius 展品档案 →
+              </button>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- STAGE 4: REAL HISTORY & MUSEUM PORTAL -->
+      <!-- SCREEN 3: STANDALONE 1962 ARCHIVE & MUSEUM PORTAL -->
       <section id="stage-history" class="stage-section" aria-labelledby="history-heading" hidden>
-        <div class="section-header-row">
-          <div>
-            <span class="step-label" data-i18n="step3Tag">Part III · Archival Fact &amp; Museum</span>
-            <h2 id="history-heading" class="section-title" data-i18n="historyHeading">The Real Ferranti Sirius (1961–1962)</h2>
+        <div class="pixel-box screen-banner">
+          <div class="box-titlebar">
+            <span>ARCHIVE_1962.DOC // FERRANTI SIRIUS</span>
+            <span>GALLERY 03 · EXHIBIT</span>
           </div>
-          <p class="section-note" data-i18n="historySubtitle">
-            Beyond the interactive letter sits a milestone of early British transistor computing—quiet enough for an ordinary office, clever enough to store memory as sound.
-          </p>
+          <div class="screen-banner-body">
+            <div class="screen-banner-copy">
+              <span class="kicker-badge" data-i18n="historyBadge">真实馆藏档案 · Ferranti Sirius</span>
+              <h2 id="history-heading" class="section-title" data-i18n="historyHeading">真实的 Ferranti Sirius（1961–1962）</h2>
+              <p class="section-note" data-i18n="historySubtitle">
+                剥开互动故事的外衣，这台出自曼彻斯特的早期晶体管计算机，曾用普通办公室电源和金属丝里的“回声”记住了整整一代数据。
+              </p>
+            </div>
+            <div class="screen-nav-actions">
+              <button type="button" id="history-to-compose-btn" class="btn-ghost btn-sm" data-i18n="backToWrite">← 返回写信台</button>
+              <button type="button" id="history-to-receive-btn" class="btn-secondary btn-sm" data-i18n="backToReceive">← 返回纸带收信机</button>
+            </div>
+          </div>
         </div>
 
         <div class="history-layout">
@@ -419,11 +463,11 @@
               </div>
               <figcaption class="photo-caption-row">
                 <span data-i18n="photoCaption">
-                  Archival exhibition plate of the Ferranti Sirius console, transistor cabinets, and 5-track photoelectric paper tape reader (c. 1962).
+                  Ferranti Sirius 馆藏档案图版：桌面控制台、晶体管机柜与光电五孔纸带读入器（约 1962 年）。
                 </span>
                 <label class="upload-photo-label">
                   <input type="file" id="photo-upload-input" accept="image/*" class="sr-only">
-                  <span data-i18n="uploadPhotoBtn">Load museum photo</span>
+                  <span data-i18n="uploadPhotoBtn">替换馆藏实拍图</span>
                 </label>
               </figcaption>
             </div>
@@ -433,9 +477,9 @@
             <article class="pixel-box history-card">
               <div class="box-titlebar"><span>FACT_01.TXT</span><span>1958–1962</span></div>
               <div class="card-body">
-                <h3 data-i18n="histCard1Title">A Transistor Computer for Ordinary Rooms</h3>
+                <h3 data-i18n="histCard1Title">不用空调机房的晶体管计算机</h3>
                 <p data-i18n="histCard1Body">
-                  Built by Ferranti Ltd. in Manchester between 1958 and 1962, the Sirius replaced glowing vacuum tubes with compact transistors. It needed no special air conditioning and plugged into standard office mains—bringing digital computing out of giant air-conditioned halls.
+                  Ferranti Sirius 由英国曼彻斯特的 Ferranti 公司于 1958 至 1962 年间研制。它用晶体管取代了耗电发热的真空管，插上普通办公室电源就能运转，让计算机第一次有机会走进日常工作间。
                 </p>
               </div>
             </article>
@@ -443,9 +487,9 @@
             <article class="pixel-box history-card">
               <div class="box-titlebar"><span>FACT_02.TXT</span><span>5-TRACK TAPE</span></div>
               <div class="card-body">
-                <h3 data-i18n="histCard2Title">Why 5-Track Punched Paper Tape?</h3>
+                <h3 data-i18n="histCard2Title">为什么要用五孔打孔纸带？</h3>
                 <p data-i18n="histCard2Body">
-                  In 1962, you did not type directly into live screen editors. Programs, calculations, and messages were punched as 5-hole patterns onto paper strips using an offline teleprinter, then fed through a photoelectric reader into the Sirius.
+                  在 1962 年，人们还不能直接在屏幕上实时编辑文字。消息与程序会先在电传打字机上打成带孔纸带，再送入 Sirius 的光电读带机，由光线透过小孔逐列辨认字符。
                 </p>
               </div>
             </article>
@@ -453,9 +497,9 @@
             <article class="pixel-box history-card">
               <div class="box-titlebar"><span>FACT_03.TXT</span><span>DELAY LINE</span></div>
               <div class="card-body">
-                <h3 data-i18n="histCard3Title">Saving Data as Traveling Echoes</h3>
+                <h3 data-i18n="histCard3Title">靠“声音回声”把信息留在机器里</h3>
                 <p data-i18n="histCard3Body">
-                  Rather than expensive magnetic core arrays, the Sirius stored numbers inside nickel magnetostrictive acoustic delay lines—sending mechanical ripples around a coil of wire and re-amplifying them endlessly so memory would not fade.
+                  为了节省昂贵的磁芯存储器，Sirius 采用镍磁致伸缩声学延迟线作为内部记忆：把电信号变成细微的机械脉冲，在镍丝线圈里一圈圈循环传播，只要循环不断，记忆就不会消失。
                 </p>
               </div>
             </article>
@@ -470,34 +514,34 @@
           <div class="visit-body">
             <div class="visit-info-grid">
               <div>
-                <span class="visit-kicker" data-i18n="visitKicker">Computer History Museum · Gallery 3</span>
-                <h3 class="visit-headline" data-i18n="visitHeadline">See the surviving Ferranti Sirius hardware in person</h3>
+                <span class="visit-kicker" data-i18n="visitKicker">计算机历史博物馆 · 三号展厅</span>
+                <h3 class="visit-headline" data-i18n="visitHeadline">欢迎来博物馆亲眼看看 Ferranti Sirius 实物</h3>
                 <p class="visit-desc" data-i18n="visitDesc">
-                  Inspect authentic 5-track paper tapes, transistor logic boards, and nickel delay-line trays in our Early Office Computing wing.
+                  在「早期晶体管与办公计算」展区，你可以近距离观察 1962 年的五孔纸带原件、晶体管插件板与镍延迟线存储盘。
                 </p>
               </div>
               <div class="visit-facts">
                 <div class="fact-item">
-                  <span class="fact-label" data-i18n="factHoursLabel">Hours</span>
-                  <span class="fact-val" data-i18n="factHoursVal">Tue – Sun · 10:00 – 17:30</span>
+                  <span class="fact-label" data-i18n="factHoursLabel">开放时间</span>
+                  <span class="fact-val" data-i18n="factHoursVal">周二至周日 10:00 – 17:30</span>
                 </div>
                 <div class="fact-item">
-                  <span class="fact-label" data-i18n="factTicketLabel">Students</span>
-                  <span class="fact-val" data-i18n="factTicketVal">Free with University ID</span>
+                  <span class="fact-label" data-i18n="factTicketLabel">大学生礼遇</span>
+                  <span class="fact-val" data-i18n="factTicketVal">凭学生证免费入馆</span>
                 </div>
                 <div class="fact-item">
-                  <span class="fact-label" data-i18n="factDemoLabel">Tape Reader Demo</span>
-                  <span class="fact-val" data-i18n="factDemoVal">Daily at 14:30</span>
+                  <span class="fact-label" data-i18n="factDemoLabel">纸带机讲解</span>
+                  <span class="fact-val" data-i18n="factDemoVal">每日 14:30 现场演示</span>
                 </div>
               </div>
             </div>
 
             <div class="visit-cta-row">
               <button type="button" id="open-visit-modal-btn" class="btn-primary" data-i18n="openVisitModal">
-                Museum &amp; Visitor Guide
+                查看博物馆与参观信息
               </button>
               <button type="button" id="write-another-btn" class="btn-secondary" data-i18n="writeAnother">
-                Write Another 1962 Letter
+                再写一封 1962 年的信
               </button>
             </div>
           </div>
@@ -508,7 +552,7 @@
     <footer class="site-footer">
       <div class="footer-inner">
         <span>A Message from 1962? · Computer History Museum</span>
-        <span data-i18n="footerNote">Gallery 3 · Early Transistor &amp; Office Computing</span>
+        <span data-i18n="footerNote">三号展厅 · 早期晶体管与办公计算</span>
       </div>
     </footer>
   </div>
@@ -518,45 +562,45 @@
     <div class="dialog-titlebar">
       <span>MUSEUM_GUIDE.INF</span>
       <form method="dialog">
-        <button type="submit" class="pixel-close-x" aria-label="Close visitor guide">×</button>
+        <button type="submit" class="pixel-close-x" aria-label="关闭参观指南">×</button>
       </form>
     </div>
     <div class="dialog-shell">
       <div class="dialog-header">
         <div>
           <span class="panel-code">GALLERY 03 · VISITOR INFO</span>
-          <h2 id="visit-dialog-title" class="dialog-title" data-i18n="dialogTitle">Visiting the Ferranti Sirius Exhibition</h2>
+          <h2 id="visit-dialog-title" class="dialog-title" data-i18n="dialogTitle">Ferranti Sirius 馆藏展区参观指南</h2>
         </div>
       </div>
 
       <div class="dialog-body">
         <p data-i18n="dialogLead">
-          Designed especially for university students and first-time visitors, the Early Office Computing gallery connects today’s instant messaging with the tactile machinery of 1962.
+          面向高校同学与首次到访的观众，「早期办公计算」常设展将今天的即时通讯与 1962 年的手工穿孔纸带连接在一起。
         </p>
 
         <dl class="dialog-details">
           <div>
-            <dt data-i18n="dlgLocationDt">Location</dt>
-            <dd data-i18n="dlgLocationDd">Gallery 3, North Wing — Early Transistor &amp; Office Computing</dd>
+            <dt data-i18n="dlgLocationDt">展厅位置</dt>
+            <dd data-i18n="dlgLocationDd">北翼三号展厅 · 早期晶体管与办公计算单元</dd>
           </div>
           <div>
-            <dt data-i18n="dlgExhibitDt">On Display</dt>
-            <dd data-i18n="dlgExhibitDd">Ferranti Sirius console unit, nickel delay-line storage tray, 1961–1962 5-track punched paper tapes</dd>
+            <dt data-i18n="dlgExhibitDt">核心馆藏</dt>
+            <dd data-i18n="dlgExhibitDd">Ferranti Sirius 主机控制台、镍声学延迟线存储组件、1961–1962 年五孔纸带档案</dd>
           </div>
           <div>
-            <dt data-i18n="dlgAdmissionDt">Student Admission</dt>
-            <dd data-i18n="dlgAdmissionDd">Free general entry with valid university student card; weekend curator talk at 14:30</dd>
+            <dt data-i18n="dlgAdmissionDt">高校学生票务</dt>
+            <dd data-i18n="dlgAdmissionDd">持全日制大学学生证免票入馆；周末 14:30 设有 15 分钟策展人导览</dd>
           </div>
           <div>
-            <dt data-i18n="dlgTransitDt">Transit</dt>
-            <dd data-i18n="dlgTransitDd">Metro Line 2 · Science Park Station (Exit B, 6 min walk)</dd>
+            <dt data-i18n="dlgTransitDt">交通路线</dt>
+            <dd data-i18n="dlgTransitDd">地铁 2 号线科学园站 B 口出站，向北步行约 6 分钟</dd>
           </div>
         </dl>
       </div>
 
       <div class="dialog-footer">
         <form method="dialog">
-          <button type="submit" class="btn-primary" data-i18n="dialogDone">Back to Exhibition</button>
+          <button type="submit" class="btn-primary" data-i18n="dialogDone">返回线上展览</button>
         </form>
       </div>
     </div>

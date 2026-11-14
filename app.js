@@ -6,27 +6,23 @@
      ======================================================================== */
   const I18N = {
     en: {
-      introSkip: "Skip Intro",
+      introSkip: "Enter Directly",
+      introExhibitBadge: "EXHIBIT: FERRANTI SIRIUS · 1962",
+      introHeadline: "Send a 1962 Punched-Tape Letter Across Time",
+      introDesc:
+        "Write a note to a friend. Inspired by Britain's 1962 Ferranti Sirius transistor computer, your letter is punched onto 5-track tape and kept alive in a ceaseless acoustic delay loop until the reader pulls it free.",
+      introStart: "Enter 1962 · Write a Letter",
       brandSub: "Ferranti Sirius Interactive",
-      navCompose: "Write",
-      navReceive: "Receive",
-      navHistory: "1962 Archive",
       soundOff: "Sound: Off",
       soundOn: "Sound: On",
-      replayIntro: "Intro",
-      heroBadge: "Museum Web Exhibition",
-      heroTitle: "< A Message from 1962? >",
-      heroLead:
-        "Write a short note to a friend, translate its voice to the early 1960s, and send it through a punched-tape machine inspired by the Ferranti Sirius.",
-      sharedTitle: "A 1962 tape has arrived for you.",
-      sharedDesc:
-        "Someone encoded a message via the Ferranti Sirius exhibition. Pull the paper tape below to read it.",
-      sharedAction: "Jump to Tape Reader",
-      consoleSub: "OPTICAL PAPER TAPE INPUT & ACOUSTIC DELAY LOOP",
-      step1Tag: "Part I · Correspondence Desk",
-      composeHeading: "Write a note, hear it in 1962",
+      replayIntro: "Replay Intro",
+      composeBadge: "1962 CORRESPONDENCE DESK",
+      composeHeading: "Write a note today, punch it onto 1962 paper tape",
       composeSubtitle:
-        "Your everyday words are adapted into a gentle 1960s letter—keeping your exact meaning without adding invented promises or events.",
+        "Your everyday words are adapted into a gentle 1960s letter—keeping your exact meaning without invented promises—while punching live 5-track paper tape below.",
+      jumpToReceiver: "Go to Receiver →",
+      learnExhibit: "Learn More: 1962 Exhibit →",
+      livePunchLabel: "LIVE 5-TRACK PAPER TAPE PUNCH PREVIEW",
       labelTo: "To",
       labelFrom: "From",
       placeholderTo: "My Friend",
@@ -44,15 +40,24 @@
       toneFootnote:
         "You may review or edit every line above before encoding it onto punched paper tape.",
       confirmEncode: "Confirm & Encode to Punched Tape",
-      dispatchReady: "5-track punched tape encoded and ready to transmit.",
-      openAsRecipient: "Open as Recipient (Pull the Tape)",
-      copyShareLink: "Copy Shareable Link",
+      dispatchReady: "5-track punched tape encoded—circulating in acoustic memory and ready to share.",
+      openAsRecipient: "Go to Receiver (Pull Tape to Read) →",
+      copyShareLink: "Copy Shareable Recipient Link",
+      learnMoreSirius: "Learn More: Ferranti Sirius Archive →",
       copiedOk: "Link copied to clipboard",
       copiedFallback: "Link ready—copy from field",
-      step2Tag: "Part II · Recipient Console",
+      receiveBadge: "1962 PAPER TAPE RECEIVER",
       receiveHeading: "Pull the tape to read the message",
       apparatusDisclaimer:
-        "A contemporary interactive apparatus inspired by the 1962 Ferranti Sirius — designed to guide visitors into the story, not an exact physical replica.",
+        "A contemporary interactive apparatus inspired by the 1962 Ferranti Sirius — built to let you feel the contrast between reading tape and circulating memory.",
+      backToWrite: "← Back to Write Desk",
+      liveLoopTag: "● LOOPING ENDLESSLY",
+      waitingCountLabel: "CIRCULATED BEFORE YOU ARRIVED",
+      waitingUnit: "cycles",
+      waitingHeadline: "Before you pulled the tape, this letter had already raced tens of thousands of loops waiting for you",
+      waitingDesc:
+        "Today's messages rest quietly inside solid-state drives or cloud servers. In 1962, the Ferranti Sirius had no static disk: to keep this letter from vanishing, it had to travel nonstop as acoustic ripples through a nickel wire coil until you opened it.",
+      consoleSub: "OPTICAL PAPER TAPE INPUT & ACOUSTIC DELAY LOOP",
       tapeTrackLabel: "5-TRACK OILED PAPER TAPE",
       pullHandle: "PULL",
       scrubberAria: "Paper tape reading progress",
@@ -65,7 +70,7 @@
         "[ Pull the paper tape above to reveal the message waiting inside... ]",
       peekOriginal: "Compare with sender's original note",
       hideOriginal: "Hide sender's original note",
-      loopTitle: "How the machine holds your letter",
+      loopTitle: "How the machine keeps your letter alive",
       pauseLoop: "Pause",
       resumeLoop: "Resume",
       procReadingName: "1. Reading Tape",
@@ -74,22 +79,24 @@
       statusReading: "Active",
       statusPaused: "Paused",
       statusComplete: "Complete",
-      statusEmpty: "Empty",
+      statusLoopStandby: "Circulating (Ready)",
       statusCirculating: "Circulating",
       statusLoopStopped: "Display Paused",
       pauseCalloutTitle: "Tape stopped — memory still circulating",
       pauseCalloutBody:
         "You stopped pulling the paper tape, so reading has paused. Yet the information already read keeps circulating inside the machine to remain stored. Reading and storing are two separate processes.",
-      simCycleLabel: "Simulated Loop Cycles",
+      simCycleLabel: "Additional Loops Since Opening",
       simDisclaimer:
-        "Note: This simulated cycle counter is an illustrative visual aid only—it does not represent the real acoustic speed or measured data of the original Ferranti Sirius.",
+        "Note: This counter illustrates continuous acoustic delay-line recirculation—it does not represent the exact kHz clock speed of the original Ferranti Sirius.",
       completePrompt:
-        "Every character of the 1962 message has arrived. Now meet the real computer behind this story.",
-      meetRealSirius: "Return to 1962 Real History",
-      step3Tag: "Part III · Archival Fact & Museum",
+        "Every character of the 1962 message has arrived. Now step inside the archive of the real Ferranti Sirius.",
+      meetRealSirius: "Learn More: The Real 1962 Ferranti Sirius →",
+      writeReplyLetter: "← Write a 1962 Letter",
+      historyBadge: "ARCHIVAL FACT · FERRANTI SIRIUS",
       historyHeading: "The Real Ferranti Sirius (1961–1962)",
       historySubtitle:
         "Beyond the interactive letter sits a milestone of early British transistor computing—quiet enough for an ordinary office, clever enough to store memory as sound.",
+      backToReceive: "← Back to Tape Receiver",
       photoCaption:
         "Archival exhibition plate of the Ferranti Sirius console, transistor cabinets, and 5-track photoelectric paper tape reader (c. 1962).",
       uploadPhotoBtn: "Load museum photo",
@@ -116,7 +123,6 @@
       writeAnother: "Write Another 1962 Letter",
       footerNote: "Gallery 3 · Early Transistor & Office Computing",
       dialogTitle: "Visiting the Ferranti Sirius Exhibition",
-      dialogClose: "Close ×",
       dialogLead:
         "Designed especially for university students and first-time visitors, the Early Office Computing gallery connects today’s instant messaging with the tactile machinery of 1962.",
       dlgLocationDt: "Location",
@@ -134,27 +140,23 @@
       readSuffix: "READ"
     },
     zh: {
-      introSkip: "跳过开屏",
-      brandSub: "Ferranti Sirius 互动展",
-      navCompose: "写信",
-      navReceive: "收信",
-      navHistory: "真实历史",
+      introSkip: "直接进入",
+      introExhibitBadge: "馆藏展品：FERRANTI SIRIUS · 1962",
+      introHeadline: "寄出一封穿越 1962 年的打孔纸带信",
+      introDesc:
+        "写一段话给朋友，由 1962 年英国 Ferranti Sirius 晶体管计算机将其编码为五孔纸带，并在镍金属丝声波回路里日夜循环保存，等待收信人亲手拉出破译。",
+      introStart: "进入 1962 年 · 开始写信",
+      brandSub: "Ferranti Sirius 馆藏互动展",
       soundOff: "机械音：关",
       soundOn: "机械音：开",
       replayIntro: "重播开屏",
-      heroBadge: "计算机历史博物馆 · 线上互动展",
-      heroTitle: "< A Message from 1962? >",
-      heroLead:
-        "写一小段想对朋友说的话，把它变成一封 1960 年代语气的书信，再通过一台受 Ferranti Sirius 启发的互动机器把它拉出并读完。",
-      sharedTitle: "你收到了一卷来自 1962 年的打孔纸带。",
-      sharedDesc:
-        "有朋友通过 Ferranti Sirius 展览给你编码了一封信。直接拉动下方纸带即可逐字读信。",
-      sharedAction: "定位到读信纸带",
-      consoleSub: "五孔光电纸带读入器 · 声学延迟线循环示意",
-      step1Tag: "第一幕 · 写信台",
-      composeHeading: "写下一句话，换个年代寄出",
+      composeBadge: "1962 写信台 · 线上互动体验",
+      composeHeading: "写下一句话，交由 1962 年的打孔纸带寄出",
       composeSubtitle:
-        "你的日常表达会被改写成温和含蓄的旧式白话书信，保留原本的意思，不擅自添加未曾说过的承诺或事件。",
+        "你的日常表达会被改写成温和含蓄的 1960 年代书信（严格保留原意），实时打成五孔光电纸带；生成链接发给朋友，或自己直接体验拉纸带收信。",
+      jumpToReceiver: "前往收信机 →",
+      learnExhibit: "了解更多：1962 展品 →",
+      livePunchLabel: "实时五孔纸带打孔预览",
       labelTo: "收信人",
       labelFrom: "署名",
       placeholderTo: "挚友",
@@ -171,17 +173,26 @@
       labelRewritten: "1962 年代感书信稿",
       toneFootnote: "你可以先对比原文与改写稿，并直接修改上方任意一句，确认后再编码为纸带。",
       confirmEncode: "确认信件并编码为打孔纸带",
-      dispatchReady: "五单位打孔纸带已生成，可以模拟发出或复制链接。",
-      openAsRecipient: "进入收信人视角（拉动纸带）",
-      copyShareLink: "复制收信链接",
+      dispatchReady: "五单位打孔纸带已生成，正送入声波延迟线循环保存，可前往收信或复制链接。",
+      openAsRecipient: "前往收信机（亲手拉出纸带读信）→",
+      copyShareLink: "复制收信链接发给朋友",
+      learnMoreSirius: "了解更多：Ferranti Sirius 展品档案 →",
       copiedOk: "链接已复制到剪贴板",
       copiedFallback: "链接已生成，请手动复制",
-      step2Tag: "第二幕 · 收信装置",
-      receiveHeading: "拉动打孔纸带，让信慢慢显现",
+      receiveBadge: "纸带收信台 · 逐字破译",
+      receiveHeading: "拉动打孔纸带，让 1962 年的信慢慢显现",
       apparatusDisclaimer:
-        "这是一台专为本次展览设计的当代互动机器，造型灵感来自 1962 年的 Ferranti Sirius，用来带你走进故事，并非原机的精确复刻。",
+        "这是一台专为本次展览设计的当代互动装置，灵感源自 1962 年 Ferranti Sirius 晶体管计算机，帮助你感受“读取纸带”与“声波循环记忆”的不同。",
+      backToWrite: "← 返回写信台",
+      liveLoopTag: "● 持续循环中",
+      waitingCountLabel: "等待收信期间已持续循环",
+      waitingUnit: "次",
+      waitingHeadline: "在你还没点开这封信时，它已经在镍金属丝里不停奔跑了上万圈",
+      waitingDesc:
+        "今天的微信、邮件会安静地躺在硬盘或云服务器里等你查看；但 1962 年的 Ferranti Sirius 没有静态硬盘——为了不让这封信消失，机器只能把它化作一串机械声波脉冲，沿着镍丝线圈永不停止地循环回荡。只要循环不断，记忆就在。",
+      consoleSub: "五孔光电纸带读入器 · 声学延迟线循环示意",
       tapeTrackLabel: "五孔油浸纸带（5-TRACK TAPE）",
-      pullHandle: "向右/左拉出",
+      pullHandle: "向左拉出",
       scrubberAria: "纸带拉动读取进度",
       holdToPull: "按住持续拉动",
       resetTape: "倒回纸带",
@@ -200,21 +211,23 @@
       statusReading: "正在读取",
       statusPaused: "已停下拉动",
       statusComplete: "读取完成",
-      statusEmpty: "尚无数据",
+      statusLoopStandby: "待机循环保存中",
       statusCirculating: "持续循环中",
       statusLoopStopped: "示意已暂停",
       pauseCalloutTitle: "纸带停下了——内部循环仍在继续",
       pauseCalloutBody:
         "你停下了拉纸带的动作，「读取信息」随之暂停；但已经读入机器的信息仍在内部不断循环以保持记忆。「读取」和「保存」是两个不同的过程。",
-      simCycleLabel: "模拟循环次数",
+      simCycleLabel: "本次读取后循环圈数",
       simDisclaimer:
-        "说明：此处显示的循环次数仅用于帮助理解概念，并非 Ferranti Sirius 原机的真实运行速度或测量数据。",
+        "说明：此处显示的循环次数仅用于帮助理解声波循环概念，并非 Ferranti Sirius 原机的真实运行速度或测量数据。",
       completePrompt: "这封来自 1962 年的信已经读完。现在，去看看机器背后的真实历史吧。",
-      meetRealSirius: "回到 1962 年真实历史",
-      step3Tag: "第三幕 · 真实历史与馆藏",
+      meetRealSirius: "了解更多：认识真实的 1962 Ferranti Sirius →",
+      writeReplyLetter: "← 我也写一封 1962 年的信",
+      historyBadge: "真实馆藏档案 · Ferranti Sirius",
       historyHeading: "真实的 Ferranti Sirius（1961–1962）",
       historySubtitle:
         "剥开互动故事的外衣，这台出自曼彻斯特的早期晶体管计算机，曾用普通办公室电源和金属丝里的“回声”记住了整整一代数据。",
+      backToReceive: "← 返回纸带收信机",
       photoCaption:
         "Ferranti Sirius 馆藏档案图版：桌面控制台、晶体管机柜与光电五孔纸带读入器（约 1962 年）。",
       uploadPhotoBtn: "替换馆藏实拍图",
@@ -241,7 +254,6 @@
       writeAnother: "再写一封 1962 年的信",
       footerNote: "三号展厅 · 早期晶体管与办公计算",
       dialogTitle: "Ferranti Sirius 馆藏展区参观指南",
-      dialogClose: "关闭 ×",
       dialogLead:
         "面向高校同学与首次到访的观众，「早期办公计算」常设展将今天的即时通讯与 1962 年的手工穿孔纸带连接在一起。",
       dlgLocationDt: "展厅位置",
@@ -301,11 +313,11 @@
      2. Shared State (Preserved across EN <-> 中文 switches)
      ======================================================================== */
   const state = {
-    lang: "en",
+    lang: "zh",
     stage: "compose", // 'compose' | 'receive' | 'history'
-    sender: SAMPLES[0].en.from,
-    recipient: SAMPLES[0].en.to,
-    rawInput: SAMPLES[0].en.text,
+    sender: SAMPLES[0].zh.from,
+    recipient: SAMPLES[0].zh.to,
+    rawInput: SAMPLES[0].zh.text,
     letterEn: "",
     letterZh: "",
     isCustomEditedEn: false,
@@ -315,6 +327,8 @@
     isActivelyPulling: false,
     isLoopPaused: false,
     simulatedCycles: 0,
+    waitingCycles: 18420,
+    dispatchedAt: Date.now(),
     soundEnabled: true,
     hasSharedArrival: false
   };
@@ -469,7 +483,8 @@
       o: state.rawInput,
       e: state.letterEn,
       z: state.letterZh,
-      l: state.lang
+      l: state.lang,
+      t: state.dispatchedAt || Date.now()
     };
     const json = JSON.stringify(payload);
     const bytes = new TextEncoder().encode(json);
@@ -511,6 +526,11 @@
         state.isCustomEditedZh = true;
         if (parsed.l === "zh" || parsed.l === "en") {
           state.lang = parsed.l;
+        }
+        if (typeof parsed.t === "number" && Number.isFinite(parsed.t)) {
+          state.dispatchedAt = parsed.t;
+          const elapsedSec = Math.max(8, Math.floor((Date.now() - parsed.t) / 1000));
+          state.waitingCycles = Math.min(9999999, 18420 + elapsedSec * 110);
         }
         state.isConfirmed = true;
         state.hasSharedArrival = true;
@@ -608,7 +628,7 @@
           x: Math.round(e.clientX / 6) * 6,
           y: Math.round(e.clientY / 6) * 6,
           life: 1,
-          color: Math.random() > 0.4 ? "#264E36" : "#8E9487"
+          color: Math.random() > 0.4 ? "#7D2027" : "#A39670"
         });
         if (this.trail.length > 36) this.trail.shift();
       });
@@ -648,7 +668,7 @@
       const winW = rect.width;
       const winH = rect.height;
 
-      const palette = ["#264E36", "#586255", "#7F897B", "#B7BEB2", "#D7D2C5"];
+      const palette = ["#372713", "#4D4828", "#A39670", "#D9C4B1", "#FAF6EE"];
       const block = 7;
 
       // Pixel-art vintage computer silhouette coordinates relative to center
@@ -716,12 +736,12 @@
       if (!this.stampsEl) return;
       this.stampsEl.innerHTML = "";
       const positions = [
-        { x: "14%", y: "22%", color: "#C84B31" },
-        { x: "82%", y: "18%", color: "#264E36" },
-        { x: "18%", y: "74%", color: "#264E36" },
-        { x: "84%", y: "72%", color: "#D96B27" },
-        { x: "32%", y: "15%", color: "#586255" },
-        { x: "68%", y: "80%", color: "#C84B31" }
+        { x: "14%", y: "22%", color: "#7D2027" },
+        { x: "82%", y: "18%", color: "#4D4828" },
+        { x: "18%", y: "74%", color: "#372713" },
+        { x: "84%", y: "72%", color: "#A39670" },
+        { x: "32%", y: "15%", color: "#4D4828" },
+        { x: "68%", y: "80%", color: "#7D2027" }
       ];
 
       positions.forEach((pos) => {
@@ -784,21 +804,64 @@
       }
       ctx.globalAlpha = 1;
 
-      // 3. Render typewriter text inside the pixel CRT screen once morphed
+      // 3. Render 1962 exhibit identification inside CRT + announcement banner below computer
       if (this.morphMode === "computer" && this.morphState.scatter < 0.1) {
         const cx = this.width / 2;
         const cy = this.height / 2;
-        const fullText = "< Hello,\n-WORLD :) |";
+        const isZh = state.lang === "zh";
+
+        // Nameplate strip on top bezel of the morphed pixel computer
+        ctx.fillStyle = "#7D2027";
+        ctx.fillRect(cx - 88, cy - 138, 176, 20);
+        ctx.strokeStyle = "#372713";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(cx - 88, cy - 138, 176, 20);
+        ctx.fillStyle = "#FAF6EE";
+        ctx.font = '600 11px "IBM Plex Mono", monospace';
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("FERRANTI SIRIUS · 1962", cx, cy - 128);
+
+        // Typewriter lines inside the CRT screen
+        const fullText = isZh
+          ? ">> 正在进入 1962 年...\n展品: FERRANTI SIRIUS\n五孔纸带 · 声波回路就绪"
+          : ">> ENTERING 1962...\nEXHIBIT: FERRANTI SIRIUS\n5-TRACK TAPE READY";
         const count = Math.floor(this.morphState.typedChars);
         const visible = fullText.slice(0, count);
         const lines = visible.split("\n");
 
-        ctx.fillStyle = "#264E36";
-        ctx.font = '24px "VT323", monospace';
+        ctx.textAlign = "left";
         ctx.textBaseline = "top";
         lines.forEach((line, idx) => {
-          ctx.fillText(line, cx - 64, cy - 84 + idx * 24);
+          ctx.fillStyle = idx === 1 ? "#7D2027" : "#372713";
+          ctx.font = isZh
+            ? '600 13px "IBM Plex Mono", "PingFang SC", sans-serif'
+            : '600 13px "IBM Plex Mono", monospace';
+          ctx.fillText(line, cx - 76, cy - 92 + idx * 24);
         });
+
+        // Announcement banner beneath the pixel computer
+        const bannerW = Math.min(this.width - 36, 440);
+        const bannerX = cx - bannerW / 2;
+        const bannerY = cy + 128;
+        ctx.fillStyle = "#FAF6EE";
+        ctx.fillRect(bannerX, bannerY, bannerW, 34);
+        ctx.strokeStyle = "#372713";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(bannerX, bannerY, bannerW, 34);
+        ctx.fillStyle = "#7D2027";
+        ctx.fillRect(bannerX, bannerY, 8, 34);
+
+        ctx.fillStyle = "#372713";
+        ctx.font = isZh
+          ? '600 12px "IBM Plex Mono", "PingFang SC", sans-serif'
+          : '600 12px "IBM Plex Mono", monospace';
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        const bannerLabel = isZh
+          ? "正在进入 1962 年 · 连接馆藏展品：Ferranti Sirius 晶体管计算机"
+          : "ENTERING 1962 · EXHIBIT: FERRANTI SIRIUS COMPUTER";
+        ctx.fillText(bannerLabel, cx + 4, bannerY + 17);
       }
     }
 
@@ -868,8 +931,8 @@
         }, null, 1.95);
 
         tl.to(this.morphState, {
-          typedChars: 20,
-          duration: 1.05,
+          typedChars: 58,
+          duration: 1.25,
           ease: "none"
         }, 1.98);
 
@@ -966,6 +1029,7 @@
       this.procStoringStatus = document.getElementById("proc-storing-status");
       this.pauseCalloutEl = document.getElementById("pause-callout");
       this.cyclesCountEl = document.getElementById("loop-cycles-count");
+      this.waitingCyclesEl = document.getElementById("waiting-cycles-count");
 
       this.colWidth = 14;
       this.leaderCols = 6;
@@ -980,6 +1044,7 @@
       this.dragStartProgress = 0;
       this.lastRevealedCount = 0;
       this.loopAngle = 0;
+      this.waitingAccum = 0;
       this.lastFrameTime = performance.now();
 
       // GSAP quickTo for compositor-friendly tape translation
@@ -1025,8 +1090,8 @@
       const ctx = this.tapeCtx;
       ctx.clearRect(0, 0, totalWidth, 84);
 
-      // Subtle paper fiber stripes
-      ctx.fillStyle = "rgba(182, 160, 102, 0.14)";
+      // Subtle oil-paper fiber stripes
+      ctx.fillStyle = "rgba(77, 72, 40, 0.16)";
       for (let y = 8; y < 84; y += 16) {
         ctx.fillRect(0, y, totalWidth, 1);
       }
@@ -1040,7 +1105,7 @@
         const bits = this.columns[c];
 
         // Sprocket feed hole
-        ctx.fillStyle = "#232622";
+        ctx.fillStyle = "#372713";
         ctx.beginPath();
         ctx.arc(x, sprocketY, 1.8, 0, Math.PI * 2);
         ctx.fill();
@@ -1048,11 +1113,11 @@
         // 5-bit data holes
         for (let b = 0; b < 5; b += 1) {
           if ((bits >> b) & 1) {
-            ctx.fillStyle = "#232622";
+            ctx.fillStyle = "#372713";
             ctx.beginPath();
             ctx.arc(x, trackYs[b], 3.3, 0, Math.PI * 2);
             ctx.fill();
-            ctx.strokeStyle = "rgba(140, 118, 68, 0.55)";
+            ctx.strokeStyle = "rgba(163, 150, 112, 0.7)";
             ctx.lineWidth = 0.8;
             ctx.stroke();
           }
@@ -1241,14 +1306,14 @@
         this.procReadingStatus.textContent = dict.statusPaused;
       }
 
-      // 2. Storing in Loop state (continuous even when tape stopped!)
+      // 2. Storing in Loop state (ALWAYS circulating in the nickel delay line—even before pulling!)
       this.stateStoringEl.classList.remove("is-idle", "is-circulating");
-      if (!hasData) {
-        this.stateStoringEl.classList.add("is-idle");
-        this.procStoringStatus.textContent = dict.statusEmpty;
-      } else if (state.isLoopPaused) {
+      if (state.isLoopPaused) {
         this.stateStoringEl.classList.add("is-idle");
         this.procStoringStatus.textContent = dict.statusLoopStopped;
+      } else if (!hasData) {
+        this.stateStoringEl.classList.add("is-circulating");
+        this.procStoringStatus.textContent = dict.statusLoopStandby;
       } else {
         this.stateStoringEl.classList.add("is-circulating");
         this.procStoringStatus.textContent = dict.statusCirculating;
@@ -1261,6 +1326,9 @@
       this.pauseCalloutEl.hidden = !(hasData && !state.isActivelyPulling && !isComplete);
 
       this.cyclesCountEl.textContent = state.simulatedCycles.toLocaleString();
+      if (this.waitingCyclesEl) {
+        this.waitingCyclesEl.textContent = state.waitingCycles.toLocaleString();
+      }
     }
 
     startLoopMonitor() {
@@ -1274,92 +1342,129 @@
         const revealedCount = Math.round(state.tapeProgress * letter.length);
         const hasData = revealedCount > 0;
 
-        if (hasData && !state.isLoopPaused) {
-          const speed = prefersReduced.matches ? 0.28 : 1.45;
+        if (!state.isLoopPaused) {
+          const speed = prefersReduced.matches ? 0.3 : 1.55;
           const prevRevs = Math.floor(this.loopAngle / (Math.PI * 2));
           this.loopAngle += dt * speed;
           const nextRevs = Math.floor(this.loopAngle / (Math.PI * 2));
-          if (nextRevs > prevRevs) {
+
+          // Always advance the pre-receive / background circulation counter so visitors see continuous loop activity
+          this.waitingAccum += dt * (prefersReduced.matches ? 6 : 36);
+          if (this.waitingAccum >= 1) {
+            const deltaCycles = Math.floor(this.waitingAccum);
+            this.waitingAccum -= deltaCycles;
+            state.waitingCycles += deltaCycles;
+            if (this.waitingCyclesEl) {
+              this.waitingCyclesEl.textContent = state.waitingCycles.toLocaleString();
+            }
+          }
+
+          if (hasData && nextRevs > prevRevs) {
             state.simulatedCycles += 1;
             this.cyclesCountEl.textContent = state.simulatedCycles.toLocaleString();
           }
         }
 
-        this.renderLoopCanvas(hasData, revealedCount);
+        this.renderLoopCanvas(hasData, revealedCount, letter);
         requestAnimationFrame(draw);
       };
 
       requestAnimationFrame(draw);
     }
 
-    renderLoopCanvas(hasData, revealedCount) {
+    renderLoopCanvas(hasData, revealedCount, letterText = "") {
       const ctx = this.loopCtx;
       const w = this.loopCanvas.width;
       const h = this.loopCanvas.height;
       const cx = w / 2;
       const cy = h / 2;
-      const rx = 128;
-      const ry = 66;
+      const rx = 132;
+      const ry = 70;
 
       ctx.clearRect(0, 0, w, h);
 
       // Stepped pixel grid axes
-      ctx.fillStyle = "rgba(38, 78, 54, 0.14)";
-      for (let x = 24; x <= w - 24; x += 8) {
+      ctx.fillStyle = "rgba(77, 72, 40, 0.16)";
+      for (let x = 22; x <= w - 22; x += 8) {
         ctx.fillRect(x, cy, 2, 2);
       }
-      for (let y = 18; y <= h - 18; y += 8) {
+      for (let y = 16; y <= h - 16; y += 8) {
         ctx.fillRect(cx, y, 2, 2);
       }
 
       // Nickel delay-line pixel coil track
-      const stepCount = 56;
+      const stepCount = 60;
       for (let s = 0; s < stepCount; s += 1) {
         const a = (s / stepCount) * Math.PI * 2;
         const px = Math.round((cx + Math.cos(a) * rx) / 3) * 3;
         const py = Math.round((cy + Math.sin(a) * ry) / 3) * 3;
-        ctx.fillStyle = hasData ? "rgba(38, 78, 54, 0.55)" : "#C7C1B2";
+        ctx.fillStyle = state.isLoopPaused ? "#A39670" : "#4D4828";
         ctx.fillRect(px - 1, py - 1, 3, 3);
       }
 
       // Input injection pixel block on left side (active only while pulling)
-      ctx.fillStyle = state.isActivelyPulling ? "#D96B27" : "#767A6F";
+      ctx.fillStyle = state.isActivelyPulling ? "#7D2027" : "#A39670";
       ctx.fillRect(cx - rx - 6, cy - 6, 12, 12);
 
       // Re-amplification / Refresh gate on right side
-      ctx.fillStyle = hasData && !state.isLoopPaused ? "#264E36" : "#767A6F";
+      ctx.fillStyle = !state.isLoopPaused ? "#4D4828" : "#A39670";
       ctx.fillRect(cx + rx - 6, cy - 10, 12, 20);
 
-      // Draw pixel-art acoustic data pulses circulating inside the loop
-      if (hasData) {
-        const pulseCount = Math.min(26, Math.max(2, Math.ceil(revealedCount / 5)));
+      // Draw orbiting acoustic pulses EVEN BEFORE pulling so the continuous memory loop is vivid
+      if (!hasData) {
+        const standbyPulses = 14;
+        for (let i = 0; i < standbyPulses; i += 1) {
+          const theta = this.loopAngle + (i / standbyPulses) * Math.PI * 2;
+          const px = Math.round((cx + Math.cos(theta) * rx) / 2) * 2;
+          const py = Math.round((cy + Math.sin(theta) * ry) / 2) * 2;
+          const sz = i % 4 === 0 ? 8 : 5;
+          ctx.fillStyle = i % 4 === 0 ? "#7D2027" : "#A39670";
+          ctx.fillRect(px - sz / 2, py - sz / 2, sz, sz);
+        }
+      } else {
+        // Orbiting character badges from the read slice + pulse blocks
+        const cleanChars = letterText
+          .slice(0, revealedCount)
+          .replace(/\s+/g, "")
+          .slice(-14);
+        const pulseCount = Math.max(8, Math.min(22, Math.ceil(revealedCount / 4)));
         for (let i = 0; i < pulseCount; i += 1) {
           const theta = this.loopAngle + (i / pulseCount) * Math.PI * 2;
           const px = Math.round((cx + Math.cos(theta) * rx) / 2) * 2;
           const py = Math.round((cy + Math.sin(theta) * ry) / 2) * 2;
-          const sz = i % 5 === 0 ? 8 : 6;
-          ctx.fillStyle = i % 5 === 0 ? "#C84B31" : "#264E36";
-          ctx.fillRect(px - sz / 2, py - sz / 2, sz, sz);
+          const ch = cleanChars.length > 0 && i < cleanChars.length ? cleanChars[i] : "";
+          if (ch) {
+            ctx.fillStyle = i % 3 === 0 ? "#7D2027" : "#372713";
+            ctx.fillRect(px - 7, py - 7, 14, 14);
+            ctx.fillStyle = "#FAF6EE";
+            ctx.font = '600 9px "IBM Plex Mono", sans-serif';
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(ch, px, py + 0.5);
+          } else {
+            ctx.fillStyle = i % 3 === 0 ? "#7D2027" : "#4D4828";
+            ctx.fillRect(px - 3, py - 3, 6, 6);
+          }
         }
       }
 
       // Center concise state typography
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      ctx.font = '600 12px "IBM Plex Mono", monospace';
-      ctx.fillStyle = hasData ? "#264E36" : "#7C7E73";
-      const label = !hasData
-        ? (state.lang === "zh" ? "等待写入脉冲" : "LOOP IDLE")
-        : state.isLoopPaused
-          ? (state.lang === "zh" ? "示意已暂停" : "DISPLAY PAUSED")
-          : (state.lang === "zh" ? "脉冲持续循环保存中" : "PULSES RECIRCULATING");
-      ctx.fillText(label, cx, cy - 8);
+      ctx.font = '600 12px "IBM Plex Mono", "PingFang SC", monospace';
+      ctx.fillStyle = state.isLoopPaused ? "#6E644C" : "#7D2027";
+      const label = state.isLoopPaused
+        ? (state.lang === "zh" ? "示意已暂停" : "DISPLAY PAUSED")
+        : !hasData
+          ? (state.lang === "zh" ? "待收信 · 声波持续循环" : "WAITING · STILL LOOPING")
+          : (state.lang === "zh" ? "已读字符持续循环保存" : "PULSES RECIRCULATING");
+      ctx.fillText(label, cx, cy - 10);
 
-      ctx.font = '400 11px "IBM Plex Mono", monospace';
-      ctx.fillStyle = "#5B5E55";
-      const sub = state.lang === "zh"
-        ? `已存 ${revealedCount} 字符`
-        : `${revealedCount} CHARS IN LOOP`;
+      ctx.font = '500 11px "IBM Plex Mono", "PingFang SC", monospace';
+      ctx.fillStyle = "#372713";
+      const sub = !hasData
+        ? (state.lang === "zh" ? `已循环 ${state.waitingCycles.toLocaleString()} 次` : `${state.waitingCycles.toLocaleString()} LOOPS SO FAR`)
+        : (state.lang === "zh" ? `已读 ${revealedCount} 字符在循环中` : `${revealedCount} CHARS IN LOOP`);
       ctx.fillText(sub, cx, cy + 12);
     }
   }
@@ -1374,16 +1479,16 @@
     const w = canvas.width;
     const h = canvas.height;
 
-    // Warm silver-gelatin archival backdrop
+    // Warm oil-painting archival backdrop (#ECE6D8 -> #D9C4B1 -> #A39670)
     const bgGrad = ctx.createLinearGradient(0, 0, 0, h);
-    bgGrad.addColorStop(0, "#DDD7CA");
-    bgGrad.addColorStop(0.65, "#C7C0B1");
-    bgGrad.addColorStop(1, "#A8A090");
+    bgGrad.addColorStop(0, "#ECE6D8");
+    bgGrad.addColorStop(0.62, "#D9C4B1");
+    bgGrad.addColorStop(1, "#A39670");
     ctx.fillStyle = bgGrad;
     ctx.fillRect(0, 0, w, h);
 
     // Subtle gallery wall panel lines
-    ctx.strokeStyle = "rgba(40, 38, 34, 0.08)";
+    ctx.strokeStyle = "rgba(55, 39, 19, 0.1)";
     ctx.lineWidth = 1;
     for (let x = 80; x < w; x += 140) {
       ctx.beginPath();
@@ -1393,51 +1498,51 @@
     }
 
     // Floor shadow
-    ctx.fillStyle = "rgba(30, 30, 26, 0.22)";
+    ctx.fillStyle = "rgba(55, 39, 19, 0.22)";
     ctx.beginPath();
     ctx.ellipse(385, 426, 290, 24, 0, 0, Math.PI * 2);
     ctx.fill();
 
-    // Rear Transistor Cabinet Bay (Ferranti Sirius upright logic unit)
-    ctx.fillStyle = "#4A4D48";
+    // Rear Transistor Cabinet Bay (Ferranti Sirius upright logic unit in olive-bronze & umber)
+    ctx.fillStyle = "#372713";
     ctx.fillRect(110, 96, 225, 310);
-    ctx.fillStyle = "#62665F";
+    ctx.fillStyle = "#4D4828";
     ctx.fillRect(116, 102, 213, 298);
     // Cabinet doors & ventilation louvres
-    ctx.strokeStyle = "#2E302C";
+    ctx.strokeStyle = "#372713";
     ctx.lineWidth = 2;
     ctx.strokeRect(126, 114, 92, 274);
     ctx.strokeRect(226, 114, 92, 274);
 
     // Upper decimal indicator strip on Sirius cabinet
-    ctx.fillStyle = "#222521";
+    ctx.fillStyle = "#372713";
     ctx.fillRect(136, 128, 172, 42);
     for (let i = 0; i < 10; i += 1) {
-      ctx.fillStyle = i === 2 || i === 6 || i === 9 ? "#D68E49" : "#444840";
+      ctx.fillStyle = i === 2 || i === 6 || i === 9 ? "#7D2027" : "#6E644C";
       ctx.fillRect(144 + i * 16, 142, 10, 14);
     }
 
     // Ventilation slots
-    ctx.fillStyle = "#353832";
+    ctx.fillStyle = "#372713";
     for (let y = 290; y < 370; y += 8) {
       ctx.fillRect(138, y, 68, 3);
       ctx.fillRect(238, y, 68, 3);
     }
 
     // Main L-shaped operator desk
-    ctx.fillStyle = "#8C877B";
+    ctx.fillStyle = "#A39670";
     ctx.fillRect(290, 244, 370, 22);
-    ctx.fillStyle = "#52554E";
+    ctx.fillStyle = "#4D4828";
     ctx.fillRect(306, 266, 28, 146);
     ctx.fillRect(614, 266, 28, 146);
 
     // Ferranti TR5 Optical Paper Tape Reader mounted on desk
-    ctx.fillStyle = "#3C403A";
+    ctx.fillStyle = "#372713";
     ctx.fillRect(350, 178, 142, 66);
-    ctx.fillStyle = "#D4CCB8";
+    ctx.fillStyle = "#ECE6D8";
     ctx.fillRect(360, 188, 122, 44);
     // Tape reels
-    ctx.strokeStyle = "#262824";
+    ctx.strokeStyle = "#372713";
     ctx.lineWidth = 3;
     ctx.beginPath();
     ctx.arc(386, 210, 16, 0, Math.PI * 2);
@@ -1445,8 +1550,8 @@
     ctx.beginPath();
     ctx.arc(454, 210, 16, 0, Math.PI * 2);
     ctx.stroke();
-    // Yellow paper tape bridge
-    ctx.strokeStyle = "#D4BA74";
+    // Warm bisque paper tape bridge
+    ctx.strokeStyle = "#D9C4B1";
     ctx.lineWidth = 5;
     ctx.beginPath();
     ctx.moveTo(386, 194);
@@ -1454,15 +1559,15 @@
     ctx.stroke();
 
     // Operator control console & manual switches
-    ctx.fillStyle = "#31342F";
+    ctx.fillStyle = "#372713";
     ctx.fillRect(512, 206, 122, 38);
-    ctx.fillStyle = "#C9C3B4";
     for (let k = 0; k < 8; k += 1) {
+      ctx.fillStyle = k === 1 || k === 5 ? "#7D2027" : "#D9C4B1";
       ctx.fillRect(522 + k * 13, 220, 8, 14);
     }
 
-    // Subtle film grain & vignette
-    ctx.fillStyle = "rgba(25, 24, 20, 0.04)";
+    // Subtle canvas grain & warm oil vignette
+    ctx.fillStyle = "rgba(55, 39, 19, 0.045)";
     for (let i = 0; i < 650; i += 1) {
       const gx = (i * 97) % w;
       const gy = (i * 53) % h;
@@ -1471,7 +1576,7 @@
 
     const vig = ctx.createRadialGradient(w / 2, h / 2, h * 0.3, w / 2, h / 2, w * 0.65);
     vig.addColorStop(0, "rgba(0,0,0,0)");
-    vig.addColorStop(1, "rgba(22, 20, 16, 0.34)");
+    vig.addColorStop(1, "rgba(55, 39, 19, 0.34)");
     ctx.fillStyle = vig;
     ctx.fillRect(0, 0, w, h);
   }
@@ -1487,7 +1592,6 @@
 
     // DOM References
     const mainContent = document.getElementById("main-content");
-    const stageTabs = Array.from(document.querySelectorAll(".stage-tab"));
     const stageSections = {
       compose: document.getElementById("stage-compose"),
       receive: document.getElementById("stage-receive"),
@@ -1496,16 +1600,16 @@
 
     const langEnBtn = document.getElementById("lang-en-btn");
     const langZhBtn = document.getElementById("lang-zh-btn");
+    const introLangEnBtn = document.getElementById("intro-lang-en");
+    const introLangZhBtn = document.getElementById("intro-lang-zh");
     const soundToggleBtn = document.getElementById("sound-toggle-btn");
     const soundToggleLabel = document.getElementById("sound-toggle-label");
     const replayIntroBtn = document.getElementById("replay-intro-btn");
 
-    const sharedBanner = document.getElementById("shared-banner");
-    const sharedOpenReceiveBtn = document.getElementById("shared-open-receive-btn");
-    const heroLead = document.getElementById("hero-lead");
     const recipientRouteBadge = document.getElementById("recipient-route-badge");
     const introWindowTitle = document.getElementById("intro-window-title");
     const introDialogGreeting = document.getElementById("intro-dialog-greeting");
+    const introDialogDesc = document.getElementById("intro-dialog-desc");
     const startIntroBtn = document.getElementById("start-intro-btn");
 
     const recipientInput = document.getElementById("recipient-input");
@@ -1516,12 +1620,25 @@
     const rewrittenLetterInput = document.getElementById("rewritten-letter-input");
     const editedBadge = document.getElementById("edited-badge");
     const resetRewriteBtn = document.getElementById("reset-rewrite-btn");
+    const livePunchCanvas = document.getElementById("live-punch-canvas");
+    const livePunchMeta = document.getElementById("live-punch-meta");
     const confirmEncodeBtn = document.getElementById("confirm-encode-btn");
     const dispatchPanel = document.getElementById("dispatch-panel");
     const goReceiveBtn = document.getElementById("go-receive-btn");
     const copyLinkBtn = document.getElementById("copy-link-btn");
     const shareUrlInput = document.getElementById("share-url-input");
     const copyFeedback = document.getElementById("copy-feedback");
+
+    // Standalone Screen Navigation Buttons
+    const composeToReceiveBtn = document.getElementById("compose-to-receive-btn");
+    const composeToHistoryBtn = document.getElementById("compose-to-history-btn");
+    const composeMoreHistoryBtn = document.getElementById("compose-more-history-btn");
+    const receiveBackComposeBtn = document.getElementById("receive-back-compose-btn");
+    const receiveToHistoryBtn = document.getElementById("receive-to-history-btn");
+    const receiveWriteBtn = document.getElementById("receive-write-btn");
+    const receiveFooterHistoryBtn = document.getElementById("receive-footer-history-btn");
+    const historyToComposeBtn = document.getElementById("history-to-compose-btn");
+    const historyToReceiveBtn = document.getElementById("history-to-receive-btn");
 
     const toggleOriginalBtn = document.getElementById("toggle-original-in-receive");
     const receiveOriginalBox = document.getElementById("receive-original-box");
@@ -1537,6 +1654,46 @@
     const siriusMachine = new SiriusMachineController();
     renderSiriusArchivePlate();
 
+    function renderLivePunchPreview() {
+      if (!livePunchCanvas) return;
+      const ctx = livePunchCanvas.getContext("2d");
+      const w = livePunchCanvas.width;
+      const h = livePunchCanvas.height;
+      const letter = getActiveLetterText();
+      const cols = siriusMachine.encodeTextToColumns(letter);
+
+      if (livePunchMeta) {
+        livePunchMeta.textContent =
+          state.lang === "zh"
+            ? `${cols.length} 列五孔穿孔 · BAUDOT/SIRIUS`
+            : `${cols.length} COLS · 5-TRACK BAUDOT/SIRIUS`;
+      }
+
+      ctx.clearRect(0, 0, w, h);
+      const colStep = 9;
+      const maxCols = Math.floor((w - 16) / colStep);
+      const visibleCols = cols.slice(0, maxCols);
+      const trackYs = [7, 14, 28, 35, 40];
+      const sprocketY = 21;
+
+      for (let i = 0; i < visibleCols.length; i += 1) {
+        const x = 10 + i * colStep;
+        const bits = visibleCols[i];
+
+        ctx.fillStyle = "#7D2027";
+        ctx.fillRect(x - 1, sprocketY - 1, 2, 2);
+
+        for (let b = 0; b < 5; b += 1) {
+          if ((bits >> b) & 1) {
+            ctx.fillStyle = "#372713";
+            ctx.beginPath();
+            ctx.arc(x, trackYs[b], 2.1, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+      }
+    }
+
     function updateRecipientBadge() {
       if (!recipientRouteBadge) return;
       const fromText = state.sender || (state.lang === "zh" ? "1962 寄信人" : "1962");
@@ -1549,6 +1706,8 @@
       document.documentElement.lang = nextLang === "zh" ? "zh-CN" : "en";
       langEnBtn.classList.toggle("is-active", nextLang === "en");
       langZhBtn.classList.toggle("is-active", nextLang === "zh");
+      if (introLangEnBtn) introLangEnBtn.classList.toggle("is-active", nextLang === "en");
+      if (introLangZhBtn) introLangZhBtn.classList.toggle("is-active", nextLang === "zh");
 
       const dict = I18N[nextLang];
       document.querySelectorAll("[data-i18n]").forEach((el) => {
@@ -1561,26 +1720,31 @@
       if (state.hasSharedArrival) {
         if (introWindowTitle) {
           introWindowTitle.textContent =
-            nextLang === "zh" ? "SIRIUS.REC // 1962 来信抵达" : "SIRIUS.REC // 1962 LETTER INBOUND";
+            nextLang === "zh"
+              ? "1962 · FERRANTI SIRIUS // 来信抵达"
+              : "1962 · FERRANTI SIRIUS // LETTER INBOUND";
         }
         if (introDialogGreeting) {
           introDialogGreeting.textContent =
             nextLang === "zh"
-              ? `< 收到来自 ${state.sender || "1962"} 的来信 >`
-              : `< Incoming 1962 Tape from ${state.sender || "1962"} >`;
+              ? `收到来自 ${state.sender || "1962"} 的一封 1962 打孔纸带信`
+              : `A 1962 Paper-Tape Letter from ${state.sender || "1962"}`;
+        }
+        if (introDialogDesc) {
+          introDialogDesc.textContent =
+            nextLang === "zh"
+              ? `${state.recipient || "朋友"}，在你打开这封信前，它已在 1962 年 Ferranti Sirius 展品的镍金属丝声波回路里持续循环了 ${state.waitingCycles.toLocaleString()} 次。进入收信台，亲手拉出纸带读信吧。`
+              : `${state.recipient || "Friend"}, before you opened this link, your letter circulated ${state.waitingCycles.toLocaleString()} times inside the Ferranti Sirius nickel acoustic loop. Step inside to pull the tape free.`;
         }
         if (startIntroBtn) {
-          startIntroBtn.textContent = nextLang === "zh" ? "打开纸带" : "Open Tape";
-        }
-        if (heroLead) {
-          heroLead.textContent =
-            nextLang === "zh"
-              ? `${state.recipient || "朋友"}，${state.sender || "1962 寄信人"} 通过 Ferranti Sirius 向你发来一封跨时代纸带信件。下方已自动载入收信机，拖动或点击即可逐字破译。`
-              : `${state.recipient || "Friend"}, ${state.sender || "a 1962 sender"} dispatched a Ferranti Sirius punched-tape letter to you. The receiver below is preloaded — drag or step the tape to decode it.`;
+          startIntroBtn.textContent =
+            nextLang === "zh" ? "进入 1962 年 · 拉动纸带读信" : "Enter 1962 · Decode Tape";
         }
       } else if (introWindowTitle) {
         introWindowTitle.textContent =
-          nextLang === "zh" ? "SIRIUS.BOOT // 1962" : "SIRIUS.BOOT // 1962";
+          nextLang === "zh"
+            ? "1962 · FERRANTI SIRIUS // 时空展厅"
+            : "1962 · FERRANTI SIRIUS // EXHIBITION";
       }
 
       // Update placeholders and sound label
@@ -1603,6 +1767,7 @@
       receiveOriginalBox.textContent = state.rawInput;
       toggleOriginalBtn.textContent = receiveOriginalBox.hidden ? dict.peekOriginal : dict.hideOriginal;
       updateRecipientBadge();
+      renderLivePunchPreview();
 
       if (state.isConfirmed) {
         shareUrlInput.value = encodeSharePayload();
@@ -1617,15 +1782,6 @@
       Object.entries(stageSections).forEach(([key, section]) => {
         const isTarget = key === targetStage;
         section.hidden = !isTarget;
-      });
-      stageTabs.forEach((tab) => {
-        const isCurrent = tab.getAttribute("data-stage-target") === targetStage;
-        tab.classList.toggle("is-active", isCurrent);
-        if (isCurrent) {
-          tab.setAttribute("aria-current", "step");
-        } else {
-          tab.removeAttribute("aria-current");
-        }
       });
 
       if (targetStage === "receive") {
@@ -1643,11 +1799,7 @@
       }
 
       if (shouldScroll) {
-        if (targetStage === "receive" && stageSections.receive) {
-          stageSections.receive.scrollIntoView({ behavior: "smooth", block: "start" });
-        } else {
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        }
+        window.scrollTo({ top: 0, behavior: "smooth" });
       }
     }
 
@@ -1661,16 +1813,11 @@
 
     replayIntroBtn.addEventListener("click", () => intro.replay());
 
-    // Language Switch
+    // Language Switch (Header + Intro Topbar)
     langEnBtn.addEventListener("click", () => applyLanguage("en"));
     langZhBtn.addEventListener("click", () => applyLanguage("zh"));
-
-    // Stage Navigation
-    stageTabs.forEach((tab) => {
-      tab.addEventListener("click", () => {
-        switchStage(tab.getAttribute("data-stage-target"));
-      });
-    });
+    if (introLangEnBtn) introLangEnBtn.addEventListener("click", () => applyLanguage("en"));
+    if (introLangZhBtn) introLangZhBtn.addEventListener("click", () => applyLanguage("zh"));
 
     // Sound Toggle (default ON; unlock AudioContext on first gesture)
     const unlockAudioOnFirstGesture = () => {
@@ -1700,6 +1847,7 @@
 
       syncDraftsFromRaw();
       rewrittenLetterInput.value = getActiveLetterText();
+      renderLivePunchPreview();
       if (state.isConfirmed) {
         shareUrlInput.value = encodeSharePayload();
       }
@@ -1735,6 +1883,7 @@
         state.isCustomEditedEn = true;
       }
       editedBadge.hidden = false;
+      renderLivePunchPreview();
       if (state.isConfirmed) {
         shareUrlInput.value = encodeSharePayload();
       }
@@ -1751,6 +1900,7 @@
       }
       editedBadge.hidden = true;
       rewrittenLetterInput.value = getActiveLetterText();
+      renderLivePunchPreview();
       if (state.isConfirmed) {
         shareUrlInput.value = encodeSharePayload();
       }
@@ -1759,6 +1909,7 @@
     // Confirm & Encode
     confirmEncodeBtn.addEventListener("click", () => {
       state.isConfirmed = true;
+      state.dispatchedAt = Date.now();
       state.tapeProgress = 0;
       state.simulatedCycles = 0;
       dispatchPanel.hidden = false;
@@ -1769,9 +1920,16 @@
 
     goReceiveBtn.addEventListener("click", () => switchStage("receive"));
 
-    if (sharedOpenReceiveBtn) {
-      sharedOpenReceiveBtn.addEventListener("click", () => switchStage("receive", true));
-    }
+    // Standalone screen-to-screen flow buttons
+    if (composeToReceiveBtn) composeToReceiveBtn.addEventListener("click", () => switchStage("receive"));
+    if (composeToHistoryBtn) composeToHistoryBtn.addEventListener("click", () => switchStage("history"));
+    if (composeMoreHistoryBtn) composeMoreHistoryBtn.addEventListener("click", () => switchStage("history"));
+    if (receiveBackComposeBtn) receiveBackComposeBtn.addEventListener("click", () => switchStage("compose"));
+    if (receiveToHistoryBtn) receiveToHistoryBtn.addEventListener("click", () => switchStage("history"));
+    if (receiveWriteBtn) receiveWriteBtn.addEventListener("click", () => switchStage("compose"));
+    if (receiveFooterHistoryBtn) receiveFooterHistoryBtn.addEventListener("click", () => switchStage("history"));
+    if (historyToComposeBtn) historyToComposeBtn.addEventListener("click", () => switchStage("compose"));
+    if (historyToReceiveBtn) historyToReceiveBtn.addEventListener("click", () => switchStage("receive"));
 
     copyLinkBtn.addEventListener("click", async () => {
       const link = encodeSharePayload();
@@ -1825,7 +1983,6 @@
     // Initial render
     applyLanguage(state.lang);
     if (state.hasSharedArrival) {
-      sharedBanner.hidden = false;
       dispatchPanel.hidden = false;
       switchStage("receive", false);
     }
