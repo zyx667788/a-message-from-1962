@@ -2629,6 +2629,12 @@
         window.addEventListener("scroll", bottomRevealHandler, { passive: true });
 
         requestAnimationFrame(() => {
+          if (window.scrollY !== 0 && activeSec.dataset.pendingTopReset === "1") {
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+          }
+          delete activeSec.dataset.pendingTopReset;
           if (window.ScrollTrigger) window.ScrollTrigger.refresh();
           // Reveal initial above-the-fold cards cleanly even if already within start threshold
           const vh = window.innerHeight || document.documentElement.clientHeight || 800;
@@ -2663,8 +2669,24 @@
       );
     }
 
+    function forceScrollTopNow() {
+      document.documentElement.style.scrollBehavior = "auto";
+      document.body.style.scrollBehavior = "auto";
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
+
     function switchStage(targetStage, shouldScroll = true) {
       clearScrollEffects();
+      if (shouldScroll && document.activeElement && typeof document.activeElement.blur === "function") {
+        document.activeElement.blur();
+      }
+
+      if (shouldScroll) {
+        forceScrollTopNow();
+      }
+
       state.stage = targetStage;
       Object.entries(stageSections).forEach(([key, section]) => {
         const isTarget = key === targetStage;
@@ -2678,11 +2700,12 @@
         renderMuseumGallery(state.activePhotoIdx, state.activeHotspotIdx);
       }
 
+      const activeSec = stageSections[targetStage];
       if (shouldScroll) {
-        window.scrollTo({ top: 0, behavior: "auto" });
+        if (activeSec) activeSec.dataset.pendingTopReset = "1";
+        forceScrollTopNow();
       }
 
-      const activeSec = stageSections[targetStage];
       if (window.gsap && activeSec) {
         window.gsap.killTweensOf(activeSec);
         window.gsap.set(activeSec, { clearProps: "opacity,visibility,transform" });
