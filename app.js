@@ -39,6 +39,7 @@
       resetDraft: "Reset draft",
       editedBadge: "Edited",
       labelRewritten: "1962 rewritten letter",
+      placeholderDraft: "Write a short note on the left to compose your 1962 paper-tape letter...",
       confirmEncode: "Confirm & Punch onto 1962 Tape",
       emptyInputAlert: "Please write a short note (or pick a quick prompt) before punching onto 1962 paper tape.",
       dispatchReady: "Encoded onto 5-track tape — now pull the tape free yourself or share the link.",
@@ -87,7 +88,7 @@
         "Reading paused when you stopped pulling, but decoded bits stay alive inside the acoustic coil.",
       simCycleLabel: "Live Coil Orbit Laps (Visual)",
       simDisclaimer:
-        "Illustrative delay-line loop counter (not exact original kHz clock speed).",
+        "Conversion: top counter ticks at ~36 acoustic pulses/sec; 1 visual orbit lap above ≈ 145 pulses (illustrative pace, not real kHz clock).",
       completePrompt:
         "Every character has arrived. Inspect the 7 real Monash Museum photos next.",
       meetRealSirius: "Explore the 7 Museum Photos →",
@@ -182,6 +183,7 @@
       resetDraft: "恢复自动改写",
       editedBadge: "已微调",
       labelRewritten: "1962 书信稿",
+      placeholderDraft: "在左侧写下一段话后，这里会自动生成 1962 年书信草稿……",
       confirmEncode: "确认并编码为 1962 打孔纸带",
       emptyInputAlert: "请先输入想对朋友说的话（或点击快速灵感），再编码为 1962 打孔纸带。",
       dispatchReady: "纸带已打孔送入声波循环——现在你可以亲自去拉动纸带，或分享链接。",
@@ -230,7 +232,7 @@
         "松手后读取暂停，但已读入的字符仍在金属丝线圈内持续循环保存。",
       simCycleLabel: "动画线圈已转圈数",
       simDisclaimer:
-        "说明：仅作声波循环工作原理示意，非原机实际主频测量。",
+        "换算说明：顶部按每秒约 36 次声波脉冲累计；上方动画每转完 1 圈约对应 145 次高速脉冲（概念示意，非原机主频）。",
       completePrompt: "这封来自 1962 年的信已全部读出，接着看看莫纳什大学大楼里的真实展品吧。",
       meetRealSirius: "查看 7 张莫纳什馆藏实拍 →",
       writeReplyLetter: "← 我也写一封 1962 的信",
@@ -353,7 +355,7 @@
     isActivelyPulling: false,
     isLoopPaused: false,
     simulatedCycles: 0,
-    waitingCycles: 18420,
+    waitingCycles: 0,
     dispatchedAt: Date.now(),
     soundEnabled: true,
     hasSharedArrival: false
@@ -480,12 +482,11 @@
 
   function buildLetter1962(rawText, sender, recipient, lang, tone = state.tone) {
     const cleanRaw = (rawText || "").trim();
+    if (!cleanRaw) return "";
     if (lang === "zh") {
       const rec = (recipient || "").trim() || "挚友";
       const snd = (sender || "").trim() || "故人";
-      const body = cleanRaw
-        ? polishChinese1960s(cleanRaw)
-        : "今借纸带寄去短简一纸，盼你近来顺遂安康。";
+      const body = polishChinese1960s(cleanRaw);
 
       if (tone === "lab") {
         return [
@@ -529,9 +530,7 @@
 
     const rec = (recipient || "").trim() || "My Friend";
     const snd = (sender || "").trim() || "Yours";
-    const body = cleanRaw
-      ? polishEnglish1960s(cleanRaw)
-      : "I send you a brief line today to hope that all is well with you.";
+    const body = polishEnglish1960s(cleanRaw);
 
     if (tone === "lab") {
       return [
@@ -1854,13 +1853,13 @@
         const revealedCount = Math.round(state.tapeProgress * letter.length);
         const hasData = revealedCount > 0;
 
-        if (!state.isLoopPaused) {
+        if (!state.isLoopPaused && state.stage === "receive") {
           const speed = prefersReduced.matches ? 0.3 : 1.55;
           const prevRevs = Math.floor(this.loopAngle / (Math.PI * 2));
           this.loopAngle += dt * speed;
           const nextRevs = Math.floor(this.loopAngle / (Math.PI * 2));
 
-          // Always advance the pre-receive / background circulation counter so visitors see continuous loop activity
+          // Advance active receive circulation counter only while on Screen 2
           this.waitingAccum += dt * (prefersReduced.matches ? 6 : 36);
           if (this.waitingAccum >= 1) {
             const deltaCycles = Math.floor(this.waitingAccum);
@@ -1872,7 +1871,7 @@
           }
 
           if (this.waitingTimerEl) {
-            const rawSec = Math.max(1, Math.floor((Date.now() - (state.dispatchedAt || Date.now())) / 1000));
+            const rawSec = Math.max(0, Math.floor((Date.now() - (state.dispatchedAt || Date.now())) / 1000));
             const hrs = String(Math.floor(rawSec / 3600)).padStart(2, "0");
             const mins = String(Math.floor((rawSec % 3600) / 60)).padStart(2, "0");
             const secs = String(rawSec % 60).padStart(2, "0");
@@ -1894,7 +1893,9 @@
           }
         }
 
-        this.renderLoopCanvas(hasData, revealedCount, letter);
+        if (state.stage === "receive") {
+          this.renderLoopCanvas(hasData, revealedCount, letter);
+        }
         requestAnimationFrame(draw);
       };
 
@@ -2933,6 +2934,7 @@
       recipientInput.placeholder = dict.placeholderTo;
       senderInput.placeholder = dict.placeholderFrom;
       rawMessageInput.placeholder = dict.placeholderMessage;
+      rewrittenLetterInput.placeholder = dict.placeholderDraft;
       soundToggleLabel.textContent = state.soundEnabled ? dict.soundOn : dict.soundOff;
 
       // Preserve user's entered & edited content across language switches, while syncing known sample names/prompts!
@@ -3338,9 +3340,15 @@
 
       clearComposeError();
       state.isConfirmed = true;
+      state.hasSharedArrival = false;
       state.dispatchedAt = Date.now();
       state.tapeProgress = 0;
       state.simulatedCycles = 0;
+      state.waitingCycles = 0;
+      siriusMachine.waitingAccum = 0;
+      if (siriusMachine.waitingCyclesEl) siriusMachine.waitingCyclesEl.textContent = "0";
+      if (siriusMachine.cyclesCountEl) siriusMachine.cyclesCountEl.textContent = "0";
+      if (siriusMachine.waitingTimerEl) siriusMachine.waitingTimerEl.textContent = "00:00:00";
       dispatchPanel.hidden = false;
       refreshShareUrlInput();
       copyFeedback.textContent = "";
