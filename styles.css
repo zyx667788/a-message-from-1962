@@ -2089,8 +2089,8 @@ body {
 
 @media (max-width: 640px) {
   .intro-overlay {
-    padding: 72px 12px 20px;
-    justify-content: flex-start;
+    padding: 56px 12px 24px;
+    justify-content: center;
   }
 
   .intro-topbar {
@@ -2106,6 +2106,7 @@ body {
   .intro-stage {
     width: calc(100% - 8px);
     max-width: 100%;
+    margin: auto 0;
   }
 
   .pixel-window {
@@ -2205,15 +2206,45 @@ body {
   .box-body,
   .console-body,
   .frame-inner,
-  .visit-body,
-  .loop-card {
+  .visit-body {
     padding: 12px;
   }
 
-  .meta-inputs,
-  .process-states {
+  .loop-card {
+    padding: 10px;
+  }
+
+  .meta-inputs {
     grid-template-columns: 1fr;
     gap: 10px;
+  }
+
+  .process-states {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .process-pill {
+    padding: 6px 8px;
+    gap: 6px;
+  }
+
+  .pill-name {
+    font-size: 10.5px;
+    line-height: 1.25;
+  }
+
+  .pill-status {
+    font-size: 11px;
+  }
+
+  .loop-card-top {
+    margin-bottom: 8px;
+  }
+
+  .loop-title {
+    font-size: 16px;
   }
 
   .text-input,
@@ -2307,18 +2338,26 @@ body {
     font-size: 10px;
   }
 
+  .console-workspace {
+    gap: 8px;
+  }
+
+  .reader-teleprinter-unit {
+    scroll-margin-top: 86px;
+  }
+
   .reader-housing {
-    padding: 8px 10px 8px;
+    padding: 7px 10px 7px;
   }
 
   .reader-meta-bar {
     font-size: 10px;
     gap: 6px;
-    margin-bottom: 6px;
+    margin-bottom: 5px;
   }
 
   .tape-viewport {
-    height: 88px;
+    height: 80px;
   }
 
   .tape-handle {
@@ -2329,37 +2368,37 @@ body {
 
   .teleprinter-frame {
     margin-top: 0;
-    padding: 8px 10px;
+    padding: 7px 10px;
   }
 
   .teleprinter-header {
-    padding-bottom: 5px;
+    padding-bottom: 4px;
     font-size: 10px;
   }
 
   .letter-sheet {
-    min-height: 98px;
-    max-height: 175px;
-    padding: 6px 2px 4px 0;
+    min-height: 74px;
+    max-height: 122px;
+    padding: 5px 2px 4px 0;
   }
 
   .decoded-text {
-    font-size: 14px;
-    line-height: 1.58;
+    font-size: 13.5px;
+    line-height: 1.55;
   }
 
   .reader-controls-dock {
-    padding: 8px 10px 10px;
+    padding: 7px 10px 8px;
   }
 
   .tape-controls-row {
-    gap: 6px;
+    gap: 5px;
   }
 
   .tape-scrubber {
     flex: 1 1 100%;
     min-width: 0;
-    min-height: 24px;
+    min-height: 22px;
   }
 
   .tape-btn-group {
@@ -2372,7 +2411,7 @@ body {
   .tape-btn-group button,
   .ping-loop-btn {
     width: 100%;
-    min-height: 38px;
+    min-height: 36px;
     justify-content: center;
   }
 
@@ -2513,7 +2552,7 @@ body {
   }
 
   .intro-overlay {
-    padding-top: 72px;
+    padding-top: 56px;
   }
 }
 

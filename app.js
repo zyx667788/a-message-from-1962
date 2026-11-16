@@ -1111,10 +1111,10 @@
         ctx.textBaseline = "middle";
         ctx.fillText("FERRANTI SIRIUS · 1962", cx, cy - 128);
 
-        // Typewriter lines inside the CRT screen
+        // Typewriter lines inside the CRT screen (strictly bounded to 144px CRT width)
         const fullText = isZh
-          ? ">> 正在进入 1962 年...\n展品: FERRANTI SIRIUS\n五孔纸带 · 声波回路就绪"
-          : ">> ENTERING 1962...\nEXHIBIT: FERRANTI SIRIUS\n5-TRACK TAPE READY";
+          ? ">> 正在进入 1962...\n展品: FERRANTI SIRIUS\n五孔纸带回路就绪"
+          : ">> ENTERING 1962...\nFERRANTI SIRIUS\n5-TRACK TAPE READY";
         const count = Math.floor(this.morphState.typedChars);
         const visible = fullText.slice(0, count);
         const lines = visible.split("\n");
@@ -1124,13 +1124,13 @@
         lines.forEach((line, idx) => {
           ctx.fillStyle = idx === 1 ? "#7D2027" : "#372713";
           ctx.font = isZh
-            ? '600 13px "IBM Plex Mono", "PingFang SC", sans-serif'
-            : '600 13px "IBM Plex Mono", monospace';
-          ctx.fillText(line, cx - 76, cy - 92 + idx * 24);
+            ? '600 11px "IBM Plex Mono", "PingFang SC", sans-serif'
+            : '600 10.5px "IBM Plex Mono", monospace';
+          ctx.fillText(line, cx - 72, cy - 92 + idx * 22, 144);
         });
 
-        // Announcement banner beneath the pixel computer
-        const bannerW = Math.min(this.width - 36, 440);
+        // Announcement banner beneath the pixel computer (bounded inside frame)
+        const bannerW = Math.min(this.width - 32, 420);
         const bannerX = cx - bannerW / 2;
         const bannerY = cy + 128;
         ctx.fillStyle = "#FAF6EE";
@@ -1141,16 +1141,17 @@
         ctx.fillStyle = "#7D2027";
         ctx.fillRect(bannerX, bannerY, 8, 34);
 
+        const isNarrow = this.width < 460;
         ctx.fillStyle = "#372713";
         ctx.font = isZh
-          ? '600 12px "IBM Plex Mono", "PingFang SC", sans-serif'
-          : '600 12px "IBM Plex Mono", monospace';
+          ? `600 ${isNarrow ? 10.5 : 12}px "IBM Plex Mono", "PingFang SC", sans-serif`
+          : `600 ${isNarrow ? 10 : 11.5}px "IBM Plex Mono", monospace`;
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         const bannerLabel = isZh
-          ? "正在进入 1962 年 · 连接馆藏展品：Ferranti Sirius 晶体管计算机"
-          : "ENTERING 1962 · EXHIBIT: FERRANTI SIRIUS COMPUTER";
-        ctx.fillText(bannerLabel, cx + 4, bannerY + 17);
+          ? "正在进入 1962 · Ferranti Sirius 真机"
+          : "ENTERING 1962 · FERRANTI SIRIUS";
+        ctx.fillText(bannerLabel, cx + 4, bannerY + 17, bannerW - 24);
       }
     }
 
@@ -1305,6 +1306,7 @@
       this.cursorEl = document.getElementById("decoded-cursor");
       this.emptyPromptEl = document.getElementById("tape-empty-prompt");
       this.unitEl = document.querySelector(".reader-teleprinter-unit");
+      this.processStatesEl = document.querySelector(".process-states");
       this.letterSheetEl = document.querySelector(".letter-sheet");
       this.sensorLeds = Array.from(document.querySelectorAll("#head-sensors .sensor-led"));
       this.lamps = Array.from(document.querySelectorAll("#decimal-lamps .lamp"));
@@ -1361,9 +1363,19 @@
 
     centerUnitInView() {
       if (!this.unitEl) return;
+      const headerEl = document.getElementById("site-header");
+      const minTop = (headerEl ? headerEl.getBoundingClientRect().height : 80) + 6;
       const rect = this.unitEl.getBoundingClientRect();
+      const procRect = this.processStatesEl ? this.processStatesEl.getBoundingClientRect() : null;
       const vh = window.innerHeight || document.documentElement.clientHeight || 800;
-      if (rect.top < 78 || rect.bottom > vh - 12) {
+      const isNarrow = window.innerWidth <= 960;
+
+      if (isNarrow) {
+        const bottomTarget = procRect ? procRect.bottom : rect.bottom;
+        if (rect.top < minTop || bottomTarget > vh - 8) {
+          this.unitEl.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      } else if (rect.top < minTop || rect.bottom > vh - 12) {
         this.unitEl.scrollIntoView({ behavior: "smooth", block: "center" });
       }
     }
