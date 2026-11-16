@@ -584,6 +584,31 @@
     return state.lang === "zh" ? state.letterZh : state.letterEn;
   }
 
+  const cjkWordSegmenter =
+    typeof Intl !== "undefined" && typeof Intl.Segmenter === "function"
+      ? new Intl.Segmenter("zh-CN", { granularity: "word" })
+      : null;
+
+  function renderSegmentWrappedText(targetEl, text) {
+    if (!targetEl) return;
+    if (!text || !cjkWordSegmenter || !/[\u4e00-\u9fff]/.test(text)) {
+      targetEl.textContent = text;
+      return;
+    }
+    const frag = document.createDocumentFragment();
+    for (const seg of cjkWordSegmenter.segment(text)) {
+      if (/^[\u4e00-\u9fff]{2,}$/.test(seg.segment)) {
+        const span = document.createElement("span");
+        span.className = "cjk-word";
+        span.textContent = seg.segment;
+        frag.appendChild(span);
+      } else {
+        frag.appendChild(document.createTextNode(seg.segment));
+      }
+    }
+    targetEl.replaceChildren(frag);
+  }
+
   /* ========================================================================
      4. Shareable URL Payload Encoder / Decoder (Sample Shortlinks + Deflate-Raw)
      ======================================================================== */
@@ -1737,9 +1762,9 @@
       }
       this.lastRevealedCount = revealedCount;
 
-      // Update Teleprinter Output
+      // Update Teleprinter Output (preserving whole CJK words cleanly)
       const slice = letter.slice(0, revealedCount);
-      this.decodedEl.textContent = slice;
+      renderSegmentWrappedText(this.decodedEl, slice);
       this.emptyPromptEl.hidden = revealedCount > 0;
       this.cursorEl.classList.toggle("is-active", revealedCount > 0 && revealedCount < totalChars);
       this.cursorEl.style.display = revealedCount >= totalChars ? "none" : "inline-block";
@@ -3170,6 +3195,13 @@
       });
 
       if (targetStage === "receive") {
+        if (!state.hasSharedArrival) {
+          state.waitingCycles = 0;
+          state.receiveElapsedMs = 0;
+          state.simulatedCycles = 0;
+          siriusMachine.waitingAccum = 0;
+          siriusMachine.pingPulses = [];
+        }
         updateRecipientBadge();
         siriusMachine.rebuildTape();
         if (siriusMachine.waitingCyclesEl) {
@@ -3246,6 +3278,18 @@
       rewrittenLetterInput.classList.remove("is-invalid");
     };
 
+    const resetStaleDispatchIfEmpty = () => {
+      const hasRawInput = Boolean(rawMessageInput.value.trim());
+      const hasDraftText = Boolean(rewrittenLetterInput.value.trim());
+      const isCustomEdited = state.lang === "zh" ? state.isCustomEditedZh : state.isCustomEditedEn;
+      if (!hasDraftText || (!hasRawInput && !isCustomEdited)) {
+        state.isConfirmed = false;
+        dispatchPanel.hidden = true;
+        if (shareUrlInput) shareUrlInput.value = "";
+        if (copyFeedback) copyFeedback.textContent = "";
+      }
+    };
+
     // Input synchronization
     const handleComposeInput = () => {
       clearComposeError();
@@ -3260,6 +3304,7 @@
       rewrittenLetterInput.value = getActiveLetterText();
       autoSizeDrafts();
       renderLivePunchPreview();
+      resetStaleDispatchIfEmpty();
       refreshShareUrlInput();
     };
 
@@ -3332,6 +3377,7 @@
       }
       editedBadge.hidden = false;
       renderLivePunchPreview();
+      resetStaleDispatchIfEmpty();
       refreshShareUrlInput();
     });
 

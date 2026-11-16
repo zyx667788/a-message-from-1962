@@ -1465,6 +1465,10 @@ body {
   color: var(--espresso-umber);
 }
 
+.cjk-word {
+  white-space: nowrap;
+}
+
 .decoded-cursor {
   display: inline-block;
   font-family: var(--font-display);

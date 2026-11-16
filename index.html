@@ -8,10 +8,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=VT323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261116-6">
+  <link rel="stylesheet" href="styles.css?v=20261116-7">
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
-  <script src="app.js?v=20261116-6" defer></script>
+  <script src="app.js?v=20261116-7" defer></script>
 </head>
 <body>
   <!-- Vintage Oil-Painting Pixel Opening Overlay -->
@@ -129,7 +129,7 @@
 
               <div class="field-group">
                 <label for="raw-message-input" class="field-label" data-i18n="labelMessage">Your note to a friend</label>
-                <textarea id="raw-message-input" class="textarea-input" rows="5" maxlength="400"></textarea>
+                <textarea id="raw-message-input" class="textarea-input" rows="5" maxlength="400" translate="no"></textarea>
               </div>
 
               <div class="samples-block">
@@ -162,7 +162,7 @@
                 </div>
 
                 <label for="rewritten-letter-input" class="sr-only" data-i18n="labelRewritten">1962 rewritten letter</label>
-                <textarea id="rewritten-letter-input" class="letter-textarea" rows="8"></textarea>
+                <textarea id="rewritten-letter-input" class="letter-textarea" rows="8" translate="no"></textarea>
               </div>
 
               <!-- Live 5-Track Paper Tape Punch Preview -->
@@ -334,7 +334,7 @@
                       <span id="char-progress-label" class="char-progress">0 / 0 字</span>
                     </div>
                     <div class="letter-sheet" aria-live="off">
-                      <pre id="decoded-letter-text" class="decoded-text"></pre>
+                      <pre id="decoded-letter-text" class="decoded-text" translate="no"></pre>
                       <span id="decoded-cursor" class="decoded-cursor" aria-hidden="true">_</span>
                       <p id="tape-empty-prompt" class="tape-empty-prompt" data-i18n="tapeEmptyPrompt">
                         [ 试着拉动上方的打孔纸带，展开这封等待已久的来信…… ]
@@ -360,7 +360,7 @@
                         <button type="button" id="toggle-original-in-receive" class="link-btn" data-i18n="peekOriginal">
                           对照寄信人的现代原文
                         </button>
-                        <p id="receive-original-box" class="receive-original-box" hidden></p>
+                        <p id="receive-original-box" class="receive-original-box" translate="no" hidden></p>
                       </div>
                     </div>
                   </div>
