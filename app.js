@@ -141,7 +141,7 @@
       dialogDone: "Back to Exhibition",
       igDialogTitle: "Your 1962 Slow-Mail Share Card",
       igDialogDesc:
-        "Save this 9:16 portrait card featuring Monash Sirius hardware, punched tape, and museum address.",
+        "Save this 9:16 pixel-art archive card featuring the 1962 Ferranti Sirius console, punched paper tape, and your letter.",
       downloadIgCardBtn: "Download PNG Story Card",
       closeIgCardBtn: "Close",
       charsSuffix: "chars",
@@ -281,7 +281,7 @@
       dialogDone: "返回线上展览",
       igDialogTitle: "你的 1962 慢递信件卡片",
       igDialogDesc:
-        "点击保存 9:16 纪念图卡，带有莫纳什馆藏图、五孔纸带纹样与博物馆地址。",
+        "点击保存 9:16 像素风纪念图卡，带有 1962 Sirius 像素机台插画、五孔纸带与你的专属书信。",
       downloadIgCardBtn: "下载 PNG 卡片",
       closeIgCardBtn: "关闭",
       charsSuffix: "字",
@@ -2219,23 +2219,165 @@
       for (const para of paragraphs) {
         if (!para.trim()) {
           if (lines.length && lines[lines.length - 1] !== "") lines.push("");
+          if (lines.length >= maxLines) return lines.slice(0, maxLines);
           continue;
         }
+        // Tokenize preserving spaces so ASCII words stay intact while CJK wraps cleanly
+        const tokens = para.match(/[A-Za-z0-9'.,!?;:\-]+|\s+|[^\s]/g) || [];
         let current = "";
-        for (const ch of para) {
-          const test = current + ch;
+        for (const tok of tokens) {
+          if (/^\s+$/.test(tok) && !current) continue;
+          const test = current + tok;
           if (ctx.measureText(test).width > maxWidth && current) {
-            lines.push(current);
-            current = ch;
-            if (lines.length >= maxLines) return lines;
+            lines.push(current.trimEnd());
+            current = /^\s+$/.test(tok) ? "" : tok;
+            if (lines.length >= maxLines) return lines.slice(0, maxLines);
           } else {
             current = test;
           }
         }
-        if (current) lines.push(current);
-        if (lines.length >= maxLines) return lines;
+        if (current.trimEnd()) lines.push(current.trimEnd());
+        if (lines.length >= maxLines) return lines.slice(0, maxLines);
       }
       return lines.slice(0, maxLines);
+    }
+
+    function drawPixelSiriusScene(ctx, boxX, boxY, boxW, boxH) {
+      // Crisp 16-bit pixel grid inside the hero frame (2px virtual pixel blocks)
+      const ps = 4; // 4px pixel art grid -> 116 x 56 crisp retro tiles!
+      const gx = (col) => boxX + col * ps;
+      const gy = (row) => boxY + row * ps;
+      const px = (c, r, cw, rh, color) => {
+        ctx.fillStyle = color;
+        ctx.fillRect(gx(c), gy(r), cw * ps, rh * ps);
+      };
+
+      const cols = Math.floor(boxW / ps); // 116
+      const rows = Math.floor(boxH / ps); // ~56
+
+      // 1. Cozy 1962 Lab Night/Gallery Backdrop with checkered wall tiles & warm lamp ambiance
+      px(0, 0, cols, rows, "#231A10");
+      px(0, 0, cols, rows - 13, "#2E2417");
+      // Subtle wall paneling stripes
+      for (let c = 4; c < cols - 4; c += 12) {
+        px(c, 2, 1, rows - 16, "#382C1D");
+      }
+      // Framed retro lab window / stars on far left
+      px(6, 5, 22, 17, "#181E24");
+      px(6, 5, 22, 1, "#594429");
+      px(6, 21, 22, 1, "#594429");
+      px(6, 5, 1, 17, "#594429");
+      px(27, 5, 1, 17, "#594429");
+      px(16, 5, 1, 17, "#594429");
+      px(6, 13, 22, 1, "#594429");
+      // Twinkling pixel stars & crescent moon in window
+      px(9, 8, 1, 1, "#FAF6EE");
+      px(22, 9, 1, 1, "#D9C4B1");
+      px(12, 17, 1, 1, "#A39670");
+      px(23, 17, 1, 1, "#FAF6EE");
+      px(19, 7, 2, 2, "#F2D99B");
+      px(20, 7, 2, 1, "#181E24");
+
+      // Warm golden light beam from vintage brass desk lamp
+      for (let r = 8; r < 34; r += 1) {
+        const spread = Math.floor((r - 8) * 0.45);
+        px(88 - spread, r, 10 + spread * 2, 1, "rgba(242, 217, 155, 0.08)");
+      }
+      // Vintage brass desk lamp on right side of console
+      px(94, 6, 8, 4, "#C4A564");
+      px(95, 5, 6, 1, "#D9C4B1");
+      px(93, 10, 10, 1, "#F2D99B");
+      px(98, 10, 2, 19, "#8C7545");
+      px(94, 28, 8, 2, "#6B5630");
+
+      // 2. Floor & Parquet shadow
+      px(0, rows - 13, cols, 13, "#3D3121");
+      px(0, rows - 13, cols, 1, "#594429");
+      px(12, rows - 9, cols - 24, 9, "#2D2316");
+
+      // 3. Ferranti Sirius L-Shaped Slate-Blue Cabinet (Iconic 1962 Monash Machine!)
+      // Left tall Optical Tape Reader & Control Tower
+      px(18, 11, 28, 30, "#4C6B73");
+      px(18, 11, 28, 2, "#6E919A");
+      px(44, 11, 2, 30, "#344A50");
+      px(18, 40, 28, 2, "#221910");
+      // Tower dark bezel + Decimal Lamps 0..9 + CRT oscilloscope!
+      px(21, 14, 21, 13, "#1D241C");
+      // 10 Decimal LED indicators (glowing crimson/amber)
+      for (let d = 0; d < 10; d += 1) {
+        px(22 + d * 2, 15, 1, 2, d === 3 || d === 7 ? "#E54B4B" : d % 2 === 0 ? "#A39670" : "#4A3A28");
+      }
+      // Glowing green-gold phosphor CRT screen inside left tower
+      px(22, 19, 12, 7, "#16291A");
+      px(23, 22, 2, 1, "#A4D668");
+      px(25, 21, 2, 1, "#A4D668");
+      px(27, 23, 3, 1, "#F2D99B");
+      px(30, 21, 3, 1, "#A4D668");
+      // Brass paper tape reel & optical read slot on right of tower
+      px(36, 19, 5, 5, "#C4A564");
+      px(37, 20, 3, 3, "#372713");
+      px(38, 21, 1, 1, "#FAF6EE");
+
+      // Right Delay-Line Logic Cabinet
+      px(46, 15, 42, 24, "#4C6B73");
+      px(46, 15, 42, 2, "#6E919A");
+      px(86, 15, 2, 24, "#344A50");
+      // Dark ventilated acoustic delay bay & indicator bulbs
+      px(49, 18, 18, 10, "#242D2A");
+      for (let row = 0; row < 4; row += 1) {
+        px(51, 20 + row * 2, 14, 1, "#4D5E57");
+      }
+      px(70, 18, 14, 10, "#1C221B");
+      // Pixel acoustic wave pulses in delay monitor
+      px(72, 21, 2, 2, "#7D2027");
+      px(75, 20, 2, 2, "#FAF6EE");
+      px(78, 22, 2, 2, "#C4A564");
+      px(81, 21, 2, 2, "#7D2027");
+
+      // 4. Oak & Slate Operator Desk Surface + 5-Track Flowing Paper Tape!
+      px(14, 29, 86, 4, "#C8A677"); // warm walnut desktop top
+      px(14, 29, 86, 1, "#E3C89B");
+      px(14, 33, 86, 3, "#6B4A2B"); // desk edge apron
+      px(16, 36, 3, 9, "#4B331D"); // left leg
+      px(93, 36, 3, 9, "#4B331D"); // right leg
+
+      // Teleprinter / Keyboard console on desk
+      px(49, 25, 16, 4, "#D9C4B1");
+      px(50, 26, 14, 2, "#372713");
+      for (let k = 0; k < 7; k += 1) {
+        px(50 + k * 2, 27, 1, 1, "#FAF6EE");
+      }
+
+      // Flowing 5-track punched paper tape curling out of left tower across the desk!
+      px(38, 24, 2, 6, "#EDE3CF");
+      px(36, 30, 28, 3, "#EDE3CF");
+      px(36, 30, 28, 1, "#FAF6EE");
+      for (let t = 37; t < 63; t += 2) {
+        px(t, 31, 1, 1, t % 4 === 1 ? "#372713" : "#7D2027");
+      }
+
+      // Vintage Letter Sheet + Crimson Wax Seal on right side of desk!
+      px(68, 27, 16, 5, "#FAF6EE");
+      px(70, 28, 10, 1, "#4D4828");
+      px(70, 30, 7, 1, "#A39670");
+      px(80, 29, 3, 3, "#7D2027"); // crimson wax seal pixel cluster
+      px(81, 30, 1, 1, "#E54B4B");
+
+      // 5. Classic Brown Leather Operator Chair (Foreground silhouette)
+      px(54, 32, 16, 4, "#8A4728"); // backrest cushion
+      px(55, 33, 14, 2, "#A65A35");
+      px(53, 36, 18, 3, "#6E351B"); // seat
+      px(61, 39, 2, 5, "#A39670"); // chrome stem
+      px(56, 44, 12, 1, "#A39670"); // base wheels
+      px(55, 45, 2, 1, "#372713");
+      px(67, 45, 2, 1, "#372713");
+
+      // 6. Floating pixel "1962" sparkles above machine
+      px(42, 6, 1, 3, "#FAF6EE");
+      px(41, 7, 3, 1, "#FAF6EE");
+      px(65, 9, 1, 1, "#F2D99B");
+      px(77, 7, 1, 3, "#E54B4B");
+      px(76, 8, 3, 1, "#E54B4B");
     }
 
     function renderIgStoryCard(canvas) {
@@ -2243,145 +2385,266 @@
       const ctx = canvas.getContext("2d");
       const w = canvas.width;
       const h = canvas.height;
+      ctx.imageSmoothingEnabled = false;
 
-      const drawCard = (photoImg) => {
-        // Warm oil canvas background (#ECE6D8 -> #D9C4B1)
-        const bg = ctx.createLinearGradient(0, 0, 0, h);
-        bg.addColorStop(0, "#FAF6EE");
-        bg.addColorStop(0.55, "#ECE6D8");
-        bg.addColorStop(1, "#D9C4B1");
-        ctx.fillStyle = bg;
-        ctx.fillRect(0, 0, w, h);
+      // 1. Textured Vintage Oil-Paper Gradient Backdrop
+      const bg = ctx.createLinearGradient(0, 0, 0, h);
+      bg.addColorStop(0, "#FAF6EE");
+      bg.addColorStop(0.52, "#EFE7D6");
+      bg.addColorStop(1, "#DECAB5");
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, w, h);
 
-        // Outer museum pixel frame
-        ctx.strokeStyle = "#372713";
-        ctx.lineWidth = 4;
-        ctx.strokeRect(18, 18, w - 36, h - 36);
-        ctx.strokeStyle = "#A39670";
-        ctx.lineWidth = 2;
-        ctx.strokeRect(26, 26, w - 52, h - 52);
-
-        // Top Header Band
-        ctx.fillStyle = "#372713";
-        ctx.fillRect(36, 36, w - 72, 54);
-        ctx.fillStyle = "#ECE6D8";
-        ctx.font = 'bold 26px "VT323", "IBM Plex Mono", monospace';
-        ctx.textAlign = "left";
-        ctx.fillText("A MESSAGE FROM 1962?", 50, 71);
-
-        // Red postmark stamp
-        ctx.save();
-        ctx.translate(w - 135, 134);
-        ctx.rotate(-0.08);
-        ctx.strokeStyle = "#7D2027";
-        ctx.lineWidth = 3;
-        ctx.strokeRect(-92, -20, 184, 38);
-        ctx.fillStyle = "#7D2027";
-        ctx.font = 'bold 14px "IBM Plex Mono", monospace';
-        ctx.textAlign = "center";
-        ctx.fillText(state.stamp || "MONASH SIRIUS · 1962", 0, 4);
-        ctx.restore();
-
-        // Museum real photograph frame
-        const photoX = 38;
-        const photoY = 108;
-        const photoW = w - 76;
-        const photoH = 228;
-        ctx.fillStyle = "#D9C4B1";
-        ctx.fillRect(photoX, photoY, photoW, photoH);
-        if (photoImg && photoImg.naturalWidth > 0) {
-          const scale = Math.max(photoW / photoImg.naturalWidth, photoH / photoImg.naturalHeight);
-          const sw = photoW / scale;
-          const sh = photoH / scale;
-          const sx = (photoImg.naturalWidth - sw) / 2;
-          const sy = (photoImg.naturalHeight - sh) / 2;
-          ctx.drawImage(photoImg, sx, sy, sw, sh, photoX, photoY, photoW, photoH);
+      // Subtle 16-bit dot-matrix paper grain across canvas
+      ctx.fillStyle = "rgba(77, 72, 40, 0.065)";
+      for (let y = 12; y < h - 12; y += 16) {
+        for (let x = 12; x < w - 12; x += 16) {
+          ctx.fillRect(x, y, 2, 2);
         }
-        ctx.strokeStyle = "#372713";
-        ctx.lineWidth = 3;
-        ctx.strokeRect(photoX, photoY, photoW, photoH);
-
-        // Caption strip under photo
-        ctx.fillStyle = "#4D4828";
-        ctx.fillRect(photoX, photoY + photoH - 28, photoW, 28);
-        ctx.fillStyle = "#FAF6EE";
-        ctx.font = 'bold 13px "IBM Plex Mono", monospace';
-        ctx.textAlign = "left";
-        ctx.fillText("FERRANTI SIRIUS · MONASH FIRST COMPUTER (1962)", photoX + 10, photoY + photoH - 9);
-
-        // Letter excerpt card
-        const cardY = 358;
-        ctx.fillStyle = "#FAF6EE";
-        ctx.fillRect(38, cardY, w - 76, 360);
-        ctx.strokeStyle = "#4D4828";
-        ctx.lineWidth = 2;
-        ctx.strokeRect(38, cardY, w - 76, 360);
-
-        ctx.fillStyle = "#7D2027";
-        ctx.font = 'bold 13px "IBM Plex Mono", monospace';
-        ctx.fillText(
-          `FROM ${state.sender || "1962"} -> TO ${state.recipient || "FRIEND"}`,
-          54,
-          cardY + 28
-        );
-
-        ctx.fillStyle = "#372713";
-        ctx.font = '17px "DotGothic16", "IBM Plex Mono", monospace';
-        const lines = wrapCanvasLines(ctx, getActiveLetterText(), w - 116, 11);
-        lines.forEach((line, idx) => {
-          ctx.fillText(line, 54, cardY + 62 + idx * 25);
-        });
-
-        // 5-track punched paper tape strip
-        const tapeY = 742;
-        ctx.fillStyle = "#D9C4B1";
-        ctx.fillRect(38, tapeY, w - 76, 62);
-        ctx.strokeStyle = "#372713";
-        ctx.lineWidth = 2;
-        ctx.strokeRect(38, tapeY, w - 76, 62);
-        const cols = siriusMachine.encodeTextToColumns(getActiveLetterText()).slice(0, 36);
-        const ys = [tapeY + 11, tapeY + 21, tapeY + 38, tapeY + 47, tapeY + 54];
-        cols.forEach((bits, ci) => {
-          const cx = 56 + ci * 12;
-          ctx.fillStyle = "#7D2027";
-          ctx.fillRect(cx - 1, tapeY + 29, 2, 2);
-          for (let b = 0; b < 5; b += 1) {
-            if ((bits >> b) & 1) {
-              ctx.fillStyle = "#372713";
-              ctx.beginPath();
-              ctx.arc(cx, ys[b], 2.2, 0, Math.PI * 2);
-              ctx.fill();
-            }
-          }
-        });
-
-        // Acoustic cycle telemetry & Monash museum address footer
-        ctx.fillStyle = "#4D4828";
-        ctx.font = 'bold 14px "IBM Plex Mono", monospace';
-        ctx.fillText(
-          `NICKEL DELAY MEMORY · ${state.waitingCycles.toLocaleString()} CYCLES`,
-          42,
-          836
-        );
-
-        ctx.fillStyle = "#372713";
-        ctx.fillRect(38, 854, w - 76, 68);
-        ctx.fillStyle = "#ECE6D8";
-        ctx.font = 'bold 14px "IBM Plex Mono", monospace';
-        ctx.fillText("Monash Museum of Computing History", 52, 882);
-        ctx.font = '12px "IBM Plex Mono", monospace';
-        ctx.fillStyle = "#D9C4B1";
-        ctx.fillText("Building B, Foyer, Level 2, Caulfield East VIC 3145", 52, 904);
-      };
-
-      const heroImg = new Image();
-      heroImg.onload = () => drawCard(heroImg);
-      heroImg.src = "assets/museum/sirius-full-desk.jpg";
-      if (heroImg.complete && heroImg.naturalWidth > 0) {
-        drawCard(heroImg);
-      } else {
-        drawCard(null);
       }
+
+      // 2. Double Archival Pixel Frame + Corner Rivets
+      ctx.strokeStyle = "#372713";
+      ctx.lineWidth = 4;
+      ctx.strokeRect(16, 16, w - 32, h - 32);
+      ctx.strokeStyle = "#A39670";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(24, 24, w - 48, h - 48);
+
+      // Pixel corner brackets
+      const corners = [
+        [20, 20],
+        [w - 30, 20],
+        [20, h - 30],
+        [w - 30, h - 30]
+      ];
+      ctx.fillStyle = "#7D2027";
+      corners.forEach(([cx, cy]) => {
+        ctx.fillRect(cx, cy, 10, 10);
+        ctx.fillStyle = "#FAF6EE";
+        ctx.fillRect(cx + 3, cy + 3, 4, 4);
+        ctx.fillStyle = "#7D2027";
+      });
+
+      // 3. Retro OS Titlebar Header (`A MESSAGE FROM 1962?` + pixel window buttons)
+      ctx.fillStyle = "#372713";
+      ctx.fillRect(34, 34, w - 68, 46);
+      ctx.fillStyle = "#7D2027";
+      ctx.fillRect(42, 49, 10, 16);
+      ctx.fillStyle = "#ECE6D8";
+      ctx.font = 'bold 26px "VT323", "IBM Plex Mono", monospace';
+      ctx.textAlign = "left";
+      ctx.fillText("A MESSAGE FROM 1962?", 60, 65);
+
+      // Mini pixel window controls [-][□][×] on top right
+      ["_", "□", "×"].forEach((sym, i) => {
+        const bx = w - 114 + i * 24;
+        ctx.fillStyle = i === 2 ? "#7D2027" : "#4D4828";
+        ctx.fillRect(bx, 45, 20, 22);
+        ctx.strokeStyle = "#A39670";
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(bx, 45, 20, 22);
+        ctx.fillStyle = "#FAF6EE";
+        ctx.font = 'bold 13px "IBM Plex Mono", monospace';
+        ctx.textAlign = "center";
+        ctx.fillText(sym, bx + 10, 61);
+      });
+
+      // 4. Pixel-Art Hero Scene Frame (Replaces plain photo!)
+      const heroX = 36;
+      const heroY = 92;
+      const heroW = w - 72; // 468
+      const heroH = 224;
+      // Pixel drop shadow behind hero scene
+      ctx.fillStyle = "#372713";
+      ctx.fillRect(heroX + 4, heroY + 4, heroW, heroH);
+      drawPixelSiriusScene(ctx, heroX, heroY, heroW, heroH);
+      ctx.strokeStyle = "#372713";
+      ctx.lineWidth = 3;
+      ctx.strokeRect(heroX, heroY, heroW, heroH);
+
+      // Sleek Caption Plate on bottom of pixel art
+      ctx.fillStyle = "rgba(55, 39, 19, 0.92)";
+      ctx.fillRect(heroX, heroY + heroH - 26, heroW, 26);
+      ctx.fillStyle = "#C4A564";
+      ctx.fillRect(heroX + 10, heroY + heroH - 17, 6, 8);
+      ctx.fillStyle = "#FAF6EE";
+      ctx.font = 'bold 12px "IBM Plex Mono", monospace';
+      ctx.textAlign = "left";
+      ctx.fillText("FERRANTI SIRIUS · MONASH FIRST COMPUTER (1962)", heroX + 24, heroY + heroH - 9);
+
+      // 5. Tilted Crimson Archive Postmark Stamp (rendered ON TOP so it visibly stamps the corner!)
+      ctx.save();
+      ctx.translate(w - 134, 114);
+      ctx.rotate(-0.09);
+      ctx.fillStyle = "rgba(250, 246, 238, 0.92)";
+      ctx.fillRect(-88, -16, 176, 32);
+      ctx.strokeStyle = "#7D2027";
+      ctx.lineWidth = 2.5;
+      ctx.strokeRect(-88, -16, 176, 32);
+      ctx.strokeStyle = "rgba(125, 32, 39, 0.45)";
+      ctx.lineWidth = 1;
+      ctx.strokeRect(-84, -12, 168, 24);
+      ctx.fillStyle = "#7D2027";
+      ctx.font = 'bold 11.5px "IBM Plex Mono", monospace';
+      ctx.textAlign = "center";
+      ctx.fillText(state.stamp || "MONASH SIRIUS · 1962", 0, 4);
+      ctx.restore();
+
+      // 6. Air-Mail Stationery Letter Card with Pixel Drop Shadow & Ruled Lines
+      const cardX = 36;
+      const cardY = 334;
+      const cardW = w - 72;
+      const cardH = 384;
+
+      ctx.fillStyle = "#4D4828";
+      ctx.fillRect(cardX + 4, cardY + 4, cardW, cardH);
+      ctx.fillStyle = "#FAF6EE";
+      ctx.fillRect(cardX, cardY, cardW, cardH);
+
+      // Vintage Airmail crimson & olive diagonal pixel trim across top edge of stationery!
+      for (let tx = cardX; tx < cardX + cardW - 12; tx += 20) {
+        ctx.fillStyle = (tx / 20) % 2 === 0 ? "#7D2027" : "#4D4828";
+        ctx.fillRect(tx + 2, cardY + 2, 14, 5);
+      }
+
+      // Subtle notebook ruling lines inside letter area
+      ctx.strokeStyle = "rgba(163, 150, 112, 0.28)";
+      ctx.lineWidth = 1;
+      for (let ry = cardY + 72; ry < cardY + cardH - 20; ry += 26) {
+        ctx.beginPath();
+        ctx.moveTo(cardX + 18, ry);
+        ctx.lineTo(cardX + cardW - 18, ry);
+        ctx.stroke();
+      }
+
+      ctx.strokeStyle = "#372713";
+      ctx.lineWidth = 2.5;
+      ctx.strokeRect(cardX, cardY, cardW, cardH);
+
+      // Route Pill (`FROM Sam -> TO Clara`) + Pixel Wax Seal badge on right
+      const fromText = (state.sender || "1962").slice(0, 16);
+      const toText = (state.recipient || "FRIEND").slice(0, 16);
+      const routeStr = `FROM ${fromText}  →  TO ${toText}`;
+      ctx.fillStyle = "#EFE7D6";
+      ctx.fillRect(cardX + 18, cardY + 18, cardW - 86, 26);
+      ctx.strokeStyle = "#A39670";
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(cardX + 18, cardY + 18, cardW - 86, 26);
+      ctx.fillStyle = "#7D2027";
+      ctx.font = 'bold 12px "IBM Plex Mono", "PingFang SC", monospace';
+      ctx.textAlign = "left";
+      ctx.fillText(routeStr, cardX + 28, cardY + 35);
+
+      // Mini Crimson Pixel Wax Seal on top-right of stationery card
+      const wx = cardX + cardW - 44;
+      const wy = cardY + 18;
+      ctx.fillStyle = "#7D2027";
+      ctx.fillRect(wx + 4, wy, 20, 26);
+      ctx.fillRect(wx, wy + 4, 28, 18);
+      ctx.fillStyle = "#A8323B";
+      ctx.fillRect(wx + 6, wy + 5, 16, 16);
+      ctx.fillStyle = "#FAF6EE";
+      ctx.font = 'bold 11px "IBM Plex Mono", monospace';
+      ctx.textAlign = "center";
+      ctx.fillText("62", wx + 14, wy + 17);
+
+      // Letter Body Text
+      ctx.fillStyle = "#372713";
+      ctx.textAlign = "left";
+      ctx.font = '16.5px "DotGothic16", "IBM Plex Mono", "PingFang SC", monospace';
+      const lines = wrapCanvasLines(ctx, getActiveLetterText(), cardW - 44, 12);
+      lines.forEach((line, idx) => {
+        ctx.fillText(line, cardX + 20, cardY + 67 + idx * 26);
+      });
+
+      // 7. 5-Track Punched Paper Tape Strip + Optical READ Head Marker
+      const tapeY = 736;
+      const tapeH = 62;
+      ctx.fillStyle = "#372713";
+      ctx.fillRect(cardX + 3, tapeY + 3, cardW, tapeH);
+      ctx.fillStyle = "#D9C4B1";
+      ctx.fillRect(cardX, tapeY, cardW, tapeH);
+      ctx.strokeStyle = "#372713";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(cardX, tapeY, cardW, tapeH);
+
+      // Subtle track guide lines inside tape
+      ctx.fillStyle = "rgba(77, 72, 40, 0.14)";
+      ctx.fillRect(cardX + 2, tapeY + 16, cardW - 4, 1);
+      ctx.fillRect(cardX + 2, tapeY + 45, cardW - 4, 1);
+
+      const cols = siriusMachine.encodeTextToColumns(getActiveLetterText()).slice(0, 35);
+      const ys = [tapeY + 11, tapeY + 21, tapeY + 38, tapeY + 47, tapeY + 54];
+      cols.forEach((bits, ci) => {
+        const cx = 58 + ci * 12;
+        ctx.fillStyle = "#7D2027";
+        ctx.fillRect(cx - 1, tapeY + 29, 2, 2);
+        for (let b = 0; b < 5; b += 1) {
+          if ((bits >> b) & 1) {
+            ctx.fillStyle = "#372713";
+            ctx.beginPath();
+            ctx.arc(cx, ys[b], 2.2, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+      });
+
+      // Mini Olive Optical READ Head accent over tape left-third
+      ctx.fillStyle = "rgba(77, 72, 40, 0.88)";
+      ctx.fillRect(88, tapeY - 2, 26, tapeH + 4);
+      ctx.strokeStyle = "#FAF6EE";
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(88, tapeY - 2, 26, tapeH + 4);
+      ctx.fillStyle = "#FAF6EE";
+      ctx.font = 'bold 8px "IBM Plex Mono", monospace';
+      ctx.textAlign = "center";
+      ctx.fillText("READ", 101, tapeY + 9);
+      for (let s = 0; s < 5; s += 1) {
+        ctx.fillStyle = s % 2 === 0 ? "#E54B4B" : "#C4A564";
+        ctx.fillRect(99, tapeY + 15 + s * 8, 4, 4);
+      }
+
+      // 8. Acoustic Telemetry Row
+      ctx.fillStyle = "#7D2027";
+      ctx.fillRect(38, 816, 8, 8);
+      ctx.fillStyle = "#4D4828";
+      ctx.font = 'bold 12.5px "IBM Plex Mono", monospace';
+      ctx.textAlign = "left";
+      ctx.fillText(
+        `NICKEL DELAY MEMORY · ${state.waitingCycles.toLocaleString()} CYCLES`,
+        54,
+        824
+      );
+      ctx.textAlign = "right";
+      ctx.fillStyle = "#7D2027";
+      ctx.fillText("ARCHIVE SPECIMEN · 1962", w - 38, 824);
+
+      // 9. Polished Museum Souvenir Footer Plate
+      ctx.fillStyle = "#372713";
+      ctx.fillRect(36, 842, w - 72, 76);
+      ctx.strokeStyle = "#A39670";
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(41, 847, w - 82, 66);
+
+      ctx.textAlign = "left";
+      ctx.fillStyle = "#FAF6EE";
+      ctx.font = 'bold 15px "IBM Plex Mono", monospace';
+      ctx.fillText("Monash Museum of Computing History", 56, 875);
+      ctx.font = '12px "IBM Plex Mono", monospace';
+      ctx.fillStyle = "#D9C4B1";
+      ctx.fillText("Building B, Foyer, Level 2, Caulfield East VIC 3145", 56, 899);
+
+      // Right mini pixel crest badge
+      ctx.fillStyle = "#7D2027";
+      ctx.fillRect(w - 110, 858, 58, 44);
+      ctx.strokeStyle = "#D9C4B1";
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(w - 110, 858, 58, 44);
+      ctx.fillStyle = "#FAF6EE";
+      ctx.font = 'bold 18px "VT323", "IBM Plex Mono", monospace';
+      ctx.textAlign = "center";
+      ctx.fillText("1962", w - 81, 886);
     }
 
     function renderLivePunchPreview() {
