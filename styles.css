@@ -220,18 +220,20 @@ body {
   flex-direction: column;
   z-index: 4;
   max-height: calc(100vh - 96px);
+  overflow-x: hidden;
   overflow-y: auto;
 }
 
 .pixel-window-bar {
-  height: 30px;
+  height: 32px;
   flex-shrink: 0;
   background: var(--espresso-umber);
   color: var(--paper-bg);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 8px 0 12px;
+  padding: 0 10px 0 12px;
+  overflow: hidden;
 }
 
 .pixel-window-title {
@@ -259,7 +261,7 @@ body {
 .pixel-close-x::after {
   content: "";
   position: absolute;
-  inset: -10px;
+  inset: -8px -4px -8px -12px;
 }
 
 .pixel-close-x:hover {
@@ -274,6 +276,9 @@ body {
   text-align: center;
   padding: 18px 22px 20px;
   gap: 12px;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: break-word;
 }
 
 .intro-icon-badge {
@@ -1745,15 +1750,15 @@ body {
   position: absolute;
   pointer-events: auto;
   transform: translate(-50%, -50%);
-  width: 28px;
-  height: 28px;
+  width: 44px;
+  height: 44px;
   background: var(--lacquer-crimson);
   color: var(--paper-elevated);
   border: 2px solid var(--paper-elevated);
   box-shadow: 2px 2px 0 #372713;
   font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 700;
   display: grid;
   place-items: center;
   cursor: pointer;
@@ -1762,7 +1767,7 @@ body {
 .hotspot-pin::after {
   content: "";
   position: absolute;
-  inset: -8px;
+  inset: -4px;
 }
 
 .hotspot-pin:hover,
@@ -2502,9 +2507,9 @@ body {
   }
 
   .hotspot-pin {
-    width: 34px;
-    height: 34px;
-    font-size: 12px;
+    width: 44px;
+    height: 44px;
+    font-size: 14px;
   }
 
   .plate-catalog-tag {

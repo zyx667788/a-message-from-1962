@@ -585,82 +585,230 @@
   }
 
   /* ========================================================================
-     4. Shareable URL Payload Encoder / Decoder (Compact payload, backwards compatible)
+     4. Shareable URL Payload Encoder / Decoder (Sample Shortlinks + Deflate-Raw)
      ======================================================================== */
-  function encodeSharePayload() {
-    const payload = {
-      s: state.sender,
-      r: state.recipient,
-      o: state.rawInput,
-      l: state.lang,
-      t: Math.floor((state.dispatchedAt || Date.now()) / 1000)
-    };
-    if (state.isCustomEditedEn) payload.e = state.letterEn;
-    if (state.isCustomEditedZh) payload.z = state.letterZh;
-    if (state.tone && state.tone !== "gentle") payload.m = state.tone;
-    if (state.stamp && state.stamp !== "MONASH SIRIUS · 1962") payload.p = state.stamp;
+  const SHARE_SEP = "\x1f";
+  const DEFAULT_STAMP = "MONASH SIRIUS · 1962";
 
-    const json = JSON.stringify(payload);
-    const bytes = new TextEncoder().encode(json);
+  function uint8ToB64Url(bytes) {
     let binary = "";
     for (let i = 0; i < bytes.length; i += 1) {
       binary += String.fromCharCode(bytes[i]);
     }
-    const b64 = btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+    return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  }
+
+  function b64UrlToUint8(b64u) {
+    let b64 = b64u.replace(/-/g, "+").replace(/_/g, "/");
+    while (b64.length % 4) b64 += "=";
+    const binary = atob(b64);
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i += 1) {
+      bytes[i] = binary.charCodeAt(i);
+    }
+    return bytes;
+  }
+
+  async function deflateRawBytes(uint8) {
+    if (typeof CompressionStream === "undefined") return null;
+    try {
+      const cs = new CompressionStream("deflate-raw");
+      const writer = cs.writable.getWriter();
+      writer.write(uint8);
+      writer.close();
+      const buf = await new Response(cs.readable).arrayBuffer();
+      return new Uint8Array(buf);
+    } catch (_err) {
+      return null;
+    }
+  }
+
+  async function inflateRawBytes(uint8) {
+    if (typeof DecompressionStream === "undefined") return null;
+    try {
+      const ds = new DecompressionStream("deflate-raw");
+      const writer = ds.writable.getWriter();
+      writer.write(uint8);
+      writer.close();
+      const buf = await new Response(ds.readable).arrayBuffer();
+      return new Uint8Array(buf);
+    } catch (_err) {
+      return null;
+    }
+  }
+
+  function getCompactSampleIndex() {
+    for (let i = 0; i < SAMPLES.length; i += 1) {
+      const pair = SAMPLES[i];
+      if (state.rawInput === pair.en.text || state.rawInput === pair.zh.text) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  function buildCompactFieldsString() {
+    const cleanField = (str) => String(str || "").split(SHARE_SEP).join(" ");
+    const sampleIdx = !state.isCustomEditedEn && !state.isCustomEditedZh ? getCompactSampleIndex() : -1;
+    const rawVal = sampleIdx >= 0 ? `\x01${sampleIdx}` : cleanField(state.rawInput);
+    const tsSec = Math.floor((state.dispatchedAt || Date.now()) / 1000);
+    const fields = [
+      cleanField(state.sender),
+      cleanField(state.recipient),
+      rawVal,
+      state.lang === "zh" ? "zh" : "en",
+      String(tsSec),
+      state.tone && state.tone !== "gentle" ? state.tone : "",
+      state.stamp && state.stamp !== DEFAULT_STAMP ? cleanField(state.stamp) : "",
+      state.isCustomEditedEn ? cleanField(state.letterEn) : "",
+      state.isCustomEditedZh ? cleanField(state.letterZh) : ""
+    ];
+    while (fields.length > 5 && fields[fields.length - 1] === "") {
+      fields.pop();
+    }
+    return fields.join(SHARE_SEP);
+  }
+
+  function encodeSharePayload() {
     const url = new URL(window.location.href);
     url.search = "";
-    url.searchParams.set("msg", b64);
+
+    const sampleIdx = !state.isCustomEditedEn && !state.isCustomEditedZh ? getCompactSampleIndex() : -1;
+    if (sampleIdx >= 0) {
+      const pair = SAMPLES[sampleIdx][state.lang];
+      if (
+        state.sender === pair.from &&
+        state.recipient === pair.to &&
+        state.tone === "gentle" &&
+        state.stamp === DEFAULT_STAMP
+      ) {
+        url.searchParams.set("k", `${sampleIdx}${state.lang === "zh" ? "z" : ""}`);
+        return url.toString();
+      }
+    }
+
+    const packedBytes = new TextEncoder().encode(buildCompactFieldsString());
+    url.searchParams.set("m", `u.${uint8ToB64Url(packedBytes)}`);
     return url.toString();
   }
 
-  function tryLoadSharePayload() {
-    const params = new URLSearchParams(window.location.search);
-    let raw = params.get("msg");
-    if (!raw && window.location.hash && window.location.hash.includes("msg=")) {
-      const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ""));
-      raw = hashParams.get("msg");
+  async function encodeSharePayloadBest() {
+    const syncUrl = encodeSharePayload();
+    const urlObj = new URL(syncUrl);
+    if (urlObj.searchParams.has("k")) {
+      return syncUrl;
     }
-    if (!raw) return false;
-    try {
-      let b64 = raw.replace(/-/g, "+").replace(/_/g, "/");
-      while (b64.length % 4) b64 += "=";
-      const binary = atob(b64);
-      const bytes = new Uint8Array(binary.length);
-      for (let i = 0; i < binary.length; i += 1) {
-        bytes[i] = binary.charCodeAt(i);
+
+    const packedBytes = new TextEncoder().encode(buildCompactFieldsString());
+    const uncompressedToken = `u.${uint8ToB64Url(packedBytes)}`;
+    const deflated = await deflateRawBytes(packedBytes);
+    if (deflated && deflated.length > 0) {
+      const compressedToken = `z.${uint8ToB64Url(deflated)}`;
+      if (compressedToken.length < uncompressedToken.length) {
+        urlObj.searchParams.set("m", compressedToken);
+        return urlObj.toString();
       }
+    }
+    return syncUrl;
+  }
+
+  function hydrateFromParsedFields(fields) {
+    const [snd, rec, rawOrRef, langCode, tsVal, toneVal, stampVal, customEn, customZh] = fields;
+    state.sender = typeof snd === "string" ? snd : state.sender;
+    state.recipient = typeof rec === "string" ? rec : state.recipient;
+    state.lang = langCode === "zh" ? "zh" : "en";
+    if (typeof rawOrRef === "string" && rawOrRef.startsWith("\x01")) {
+      const sIdx = Number(rawOrRef.slice(1));
+      state.rawInput = SAMPLES[sIdx]?.[state.lang]?.text || SAMPLES[0].en.text;
+    } else if (typeof rawOrRef === "string") {
+      state.rawInput = rawOrRef;
+    }
+    if (toneVal === "gentle" || toneVal === "lab" || toneVal === "postcard") {
+      state.tone = toneVal;
+    }
+    if (typeof stampVal === "string" && stampVal.trim()) {
+      state.stamp = stampVal;
+    }
+    state.letterEn =
+      typeof customEn === "string" && customEn
+        ? customEn
+        : buildLetter1962(state.rawInput, state.sender, state.recipient, "en", state.tone);
+    state.letterZh =
+      typeof customZh === "string" && customZh
+        ? customZh
+        : buildLetter1962(state.rawInput, state.sender, state.recipient, "zh", state.tone);
+    state.isCustomEditedEn = typeof customEn === "string" && Boolean(customEn);
+    state.isCustomEditedZh = typeof customZh === "string" && Boolean(customZh);
+    const tsNum = Number(tsVal);
+    if (Number.isFinite(tsNum) && tsNum > 0) {
+      const tsMs = tsNum < 1e12 ? tsNum * 1000 : tsNum;
+      state.dispatchedAt = tsMs;
+      const elapsedSec = Math.max(8, Math.floor((Date.now() - tsMs) / 1000));
+      state.waitingCycles = Math.min(9999999, 18420 + elapsedSec * 110);
+    }
+    state.isConfirmed = true;
+    state.hasSharedArrival = true;
+  }
+
+  async function tryLoadSharePayload() {
+    const params = new URLSearchParams(window.location.search);
+    const hashParams =
+      window.location.hash && (window.location.hash.includes("msg=") || window.location.hash.includes("m=") || window.location.hash.includes("k="))
+        ? new URLSearchParams(window.location.hash.replace(/^#/, ""))
+        : null;
+
+    // 1. Ultra-short preset sample link (?k=0 or ?k=1z)
+    const sampleParam = params.get("k") || (hashParams ? hashParams.get("k") : null);
+    if (sampleParam) {
+      const isZh = sampleParam.endsWith("z");
+      const idx = Number(isZh ? sampleParam.slice(0, -1) : sampleParam);
+      if (!Number.isNaN(idx) && SAMPLES[idx]) {
+        const lang = isZh ? "zh" : "en";
+        const pair = SAMPLES[idx][lang];
+        hydrateFromParsedFields([pair.from, pair.to, pair.text, lang, Math.floor((Date.now() - 45000) / 1000)]);
+        return true;
+      }
+    }
+
+    // 2. Deflate-raw / compact tuple link (?m=z.<b64u> or ?m=u.<b64u>)
+    const compactParam = params.get("m") || (hashParams ? hashParams.get("m") : null);
+    if (compactParam && (compactParam.startsWith("z.") || compactParam.startsWith("u."))) {
+      try {
+        const rawBytes = b64UrlToUint8(compactParam.slice(2));
+        let decodedStr = "";
+        if (compactParam.startsWith("z.")) {
+          const inflated = await inflateRawBytes(rawBytes);
+          if (inflated) {
+            decodedStr = new TextDecoder().decode(inflated);
+          }
+        } else {
+          decodedStr = new TextDecoder().decode(rawBytes);
+        }
+        if (decodedStr) {
+          hydrateFromParsedFields(decodedStr.split(SHARE_SEP));
+          return true;
+        }
+      } catch (_err) {}
+    }
+
+    // 3. Legacy JSON Base64URL link (?msg=eyJ...)
+    const legacyParam = params.get("msg") || (hashParams ? hashParams.get("msg") : null);
+    if (!legacyParam) return false;
+    try {
+      const bytes = b64UrlToUint8(legacyParam);
       const parsed = JSON.parse(new TextDecoder().decode(bytes));
       if (parsed && typeof parsed === "object") {
-        state.sender = typeof parsed.s === "string" ? parsed.s : state.sender;
-        state.recipient = typeof parsed.r === "string" ? parsed.r : state.recipient;
-        state.rawInput = typeof parsed.o === "string" ? parsed.o : state.rawInput;
-        if (parsed.m === "gentle" || parsed.m === "lab" || parsed.m === "postcard") {
-          state.tone = parsed.m;
-        }
-        if (typeof parsed.p === "string" && parsed.p.trim()) {
-          state.stamp = parsed.p;
-        }
-        state.letterEn =
-          typeof parsed.e === "string" && parsed.e
-            ? parsed.e
-            : buildLetter1962(state.rawInput, state.sender, state.recipient, "en", state.tone);
-        state.letterZh =
-          typeof parsed.z === "string" && parsed.z
-            ? parsed.z
-            : buildLetter1962(state.rawInput, state.sender, state.recipient, "zh", state.tone);
-        state.isCustomEditedEn = typeof parsed.e === "string" && Boolean(parsed.e);
-        state.isCustomEditedZh = typeof parsed.z === "string" && Boolean(parsed.z);
-        if (parsed.l === "zh" || parsed.l === "en") {
-          state.lang = parsed.l;
-        }
-        if (typeof parsed.t === "number" && Number.isFinite(parsed.t)) {
-          const tsMs = parsed.t < 1e12 ? parsed.t * 1000 : parsed.t;
-          state.dispatchedAt = tsMs;
-          const elapsedSec = Math.max(8, Math.floor((Date.now() - tsMs) / 1000));
-          state.waitingCycles = Math.min(9999999, 18420 + elapsedSec * 110);
-        }
-        state.isConfirmed = true;
-        state.hasSharedArrival = true;
+        hydrateFromParsedFields([
+          parsed.s,
+          parsed.r,
+          parsed.o,
+          parsed.l,
+          parsed.t,
+          parsed.m,
+          parsed.p,
+          parsed.e,
+          parsed.z
+        ]);
         return true;
       }
     } catch (_err) {
@@ -1886,8 +2034,8 @@
       captionEn: "Ferranti Sirius full operator console on open display in Building B, Foyer, Level 2, Monash University Caulfield Campus.",
       hotspots: [
         {
-          x: 49,
-          y: 16,
+          x: 51,
+          y: 14,
           badge: "1",
           titleZh: "① 绿色主指示面板与展厅挂钟",
           titleEn: "1. Green Status Facia & Wall Clock",
@@ -1895,8 +2043,8 @@
           descEn: "Green header facia and register display perched above the main operating desk inside Building B foyer."
         },
         {
-          x: 41,
-          y: 31,
+          x: 39,
+          y: 36,
           badge: "2",
           titleZh: "② 桌面指令键盘与控制台",
           titleEn: "2. Desktop Control Keypad",
@@ -2075,13 +2223,23 @@
   /* ========================================================================
      9. Main Application Wiring & State-Preserving Bilingual Controller
      ======================================================================== */
-  document.addEventListener("DOMContentLoaded", () => {
-    const loadedFromUrl = tryLoadSharePayload();
+  document.addEventListener("DOMContentLoaded", async () => {
+    const loadedFromUrl = await tryLoadSharePayload();
     if (!loadedFromUrl) {
       syncDraftsFromRaw();
     }
 
-    // DOM References
+    let shareEncodeSeq = 0;
+    const refreshShareUrlInput = () => {
+      if (!state.isConfirmed || !shareUrlInput) return;
+      shareUrlInput.value = encodeSharePayload();
+      const seq = (shareEncodeSeq += 1);
+      encodeSharePayloadBest().then((bestUrl) => {
+        if (seq === shareEncodeSeq && state.isConfirmed) {
+          shareUrlInput.value = bestUrl;
+        }
+      });
+    };
     const mainContent = document.getElementById("main-content");
     const stageSections = {
       compose: document.getElementById("stage-compose"),
@@ -2798,9 +2956,7 @@
         renderMuseumGallery(state.activePhotoIdx, state.activeHotspotIdx);
       }
 
-      if (state.isConfirmed) {
-        shareUrlInput.value = encodeSharePayload();
-      }
+      refreshShareUrlInput();
 
       // Rebuild paper tape encoding & refresh read progress display without losing tapeProgress!
       siriusMachine.rebuildTape();
@@ -3072,9 +3228,7 @@
       syncDraftsFromRaw();
       rewrittenLetterInput.value = getActiveLetterText();
       renderLivePunchPreview();
-      if (state.isConfirmed) {
-        shareUrlInput.value = encodeSharePayload();
-      }
+      refreshShareUrlInput();
     };
 
     recipientInput.addEventListener("input", handleComposeInput);
@@ -3144,9 +3298,7 @@
       }
       editedBadge.hidden = false;
       renderLivePunchPreview();
-      if (state.isConfirmed) {
-        shareUrlInput.value = encodeSharePayload();
-      }
+      refreshShareUrlInput();
     });
 
     // Reset auto-draft
@@ -3162,9 +3314,7 @@
       rewrittenLetterInput.value = getActiveLetterText();
       renderLivePunchPreview();
       animateLetterPaperRefresh();
-      if (state.isConfirmed) {
-        shareUrlInput.value = encodeSharePayload();
-      }
+      refreshShareUrlInput();
     });
 
     // Confirm & Encode (with non-empty validation)
@@ -3192,7 +3342,7 @@
       state.tapeProgress = 0;
       state.simulatedCycles = 0;
       dispatchPanel.hidden = false;
-      shareUrlInput.value = encodeSharePayload();
+      refreshShareUrlInput();
       copyFeedback.textContent = "";
       siriusMachine.rebuildTape();
       if (window.gsap && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -3270,7 +3420,7 @@
     });
 
     copyLinkBtn.addEventListener("click", async () => {
-      const link = encodeSharePayload();
+      const link = await encodeSharePayloadBest();
       shareUrlInput.value = link;
       try {
         await navigator.clipboard.writeText(link);
