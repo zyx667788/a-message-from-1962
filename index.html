@@ -8,10 +8,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=VT323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261116-2">
+  <link rel="stylesheet" href="styles.css?v=20261116-3">
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
-  <script src="app.js?v=20261116-2" defer></script>
+  <script src="app.js?v=20261116-3" defer></script>
 </head>
 <body>
   <!-- Vintage Oil-Painting Pixel Opening Overlay -->
@@ -101,7 +101,7 @@
               <span class="kicker-badge" data-i18n="composeBadge">1962 CORRESPONDENCE DESK</span>
               <h1 id="compose-heading" class="section-title" data-i18n="composeHeading">Write a note today, punch it onto 1962 paper tape</h1>
               <p class="section-note" data-i18n="composeSubtitle">
-                Draft a short message or pick a quick prompt—once punched, pull the paper tape yourself to read how 1962 received it.
+                Draft a short message or pick a quick prompt — once punched, pull the paper tape yourself to read how 1962 received it.
               </p>
             </div>
           </div>
@@ -142,7 +142,7 @@
               </div>
 
               <p class="compose-pull-hint" data-i18n="composePullHint">
-                Tip: After encoding, click "Go to Receiver" to pull the 5-track paper tape out yourself—or share the link with a friend.
+                Tip: After encoding, click "Go to Receiver" to pull the 5-track paper tape out yourself — or share the link with a friend.
               </p>
             </div>
           </div>
@@ -174,6 +174,8 @@
                 <canvas id="live-punch-canvas" class="live-punch-canvas" width="520" height="44" aria-hidden="true"></canvas>
               </div>
 
+              <p id="compose-error-msg" class="compose-error-msg" role="alert" hidden></p>
+
               <div class="compose-actions">
                 <button type="button" id="confirm-encode-btn" class="btn-primary" data-i18n="confirmEncode">
                   Confirm &amp; Punch onto 1962 Tape
@@ -184,7 +186,7 @@
               <div id="dispatch-panel" class="dispatch-panel" hidden>
                 <div class="dispatch-status">
                   <span class="status-dot" aria-hidden="true"></span>
-                  <span data-i18n="dispatchReady">Encoded onto 5-track tape—now pull the tape free yourself or share the link.</span>
+                  <span data-i18n="dispatchReady">Encoded onto 5-track tape — now pull the tape free yourself or share the link.</span>
                 </div>
                 <div class="dispatch-buttons">
                   <button type="button" id="go-receive-btn" class="btn-primary" data-i18n="openAsRecipient">
@@ -250,7 +252,7 @@
             </div>
             <div class="loop-waiting-copy">
               <h3 id="loop-waiting-headline" data-i18n="waitingHeadline">
-                No static disk in 1962—this letter kept circling as sound until you opened it
+                No static disk in 1962 — this letter kept circling as sound until you opened it
               </h3>
               <p id="loop-waiting-desc" data-i18n="waitingDesc">
                 To stay alive, every bit had to loop endlessly as acoustic pulses through a nickel wire coil.

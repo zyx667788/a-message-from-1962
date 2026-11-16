@@ -20,7 +20,7 @@
       composeBadge: "1962 CORRESPONDENCE DESK",
       composeHeading: "Write a note today, punch it onto 1962 paper tape",
       composeSubtitle:
-        "Write your note or pick a quick prompt—once punched, pull the paper tape yourself to read it, or share the link.",
+        "Write your note or pick a quick prompt — once punched, pull the paper tape yourself to read it, or share the link.",
       jumpToReceiver: "Go to Receiver →",
       learnExhibit: "Real 1962 Exhibit →",
       livePunchLabel: "LIVE 5-TRACK PAPER TAPE PUNCH",
@@ -35,18 +35,19 @@
       sample2Label: "Late lab report",
       sample3Label: "Meet at Building B",
       composePullHint:
-        "Tip: After encoding, click \"Go to Receiver\" to pull the 5-track paper tape out yourself—or share the link with a friend.",
+        "Tip: After encoding, click \"Go to Receiver\" to pull the 5-track paper tape out yourself — or share the link with a friend.",
       resetDraft: "Reset draft",
       editedBadge: "Edited",
       labelRewritten: "1962 rewritten letter",
       confirmEncode: "Confirm & Punch onto 1962 Tape",
-      dispatchReady: "Encoded onto 5-track tape—now pull the tape free yourself or share the link.",
+      emptyInputAlert: "Please write a short note (or pick a quick prompt) before punching onto 1962 paper tape.",
+      dispatchReady: "Encoded onto 5-track tape — now pull the tape free yourself or share the link.",
       openAsRecipient: "Go to Receiver (Pull Tape Yourself) →",
       copyShareLink: "Copy Recipient Link",
       openIgCardBtn: "Save Story Card",
       learnMoreSirius: "Explore the Real 1962 Sirius →",
       copiedOk: "Link copied to clipboard",
-      copiedFallback: "Link ready—copy from field",
+      copiedFallback: "Link ready — copy from field",
       receiveBadge: "1962 PAPER TAPE RECEIVER",
       receiveHeading: "Pull the tape to read the message",
       backToWrite: "← Back to Write Desk",
@@ -54,7 +55,7 @@
       waitingCountLabel: "CIRCULATED WHILE WAITING",
       waitingUnit: "cycles",
       waitingTimeLabel: "Elapsed in coil:",
-      waitingHeadline: "No static disk in 1962—this letter kept circling as sound until you opened it",
+      waitingHeadline: "No static disk in 1962 — this letter kept circling as sound until you opened it",
       waitingDesc:
         "To stay alive, every bit had to loop endlessly as acoustic pulses through a nickel wire coil.",
       consoleSub: "OPTICAL PAPER TAPE INPUT & ACOUSTIC DELAY LOOP",
@@ -84,7 +85,7 @@
       pauseCalloutTitle: "Tape stopped — memory still circling",
       pauseCalloutBody:
         "Reading paused when you stopped pulling, but decoded bits stay alive inside the acoustic coil.",
-      simCycleLabel: "Loops Since Opening",
+      simCycleLabel: "Live Coil Orbit Laps (Visual)",
       simDisclaimer:
         "Illustrative delay-line loop counter (not exact original kHz clock speed).",
       completePrompt:
@@ -112,7 +113,7 @@
         "Messages and code were punched offline as 5-hole strips on a teleprinter, then read optically into Sirius.",
       histCard3Title: "Saving Data as Traveling Echoes",
       histCard3Body:
-        "Nickel magnetostrictive delay lines kept data circling endlessly as acoustic ripples—stop circulating, and memory vanishes.",
+        "Nickel magnetostrictive delay lines kept data circling endlessly as acoustic ripples — stop circulating, and memory vanishes.",
       visitKicker: "Monash Museum of Computing History · Caulfield Campus",
       visitHeadline: "Visit the surviving 1962 Ferranti Sirius in person",
       visitDesc:
@@ -182,6 +183,7 @@
       editedBadge: "已微调",
       labelRewritten: "1962 书信稿",
       confirmEncode: "确认并编码为 1962 打孔纸带",
+      emptyInputAlert: "请先输入想对朋友说的话（或点击快速灵感），再编码为 1962 打孔纸带。",
       dispatchReady: "纸带已打孔送入声波循环——现在你可以亲自去拉动纸带，或分享链接。",
       openAsRecipient: "前往收信机（自己拉纸带看）→",
       copyShareLink: "复制收信链接发给朋友",
@@ -226,7 +228,7 @@
       pauseCalloutTitle: "纸带停下——循环仍在继续",
       pauseCalloutBody:
         "松手后读取暂停，但已读入的字符仍在金属丝线圈内持续循环保存。",
-      simCycleLabel: "本次读取后循环圈数",
+      simCycleLabel: "动画线圈已转圈数",
       simDisclaimer:
         "说明：仅作声波循环工作原理示意，非原机实际主频测量。",
       completePrompt: "这封来自 1962 年的信已全部读出，接着看看莫纳什大学大楼里的真实展品吧。",
@@ -306,7 +308,7 @@
       en: {
         to: "Oliver",
         from: "Maya",
-        text: "Still awake finishing my lab report. Hope your week is going smoothly—don't forget to rest."
+        text: "Still awake finishing my lab report. Hope your week is going smoothly — don't forget to rest."
       },
       zh: {
         to: "志远",
@@ -583,20 +585,21 @@
   }
 
   /* ========================================================================
-     4. Shareable URL Payload Encoder / Decoder
+     4. Shareable URL Payload Encoder / Decoder (Compact payload, backwards compatible)
      ======================================================================== */
   function encodeSharePayload() {
     const payload = {
       s: state.sender,
       r: state.recipient,
       o: state.rawInput,
-      e: state.letterEn,
-      z: state.letterZh,
       l: state.lang,
-      m: state.tone,
-      p: state.stamp,
-      t: state.dispatchedAt || Date.now()
+      t: Math.floor((state.dispatchedAt || Date.now()) / 1000)
     };
+    if (state.isCustomEditedEn) payload.e = state.letterEn;
+    if (state.isCustomEditedZh) payload.z = state.letterZh;
+    if (state.tone && state.tone !== "gentle") payload.m = state.tone;
+    if (state.stamp && state.stamp !== "MONASH SIRIUS · 1962") payload.p = state.stamp;
+
     const json = JSON.stringify(payload);
     const bytes = new TextEncoder().encode(json);
     let binary = "";
@@ -645,14 +648,15 @@
           typeof parsed.z === "string" && parsed.z
             ? parsed.z
             : buildLetter1962(state.rawInput, state.sender, state.recipient, "zh", state.tone);
-        state.isCustomEditedEn = true;
-        state.isCustomEditedZh = true;
+        state.isCustomEditedEn = typeof parsed.e === "string" && Boolean(parsed.e);
+        state.isCustomEditedZh = typeof parsed.z === "string" && Boolean(parsed.z);
         if (parsed.l === "zh" || parsed.l === "en") {
           state.lang = parsed.l;
         }
         if (typeof parsed.t === "number" && Number.isFinite(parsed.t)) {
-          state.dispatchedAt = parsed.t;
-          const elapsedSec = Math.max(8, Math.floor((Date.now() - parsed.t) / 1000));
+          const tsMs = parsed.t < 1e12 ? parsed.t * 1000 : parsed.t;
+          state.dispatchedAt = tsMs;
+          const elapsedSec = Math.max(8, Math.floor((Date.now() - tsMs) / 1000));
           state.waitingCycles = Math.min(9999999, 18420 + elapsedSec * 110);
         }
         state.isConfirmed = true;
@@ -1863,8 +1867,10 @@
       ctx.font = '500 11px "IBM Plex Mono", "PingFang SC", monospace';
       ctx.fillStyle = "#372713";
       const sub = !hasData
-        ? (state.lang === "zh" ? `已循环 ${state.waitingCycles.toLocaleString()} 次` : `${state.waitingCycles.toLocaleString()} LOOPS SO FAR`)
-        : (state.lang === "zh" ? `已读 ${revealedCount} 字符在循环中` : `${revealedCount} CHARS IN LOOP`);
+        ? (state.lang === "zh" ? "镍丝声波待命循环中" : "COIL STANDBY · NO LOSS")
+        : (state.lang === "zh"
+            ? `已读 ${revealedCount} / ${letterText.length} 字符在循环`
+            : `${revealedCount} / ${letterText.length} CHARS IN LOOP`);
       ctx.fillText(sub, cx, cy + 12);
     }
   }
@@ -1895,7 +1901,7 @@
           titleZh: "② 桌面指令键盘与控制台",
           titleEn: "2. Desktop Control Keypad",
           descZh: "1962 年没有鼠标与图形屏幕，操作员在这里逐条启动纸带读取并观察寄存器变化。",
-          descEn: "No mouse or monitor in 1962—operators stepped programs and checked decimal registers from this desk keypad."
+          descEn: "No mouse or monitor in 1962 — operators stepped programs and checked decimal registers from this desk keypad."
         },
         {
           x: 82,
@@ -1948,7 +1954,7 @@
           titleZh: "③ 黄色五孔纸带与运行手册",
           titleEn: "3. 5-Track Paper Tape & Logs",
           descZh: "右侧与左下角展示的黄色纸带正是本网站灵感来源：文字曾真正被打在一条条窄纸带上。",
-          descEn: "Oiled yellow paper tape rolls kept beside original binders—every bit of text traveled as physical holes."
+          descEn: "Oiled yellow paper tape rolls kept beside original binders — every bit of text traveled as physical holes."
         }
       ]
     },
@@ -1965,7 +1971,7 @@
           titleZh: "① 镍延迟线与分立晶体管插板",
           titleEn: "1. Nickel Delay Line & Logic Bay",
           descZh: "不同与今天的固态硬盘，Sirius 用镍金属丝传播声音回波来“循环记住”数据，断电或停转即逝。",
-          descEn: "Inside this bay sit discrete transistor boards and coiled nickel acoustic delay lines—memory existed only while moving."
+          descEn: "Inside this bay sit discrete transistor boards and coiled nickel acoustic delay lines — memory existed only while moving."
         }
       ]
     },
@@ -2109,6 +2115,7 @@
     const livePunchCanvas = document.getElementById("live-punch-canvas");
     const livePunchMeta = document.getElementById("live-punch-meta");
     const confirmEncodeBtn = document.getElementById("confirm-encode-btn");
+    const composeErrorMsg = document.getElementById("compose-error-msg");
     const dispatchPanel = document.getElementById("dispatch-panel");
     const goReceiveBtn = document.getElementById("go-receive-btn");
     const copyLinkBtn = document.getElementById("copy-link-btn");
@@ -3043,8 +3050,18 @@
       if (state.soundEnabled) soundEngine.playTapeTick();
     });
 
+    const clearComposeError = () => {
+      if (composeErrorMsg) {
+        composeErrorMsg.hidden = true;
+        composeErrorMsg.textContent = "";
+      }
+      rawMessageInput.classList.remove("is-invalid");
+      rewrittenLetterInput.classList.remove("is-invalid");
+    };
+
     // Input synchronization
     const handleComposeInput = () => {
+      clearComposeError();
       state.recipient = recipientInput.value;
       state.sender = senderInput.value;
       state.rawInput = rawMessageInput.value;
@@ -3117,6 +3134,7 @@
 
     // Direct editing of the 1962 letter draft
     rewrittenLetterInput.addEventListener("input", () => {
+      clearComposeError();
       if (state.lang === "zh") {
         state.letterZh = rewrittenLetterInput.value;
         state.isCustomEditedZh = true;
@@ -3149,8 +3167,26 @@
       }
     });
 
-    // Confirm & Encode
+    // Confirm & Encode (with non-empty validation)
     confirmEncodeBtn.addEventListener("click", () => {
+      const hasRawInput = Boolean(rawMessageInput.value.trim());
+      const hasDraftText = Boolean(rewrittenLetterInput.value.trim());
+      const isCustomEdited = state.lang === "zh" ? state.isCustomEditedZh : state.isCustomEditedEn;
+
+      if (!hasDraftText || (!hasRawInput && !isCustomEdited)) {
+        state.isConfirmed = false;
+        dispatchPanel.hidden = true;
+        if (composeErrorMsg) {
+          composeErrorMsg.textContent = I18N[state.lang].emptyInputAlert;
+          composeErrorMsg.hidden = false;
+        }
+        const targetField = !hasRawInput ? rawMessageInput : rewrittenLetterInput;
+        targetField.classList.add("is-invalid");
+        targetField.focus();
+        return;
+      }
+
+      clearComposeError();
       state.isConfirmed = true;
       state.dispatchedAt = Date.now();
       state.tapeProgress = 0;
