@@ -356,6 +356,7 @@
     isLoopPaused: false,
     simulatedCycles: 0,
     waitingCycles: 0,
+    receiveElapsedMs: 0,
     dispatchedAt: Date.now(),
     soundEnabled: true,
     hasSharedArrival: false
@@ -743,7 +744,9 @@
       const tsMs = tsNum < 1e12 ? tsNum * 1000 : tsNum;
       state.dispatchedAt = tsMs;
       const elapsedSec = Math.max(8, Math.floor((Date.now() - tsMs) / 1000));
+      state.receiveElapsedMs = elapsedSec * 1000;
       state.waitingCycles = Math.min(9999999, 18420 + elapsedSec * 110);
+      state.simulatedCycles = Math.floor(state.waitingCycles / 145);
     }
     state.isConfirmed = true;
     state.hasSharedArrival = true;
@@ -1692,7 +1695,6 @@
       this.resetTapeBtn.addEventListener("click", () => {
         stopHold();
         this.lastRevealedCount = 0;
-        state.simulatedCycles = 0;
         this.applyProgress(0, false);
       });
 
@@ -1855,23 +1857,26 @@
 
         if (!state.isLoopPaused && state.stage === "receive") {
           const speed = prefersReduced.matches ? 0.3 : 1.55;
-          const prevRevs = Math.floor(this.loopAngle / (Math.PI * 2));
           this.loopAngle += dt * speed;
-          const nextRevs = Math.floor(this.loopAngle / (Math.PI * 2));
+          state.receiveElapsedMs += dt * 1000;
 
-          // Advance active receive circulation counter only while on Screen 2
+          // Advance active receive pulses + orbit laps in lockstep (145 pulses = 1 visual lap)
           this.waitingAccum += dt * (prefersReduced.matches ? 6 : 36);
           if (this.waitingAccum >= 1) {
             const deltaCycles = Math.floor(this.waitingAccum);
             this.waitingAccum -= deltaCycles;
             state.waitingCycles += deltaCycles;
+            state.simulatedCycles = Math.floor(state.waitingCycles / 145);
             if (this.waitingCyclesEl) {
               this.waitingCyclesEl.textContent = state.waitingCycles.toLocaleString();
+            }
+            if (this.cyclesCountEl) {
+              this.cyclesCountEl.textContent = state.simulatedCycles.toLocaleString();
             }
           }
 
           if (this.waitingTimerEl) {
-            const rawSec = Math.max(0, Math.floor((Date.now() - (state.dispatchedAt || Date.now())) / 1000));
+            const rawSec = Math.max(0, Math.floor(state.receiveElapsedMs / 1000));
             const hrs = String(Math.floor(rawSec / 3600)).padStart(2, "0");
             const mins = String(Math.floor((rawSec % 3600) / 60)).padStart(2, "0");
             const secs = String(rawSec % 60).padStart(2, "0");
@@ -1885,11 +1890,6 @@
             if (this.pingPulses[p].life <= 0) {
               this.pingPulses.splice(p, 1);
             }
-          }
-
-          if (hasData && nextRevs > prevRevs) {
-            state.simulatedCycles += 1;
-            this.cyclesCountEl.textContent = state.simulatedCycles.toLocaleString();
           }
         }
 
@@ -1905,8 +1905,12 @@
     triggerPing() {
       this.pingPulses.push({ angle: 0, life: 1 });
       state.waitingCycles += 8;
+      state.simulatedCycles = Math.floor(state.waitingCycles / 145);
       if (this.waitingCyclesEl) {
         this.waitingCyclesEl.textContent = state.waitingCycles.toLocaleString();
+      }
+      if (this.cyclesCountEl) {
+        this.cyclesCountEl.textContent = state.simulatedCycles.toLocaleString();
       }
       soundEngine.playPingEcho();
     }
@@ -2230,6 +2234,17 @@
       syncDraftsFromRaw();
     }
 
+    const autoSizeDrafts = () => {
+      const minDraftPx = window.innerWidth <= 640 ? 274 : 332;
+      if (rewrittenLetterInput) {
+        rewrittenLetterInput.style.height = "auto";
+        rewrittenLetterInput.style.height = `${Math.max(minDraftPx, rewrittenLetterInput.scrollHeight + 4)}px`;
+      }
+      if (rawMessageInput) {
+        rawMessageInput.style.height = "auto";
+        rawMessageInput.style.height = `${Math.min(280, Math.max(112, rawMessageInput.scrollHeight + 4))}px`;
+      }
+    };
     let shareEncodeSeq = 0;
     const refreshShareUrlInput = () => {
       if (!state.isConfirmed || !shareUrlInput) return;
@@ -2946,6 +2961,7 @@
       if (originalPreview) originalPreview.textContent = state.rawInput || "—";
 
       rewrittenLetterInput.value = getActiveLetterText();
+      autoSizeDrafts();
       const isEdited = nextLang === "zh" ? state.isCustomEditedZh : state.isCustomEditedEn;
       editedBadge.hidden = !isEdited;
 
@@ -3156,6 +3172,19 @@
       if (targetStage === "receive") {
         updateRecipientBadge();
         siriusMachine.rebuildTape();
+        if (siriusMachine.waitingCyclesEl) {
+          siriusMachine.waitingCyclesEl.textContent = state.waitingCycles.toLocaleString();
+        }
+        if (siriusMachine.cyclesCountEl) {
+          siriusMachine.cyclesCountEl.textContent = state.simulatedCycles.toLocaleString();
+        }
+        if (siriusMachine.waitingTimerEl) {
+          const rawSec = Math.max(0, Math.floor(state.receiveElapsedMs / 1000));
+          const hrs = String(Math.floor(rawSec / 3600)).padStart(2, "0");
+          const mins = String(Math.floor((rawSec % 3600) / 60)).padStart(2, "0");
+          const secs = String(rawSec % 60).padStart(2, "0");
+          siriusMachine.waitingTimerEl.textContent = `${hrs}:${mins}:${secs}`;
+        }
       } else if (targetStage === "history" && !customPhotoObjectUrl) {
         renderMuseumGallery(state.activePhotoIdx, state.activeHotspotIdx);
       }
@@ -3229,6 +3258,7 @@
 
       syncDraftsFromRaw();
       rewrittenLetterInput.value = getActiveLetterText();
+      autoSizeDrafts();
       renderLivePunchPreview();
       refreshShareUrlInput();
     };
@@ -3248,6 +3278,7 @@
         editedBadge.hidden = true;
         syncDraftsFromRaw();
         rewrittenLetterInput.value = getActiveLetterText();
+      autoSizeDrafts();
         updateToneAndStampUI();
         renderLivePunchPreview();
         if (state.isConfirmed) {
@@ -3291,6 +3322,7 @@
     // Direct editing of the 1962 letter draft
     rewrittenLetterInput.addEventListener("input", () => {
       clearComposeError();
+      autoSizeDrafts();
       if (state.lang === "zh") {
         state.letterZh = rewrittenLetterInput.value;
         state.isCustomEditedZh = true;
@@ -3314,6 +3346,7 @@
       }
       editedBadge.hidden = true;
       rewrittenLetterInput.value = getActiveLetterText();
+      autoSizeDrafts();
       renderLivePunchPreview();
       animateLetterPaperRefresh();
       refreshShareUrlInput();
@@ -3345,6 +3378,7 @@
       state.tapeProgress = 0;
       state.simulatedCycles = 0;
       state.waitingCycles = 0;
+      state.receiveElapsedMs = 0;
       siriusMachine.waitingAccum = 0;
       if (siriusMachine.waitingCyclesEl) siriusMachine.waitingCyclesEl.textContent = "0";
       if (siriusMachine.cyclesCountEl) siriusMachine.cyclesCountEl.textContent = "0";

@@ -2005,6 +2005,7 @@ body {
 .visit-dialog {
   width: min(580px, calc(100vw - 24px));
   max-width: calc(100vw - 24px);
+  max-height: calc(100dvh - 24px);
   border: 2px solid var(--espresso-umber);
   background: var(--paper-surface);
   color: var(--espresso-umber);
@@ -2012,17 +2013,28 @@ body {
   box-shadow: 6px 6px 0 rgba(55, 39, 19, 0.28);
 }
 
+.visit-dialog[open] {
+  display: flex;
+  flex-direction: column;
+}
+
 .visit-dialog::backdrop {
   background: rgba(55, 39, 19, 0.58);
 }
 
 .dialog-shell {
-  padding: 20px 22px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .dialog-header {
-  padding-bottom: 12px;
+  padding-bottom: 10px;
   border-bottom: 1px dashed var(--brass-ochre);
+  flex-shrink: 0;
 }
 
 .dialog-title {
@@ -2034,10 +2046,13 @@ body {
 }
 
 .dialog-body {
-  padding: 14px 0;
+  padding: 12px 0;
   font-family: var(--font-mono);
   font-size: 13px;
   color: var(--olive-bronze);
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 .dialog-details {
@@ -2066,12 +2081,13 @@ body {
 }
 
 .dialog-footer {
-  padding-top: 12px;
+  padding-top: 10px;
   border-top: 1px dashed var(--brass-ochre);
   display: flex;
   justify-content: flex-end;
   gap: 10px;
   flex-wrap: wrap;
+  flex-shrink: 0;
 }
 
 .ig-card-dialog {
@@ -2079,7 +2095,7 @@ body {
 }
 
 .ig-preview-note {
-  margin: 0 0 12px;
+  margin: 0 0 10px;
   font-size: 12px;
 }
 
@@ -2088,12 +2104,14 @@ body {
   justify-content: center;
   background: var(--paper-inset);
   border: 2px solid var(--espresso-umber);
-  padding: 10px;
+  padding: 8px;
 }
 
 .ig-story-canvas {
-  width: 100%;
-  max-width: 280px;
+  width: auto;
+  max-width: 100%;
+  max-height: min(420px, 48dvh);
+  aspect-ratio: 540 / 960;
   height: auto;
   display: block;
   border: 2px solid var(--espresso-umber);
