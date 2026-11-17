@@ -2359,7 +2359,45 @@
 
     const openVisitModalBtn = document.getElementById("open-visit-modal-btn");
     const visitDialog = document.getElementById("visit-dialog");
+    const closeVisitXBtn = document.getElementById("close-visit-x");
+    const closeVisitDoneBtn = document.getElementById("close-visit-done-btn");
+    const closeIgXBtn = document.getElementById("close-ig-x");
+    const closeIgBtn = document.getElementById("close-ig-btn");
     const photoUploadInput = document.getElementById("photo-upload-input");
+
+    let activeModalEl = null;
+    let lastModalTriggerEl = null;
+
+    function openAppModal(modalEl, triggerEl) {
+      if (!modalEl) return;
+      lastModalTriggerEl = triggerEl || document.activeElement;
+      activeModalEl = modalEl;
+      modalEl.hidden = false;
+      document.body.style.overflow = "hidden";
+      const focusTarget = modalEl.querySelector(".pixel-close-x, .btn-primary, button");
+      if (focusTarget && typeof focusTarget.focus === "function") {
+        focusTarget.focus();
+      }
+    }
+
+    function closeAppModal(modalEl) {
+      if (!modalEl) return;
+      modalEl.hidden = true;
+      if (activeModalEl === modalEl) {
+        activeModalEl = null;
+      }
+      document.body.style.overflow = "";
+      if (lastModalTriggerEl && typeof lastModalTriggerEl.focus === "function") {
+        lastModalTriggerEl.focus();
+        lastModalTriggerEl = null;
+      }
+    }
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && activeModalEl && !activeModalEl.hidden) {
+        closeAppModal(activeModalEl);
+      }
+    });
 
     const siriusMachine = new SiriusMachineController();
     let customPhotoObjectUrl = "";
@@ -3460,18 +3498,16 @@
     if (openIgCardBtn && igCardDialog) {
       openIgCardBtn.addEventListener("click", () => {
         renderIgStoryCard(igStoryCanvas);
-        if (typeof igCardDialog.showModal === "function") {
-          igCardDialog.showModal();
-        } else {
-          igCardDialog.setAttribute("open", "");
-        }
+        openAppModal(igCardDialog, openIgCardBtn);
       });
 
       igCardDialog.addEventListener("click", (e) => {
         if (e.target === igCardDialog) {
-          igCardDialog.close();
+          closeAppModal(igCardDialog);
         }
       });
+      if (closeIgXBtn) closeIgXBtn.addEventListener("click", () => closeAppModal(igCardDialog));
+      if (closeIgBtn) closeIgBtn.addEventListener("click", () => closeAppModal(igCardDialog));
     }
 
     if (downloadIgCardBtn && igStoryCanvas) {
@@ -3534,20 +3570,20 @@
     goHistoryBtn.addEventListener("click", () => switchStage("history"));
     writeAnotherBtn.addEventListener("click", () => switchStage("compose"));
 
-    // Museum Visitor Modal (<dialog> with light-dismiss fallback)
-    openVisitModalBtn.addEventListener("click", () => {
-      if (typeof visitDialog.showModal === "function") {
-        visitDialog.showModal();
-      } else {
-        visitDialog.setAttribute("open", "");
-      }
-    });
+    // Museum Visitor Modal (fixed backdrop overlay compatible with all WebViews)
+    if (openVisitModalBtn && visitDialog) {
+      openVisitModalBtn.addEventListener("click", () => {
+        openAppModal(visitDialog, openVisitModalBtn);
+      });
 
-    visitDialog.addEventListener("click", (e) => {
-      if (e.target === visitDialog) {
-        visitDialog.close();
-      }
-    });
+      visitDialog.addEventListener("click", (e) => {
+        if (e.target === visitDialog) {
+          closeAppModal(visitDialog);
+        }
+      });
+      if (closeVisitXBtn) closeVisitXBtn.addEventListener("click", () => closeAppModal(visitDialog));
+      if (closeVisitDoneBtn) closeVisitDoneBtn.addEventListener("click", () => closeAppModal(visitDialog));
+    }
 
     // Optional museum photograph upload preview
     if (photoUploadInput && museumActivePhoto) {

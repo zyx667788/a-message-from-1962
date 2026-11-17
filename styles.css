@@ -102,6 +102,10 @@ body {
 
 .intro-overlay {
   position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   inset: 0;
   z-index: 1000;
   background-color: var(--paper-bg);
@@ -114,6 +118,7 @@ body {
   align-items: center;
   padding: 72px 16px 20px;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .intro-overlay.is-hidden {
@@ -124,6 +129,10 @@ body {
 
 .intro-canvas {
   position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   inset: 0;
   width: 100%;
   height: 100%;
@@ -181,6 +190,10 @@ body {
 
 .intro-stamps {
   position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   inset: 0;
   pointer-events: none;
   z-index: 2;
@@ -220,8 +233,10 @@ body {
   flex-direction: column;
   z-index: 4;
   max-height: calc(100vh - 96px);
+  max-height: calc(100dvh - 96px);
   overflow-x: hidden;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .pixel-window-bar {
@@ -2006,31 +2021,53 @@ body {
   color: var(--ink-muted);
 }
 
+/* Fixed Overlay Modals (X5/TBS WebView & Cross-Browser Safe) */
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  inset: 0;
+  z-index: 1200;
+  background: rgba(55, 39, 19, 0.62);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .visit-dialog {
-  width: min(580px, calc(100vw - 24px));
+  position: relative;
+  margin: auto;
+  width: 580px;
   max-width: calc(100vw - 24px);
+  height: auto;
+  max-height: calc(100vh - 24px);
   max-height: calc(100dvh - 24px);
+  display: flex;
+  flex-direction: column;
   border: 2px solid var(--espresso-umber);
   background: var(--paper-surface);
   color: var(--espresso-umber);
   padding: 0;
   box-shadow: 6px 6px 0 rgba(55, 39, 19, 0.28);
+  overflow: hidden;
 }
 
-.visit-dialog[open] {
-  display: flex;
-  flex-direction: column;
-}
-
-.visit-dialog::backdrop {
-  background: rgba(55, 39, 19, 0.58);
+.dialog-titlebar {
+  flex-shrink: 0;
 }
 
 .dialog-shell {
   padding: 16px 20px;
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex: 0 1 auto;
   min-height: 0;
   overflow: hidden;
 }
@@ -2054,9 +2091,10 @@ body {
   font-family: var(--font-mono);
   font-size: 13px;
   color: var(--olive-bronze);
-  flex: 1;
-  min-height: 0;
+  flex: 0 1 auto;
+  min-height: 120px;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .dialog-details {
@@ -2095,7 +2133,8 @@ body {
 }
 
 .ig-card-dialog {
-  width: min(460px, calc(100vw - 28px));
+  width: 460px;
+  max-width: calc(100vw - 28px);
 }
 
 .ig-preview-note {
@@ -2114,7 +2153,8 @@ body {
 .ig-story-canvas {
   width: auto;
   max-width: 100%;
-  max-height: min(420px, 48dvh);
+  max-height: 46vh;
+  max-height: min(420px, 46dvh);
   aspect-ratio: 540 / 960;
   height: auto;
   display: block;
@@ -2172,7 +2212,8 @@ body {
   }
 
   .pixel-window {
-    max-height: calc(100dvh - 92px);
+    max-height: calc(100vh - 88px);
+    max-height: calc(100dvh - 88px);
   }
 
   .pixel-window-body {
@@ -2578,26 +2619,28 @@ body {
   }
 
   /* Mobile Modal Dialogs */
+  .modal-backdrop {
+    padding: 10px;
+  }
+
   .visit-dialog {
     width: calc(100vw - 20px);
-    max-width: calc(100% - 20px);
-    max-height: calc(100dvh - 24px);
+    max-width: calc(100% - 4px);
+    max-height: calc(100vh - 20px);
+    max-height: calc(100dvh - 20px);
   }
 
   .dialog-shell {
-    padding: 14px;
-    display: flex;
-    flex-direction: column;
-    max-height: calc(100dvh - 58px);
+    padding: 12px 14px;
   }
 
   .dialog-body {
-    overflow-y: auto;
     padding: 10px 0;
   }
 
   .ig-story-canvas {
-    max-height: 48dvh;
+    max-height: 44vh;
+    max-height: 44dvh;
     width: auto;
     max-width: 100%;
   }
@@ -2607,7 +2650,6 @@ body {
     gap: 8px;
   }
 
-  .dialog-footer form,
   .dialog-footer button {
     width: 100%;
     justify-content: center;

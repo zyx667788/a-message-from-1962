@@ -8,10 +8,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=VT323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261116-7">
+  <link rel="stylesheet" href="styles.css?v=20261117-1">
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
-  <script src="app.js?v=20261116-7" defer></script>
+  <script src="app.js?v=20261117-1" defer></script>
 </head>
 <body>
   <!-- Vintage Oil-Painting Pixel Opening Overlay -->
@@ -614,87 +614,83 @@
     </footer>
   </div>
 
-  <!-- Native Accessible Modal Dialog: Museum Guide -->
-  <dialog id="visit-dialog" class="visit-dialog" closedby="any" aria-labelledby="visit-dialog-title">
-    <div class="dialog-titlebar">
-      <span>MUSEUM_GUIDE.INF // VIC 3145</span>
-      <form method="dialog">
-        <button type="submit" class="pixel-close-x" aria-label="关闭参观指南">×</button>
-      </form>
-    </div>
-    <div class="dialog-shell">
-      <div class="dialog-header">
-        <div>
-          <span class="panel-code">MONASH MUSEUM OF COMPUTING HISTORY</span>
-          <h2 id="visit-dialog-title" class="dialog-title" data-i18n="dialogTitle">莫纳什大学计算机历史博物馆参观指南</h2>
+  <!-- Fixed Overlay Modal: Museum Guide (works across all WebViews including WeChat X5/TBS) -->
+  <div id="visit-dialog" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="visit-dialog-title" hidden>
+    <div class="visit-dialog">
+      <div class="dialog-titlebar">
+        <span>MUSEUM_GUIDE.INF // VIC 3145</span>
+        <button type="button" id="close-visit-x" class="pixel-close-x" aria-label="关闭参观指南">×</button>
+      </div>
+      <div class="dialog-shell">
+        <div class="dialog-header">
+          <div>
+            <span class="panel-code">MONASH MUSEUM OF COMPUTING HISTORY</span>
+            <h2 id="visit-dialog-title" class="dialog-title" data-i18n="dialogTitle">莫纳什大学计算机历史博物馆参观指南</h2>
+          </div>
+        </div>
+
+        <div class="dialog-body">
+          <p data-i18n="dialogLead">
+            展区位于莫纳什大学 Caulfield 校区 Building B 二楼大厅，面向所有在校学生与公众开放，免费近距离观看 1962 年莫纳什第一台计算机 Ferranti Sirius。
+          </p>
+
+          <dl class="dialog-details">
+            <div>
+              <dt data-i18n="dlgLocationDt">精确地址</dt>
+              <dd data-i18n="dlgLocationDd">Building B, Foyer, Level 2, Caulfield East VIC 3145, Australia（莫纳什大学 Caulfield 校区 Building B 二楼大厅）</dd>
+            </div>
+            <div>
+              <dt data-i18n="dlgExhibitDt">核心馆藏</dt>
+              <dd data-i18n="dlgExhibitDd">1962 Ferranti Sirius 操作台与晶体管延迟线机柜、Millionaire 机械计算器、A Digital Evolution 展区</dd>
+            </div>
+            <div>
+              <dt data-i18n="dlgAdmissionDt">门票与参观方式</dt>
+              <dd data-i18n="dlgAdmissionDd">免费向学生与访客开放；可自由沿二楼大厅玻璃展柜长廊自助参观，配合本网页体验 1962 写信互动</dd>
+            </div>
+            <div>
+              <dt data-i18n="dlgTransitDt">公共交通</dt>
+              <dd data-i18n="dlgTransitDd">墨尔本轻轨/火车 Pakenham · Cranbourne · Frankston 线至 Caulfield Station，出站步行即达 Caulfield 校区 Building B</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="dialog-footer">
+          <button type="button" id="close-visit-done-btn" class="btn-primary" data-i18n="dialogDone">返回线上展览</button>
         </div>
       </div>
-
-      <div class="dialog-body">
-        <p data-i18n="dialogLead">
-          展区位于莫纳什大学 Caulfield 校区 Building B 二楼大厅，面向所有在校学生与公众开放，免费近距离观看 1962 年莫纳什第一台计算机 Ferranti Sirius。
-        </p>
-
-        <dl class="dialog-details">
-          <div>
-            <dt data-i18n="dlgLocationDt">精确地址</dt>
-            <dd data-i18n="dlgLocationDd">Building B, Foyer, Level 2, Caulfield East VIC 3145, Australia（莫纳什大学 Caulfield 校区 Building B 二楼大厅）</dd>
-          </div>
-          <div>
-            <dt data-i18n="dlgExhibitDt">核心馆藏</dt>
-            <dd data-i18n="dlgExhibitDd">1962 Ferranti Sirius 操作台与晶体管延迟线机柜、Millionaire 机械计算器、A Digital Evolution 展区</dd>
-          </div>
-          <div>
-            <dt data-i18n="dlgAdmissionDt">门票与参观方式</dt>
-            <dd data-i18n="dlgAdmissionDd">免费向学生与访客开放；可自由沿二楼大厅玻璃展柜长廊自助参观，配合本网页体验 1962 写信互动</dd>
-          </div>
-          <div>
-            <dt data-i18n="dlgTransitDt">公共交通</dt>
-            <dd data-i18n="dlgTransitDd">墨尔本轻轨/火车 Pakenham · Cranbourne · Frankston 线至 Caulfield Station，出站步行即达 Caulfield 校区 Building B</dd>
-          </div>
-        </dl>
-      </div>
-
-      <div class="dialog-footer">
-        <form method="dialog">
-          <button type="submit" class="btn-primary" data-i18n="dialogDone">返回线上展览</button>
-        </form>
-      </div>
     </div>
-  </dialog>
+  </div>
 
-  <!-- Native Accessible Modal Dialog: Simulated Instagram Story / Slow-Mail Share Card -->
-  <dialog id="ig-card-dialog" class="visit-dialog ig-card-dialog" closedby="any" aria-labelledby="ig-dialog-title">
-    <div class="dialog-titlebar">
-      <span>IG_STORY_CARD.PNG // 1962 SLOW MAIL</span>
-      <form method="dialog">
-        <button type="submit" class="pixel-close-x" aria-label="关闭卡片预览">×</button>
-      </form>
-    </div>
-    <div class="dialog-shell">
-      <div class="dialog-header">
-        <div>
-          <span class="panel-code">SHAREABLE 1962 ARCHIVE CARD</span>
-          <h2 id="ig-dialog-title" class="dialog-title" data-i18n="igDialogTitle">1962 复古慢递分享卡片</h2>
+  <!-- Fixed Overlay Modal: Simulated Instagram Story / Slow-Mail Share Card -->
+  <div id="ig-card-dialog" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="ig-dialog-title" hidden>
+    <div class="visit-dialog ig-card-dialog">
+      <div class="dialog-titlebar">
+        <span>IG_STORY_CARD.PNG // 1962 SLOW MAIL</span>
+        <button type="button" id="close-ig-x" class="pixel-close-x" aria-label="关闭卡片预览">×</button>
+      </div>
+      <div class="dialog-shell">
+        <div class="dialog-header">
+          <div>
+            <span class="panel-code">SHAREABLE 1962 ARCHIVE CARD</span>
+            <h2 id="ig-dialog-title" class="dialog-title" data-i18n="igDialogTitle">1962 复古慢递分享卡片</h2>
+          </div>
+        </div>
+
+        <div class="dialog-body ig-preview-body">
+          <p class="ig-preview-note" data-i18n="igDialogDesc">
+            已为你生成融合 1962 Sirius 像素插画、邮戳、五孔打孔纸带条与书信摘录的复古竖版卡片，可直接保存分享到 Instagram Story 或朋友圈。
+          </p>
+          <div class="ig-canvas-wrap">
+            <canvas id="ig-story-canvas" class="ig-story-canvas" width="540" height="960"></canvas>
+          </div>
+        </div>
+
+        <div class="dialog-footer ig-dialog-footer">
+          <button type="button" id="download-ig-card-btn" class="btn-primary" data-i18n="downloadIgCardBtn">保存卡片图片 (.PNG)</button>
+          <button type="button" id="close-ig-btn" class="btn-secondary" data-i18n="closeIgCardBtn">关闭</button>
         </div>
       </div>
-
-      <div class="dialog-body ig-preview-body">
-        <p class="ig-preview-note" data-i18n="igDialogDesc">
-          已为你生成融合莫纳什大学馆藏原机实拍、邮戳、五孔打孔纸带条与书信摘录的复古竖版卡片，可直接保存分享到 Instagram Story 或朋友圈。
-        </p>
-        <div class="ig-canvas-wrap">
-          <canvas id="ig-story-canvas" class="ig-story-canvas" width="540" height="960"></canvas>
-        </div>
-      </div>
-
-      <div class="dialog-footer ig-dialog-footer">
-        <button type="button" id="download-ig-card-btn" class="btn-primary" data-i18n="downloadIgCardBtn">保存卡片图片 (.PNG)</button>
-        <form method="dialog">
-          <button type="submit" class="btn-secondary" data-i18n="closeIgCardBtn">关闭</button>
-        </form>
-      </div>
     </div>
-  </dialog>
+  </div>
 </body>
 </html>
